@@ -53,6 +53,20 @@
 3. **验证通过后再提交 sitemap**：左侧菜单"站点地图" → 填入 `sitemap-index.xml`（不用填完整 URL，GSC 会自动拼域名）→ 提交
 4. **提交后检查状态**：正常应显示"成功"，如果显示"无法提取"，先自己在浏览器里打开一遍 `https://acecombat8.wiki/sitemap-index.xml` 确认能访问，能访问的话回 GSC 里点"重新提交"通常就好了，一般还是时序问题
 
+## 机体库存扩充（2026-07-03 第六轮）
+
+新增3架有真实官方信源的机体，机体总数从3架变成**6架**，四个分类首次全部覆盖到：
+
+| 机体 | 分类 | 信源 |
+|---|---|---|
+| F/A-18E Super Hornet | Multirole | 主角初始座机，Project Aces官方推文揭晓 |
+| Su-57 Felon | Air Superiority | 敌方机体，官方推文揭晓，**目前未确认玩家能否使用**，页面里明确标注了这个不确定性 |
+| F-4 Phantom II | Attacker | 豪华版"Mobius Squadron 25周年涂装"对应的基础机体，之前只写了涂装没写机体本身，这次补全 |
+
+新增机体不需要额外接线——`aircraft/compare` 对比工具、首页 HudStrip 的"Confirmed aircraft"统计、机体列表页，全部是从 `aircraft` 内容集合自动读取，加完 `.md` 文件构建一次就自动联动，已经过验证：对比工具checkbox数量、首页统计数字都自动变成了6。
+
+**Su-57这条记录处理方式值得注意**：它目前是"官方确认存在，但是否可玩未确认"的状态，`unlockMethod` 字段如实写成"Unknown — introduced as an enemy aircraft; playability unconfirmed"，没有为了内容完整度就编造一个解锁方式——这是站点一直坚持的"零编造"原则的具体体现。
+
 ## 三项功能补齐（2026-07-03 第五轮）
 
 ### 1. 机体对比工具 `/aircraft/compare`
