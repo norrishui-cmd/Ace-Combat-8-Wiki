@@ -1,16 +1,29 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AircraftCard from '../../components/AircraftCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
 
 const all = await getCollection('aircraft');
 const sorted = all.sort((a, b) => a.data.order - b.data.order);
 const categories = ['Multirole', 'Air Superiority', 'Attacker', 'Interceptor'];
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: sorted.map((a, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: a.data.name,
+    url: new URL(`/aircraft/${a.id}`, Astro.site).toString(),
+  })),
+};
 ---
 <BaseLayout
   title="Aircraft List"
   description="Full Ace Combat 8: Wings of Theve aircraft list — Multirole, Air Superiority, Attacker, and Interceptor categories, updated as Bandai Namco confirms new planes."
 >
+  <Breadcrumbs items={[{ label: 'Aircraft' }]} />
   <section class="container page-head">
     <span class="eyebrow">30+ aircraft at launch, 4 categories</span>
     <h1>Aircraft List</h1>
@@ -37,6 +50,8 @@ const categories = ['Multirole', 'Air Superiority', 'Attacker', 'Interceptor'];
       ))}
     </div>
   </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
 </BaseLayout>
 
 <style>

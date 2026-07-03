@@ -21,6 +21,7 @@ const aircraft = defineCollection({
     image: z.string().optional(),
     summary: z.string(),
     order: z.number().default(999),
+    updatedAt: z.date(), // 每次改动数值时更新这个日期，页面上会显示"Last updated"，也是新鲜度信号
   }),
 });
 
@@ -31,6 +32,7 @@ const editions = defineCollection({
     price: z.string().optional(),
     order: z.number().default(999),
     highlights: z.array(z.string()),
+    updatedAt: z.date(),
   }),
 });
 

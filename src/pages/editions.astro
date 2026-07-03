@@ -1,14 +1,43 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { getCollection, render } from 'astro:content';
 
 const editions = (await getCollection('editions')).sort((a, b) => a.data.order - b.data.order);
 const rendered = await Promise.all(editions.map(async (e) => ({ ...e, Content: (await render(e)).Content })));
+
+// FAQ 内容同时喂给页面展示和 FAQPage 结构化数据 —— 这类问答式内容
+// 是最容易在 Google 里拿到"常见问题"富媒体摘要的类型。
+const faqs = [
+  {
+    q: 'Does the Standard Edition include the Ace Combat Zero bonus?',
+    a: 'Yes. All digital pre-orders — Standard or Deluxe — include a digital copy of Ace Combat Zero: The Belkan War and the playable F-14A aircraft, regardless of which edition you buy.',
+  },
+  {
+    q: 'Is the Deluxe Edition worth it?',
+    a: 'The main value in the Deluxe Edition is the Premium Ace Pass Plus voucher, which unlocks the Season 1 exclusive ADFX-02 Morgan-PIXY aircraft and skips 30 levels of pass progress, plus three days of early access starting September 28, 2026.',
+  },
+  {
+    q: 'Can I buy the Joker Flight Pack without the Deluxe Edition content?',
+    a: 'No. The Joker Flight Pack is a Bandai Namco Store exclusive that includes everything in the Deluxe Edition plus physical collectibles like vinyl records and an artbook — it is not sold as a standalone add-on.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 <BaseLayout
   title="Editions & Pre-order Bonuses Compared"
   description="Standard Edition vs Deluxe Edition vs Joker Flight Pack for Ace Combat 8: Wings of Theve — what each one actually includes, and which pre-order bonus matters most."
 >
+  <Breadcrumbs items={[{ label: 'Editions' }]} />
   <section class="container page-head">
     <span class="eyebrow">Pre-orders open now</span>
     <h1>Editions Compared</h1>
@@ -32,6 +61,21 @@ const rendered = await Promise.all(editions.map(async (e) => ({ ...e, Content: (
       </div>
     ))}
   </section>
+
+  <section class="container faq-section">
+    <span class="eyebrow">Frequently asked</span>
+    <h2>Common Questions</h2>
+    <div class="faq-list">
+      {faqs.map((f) => (
+        <div class="card">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 </BaseLayout>
 
 <style>
@@ -44,7 +88,7 @@ const rendered = await Promise.all(editions.map(async (e) => ({ ...e, Content: (
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
   }
   .edition-card ul {
     padding-left: 18px;
@@ -59,4 +103,15 @@ const rendered = await Promise.all(editions.map(async (e) => ({ ...e, Content: (
     font-size: 0.85rem;
   }
   .edition-card__note :global(p) { margin: 0; }
+  .faq-section {
+    padding-bottom: 80px;
+    max-width: 760px;
+  }
+  .faq-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .faq-list h3 { font-size: 1rem; margin-bottom: 8px; }
+  .faq-list p { font-size: 0.9rem; margin: 0; }
 </style>

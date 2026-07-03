@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <BaseLayout
   title="Ace Combat Zero: The Belkan War Pre-order Bonus Explained"
   description="Every pre-order of Ace Combat 8: Wings of Theve includes a digital copy of Ace Combat Zero: The Belkan War. Here's how to claim it and why it matters."
 >
+  <Breadcrumbs items={[{ label: 'Ace Combat Zero Bonus' }]} />
   <article class="container article">
     <span class="eyebrow">For returning series fans</span>
     <h1>The Ace Combat Zero Bonus</h1>

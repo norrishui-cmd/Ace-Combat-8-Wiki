@@ -1,6 +1,7 @@
 ---
 name: "Joker Flight Pack"
 order: 3
+updatedAt: 2026-07-03
 highlights:
   - "包含豪华版全部内容"
   - "The Vinyl Collection：原声黑胶唱片 2 张"

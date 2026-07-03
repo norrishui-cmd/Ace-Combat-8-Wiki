@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <BaseLayout
   title="Ace Style System Explained"
   description="How the Ace Style gauge works in Ace Combat 8: Wings of Theve, and how your in-mission choices shape your pilot's identity and the story's outcome."
 >
+  <Breadcrumbs items={[{ label: 'Ace Style System' }]} />
   <article class="container article">
     <span class="eyebrow">Core system</span>
     <h1>The Ace Style System</h1>

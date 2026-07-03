@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const mechanics = [
   {
@@ -32,6 +33,7 @@ const mechanics = [
   title="New Mechanics Explained"
   description="Every new gameplay mechanic in Ace Combat 8: Wings of Theve compared to Ace Combat 7 — debris damage, dual special weapons, no weak-point-only hits, and more."
 >
+  <Breadcrumbs items={[{ label: 'New Mechanics' }]} />
   <article class="container article">
     <span class="eyebrow">vs. Ace Combat 7: Skies Unknown</span>
     <h1>New Mechanics</h1>

@@ -1,0 +1,79 @@
+---
+// 面包屑同时做两件事：① 给用户看的导航路径 ② 输出 BreadcrumbList JSON-LD 给搜索引擎，
+// 这是 Google 搜索结果里出现"面包屑富媒体摘要"的前提条件。
+interface Crumb {
+  label: string;
+  href?: string; // 最后一级（当前页）不传 href
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+
+const fullItems = [{ label: 'Home', href: '/' }, ...items];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: fullItems.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, Astro.site).toString() } : {}),
+  })),
+};
+---
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    {fullItems.map((item, i) => (
+      <li>
+        {item.href && i !== fullItems.length - 1 ? (
+          <>
+            <a href={item.href}>{item.label}</a>
+            <span class="sep" aria-hidden="true">/</span>
+          </>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<style>
+  .breadcrumbs {
+    padding: 18px 0 0;
+  }
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 6px;
+  }
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .breadcrumbs a,
+  .breadcrumbs span[aria-current] {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+  .breadcrumbs a:hover {
+    color: var(--hud-amber);
+    text-decoration: none;
+  }
+  .breadcrumbs span[aria-current] {
+    color: var(--radar-green);
+  }
+  .breadcrumbs .sep {
+    color: var(--cloud-600);
+    font-size: 0.75rem;
+  }
+</style>

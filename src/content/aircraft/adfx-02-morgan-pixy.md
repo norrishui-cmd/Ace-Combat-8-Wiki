@@ -13,6 +13,7 @@ specialWeaponSlots: 2
 confirmed: true
 summary: "系列经典试验机 ADFX-02 的全新涂装版本，作为首赛季 Premium Ace Pass 的专属奖励机体登场，需要付费通行证并达到对应等级才能解锁。"
 order: 2
+updatedAt: 2026-07-03
 ---
 
 ## 获取方式

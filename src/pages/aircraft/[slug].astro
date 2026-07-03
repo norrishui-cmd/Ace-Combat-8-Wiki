@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -17,11 +18,13 @@ const d = entry.data;
 function stars(n: number) {
   return '★'.repeat(n) + '☆'.repeat(5 - n);
 }
+const updatedLabel = d.updatedAt.toISOString().slice(0, 10);
 ---
 <BaseLayout
   title={`${d.name} (${d.designation})`}
   description={d.summary}
 >
+  <Breadcrumbs items={[{ label: 'Aircraft', href: '/aircraft' }, { label: d.name }]} />
   <article class="container aircraft-detail">
     <span class="eyebrow">{d.category}</span>
     <div class="aircraft-detail__title-row">
@@ -31,6 +34,7 @@ function stars(n: number) {
       </span>
     </div>
     <p class="mono aircraft-detail__designation">{d.designation}</p>
+    <p class="mono aircraft-detail__updated">Last updated: {updatedLabel}</p>
 
     <div class="aircraft-detail__stats card">
       <div class="stat-row"><span>Speed</span><span class="rating">{stars(d.speed)}</span></div>
@@ -47,6 +51,18 @@ function stars(n: number) {
 
     <a href="/aircraft" class="btn btn--ghost">&larr; Back to aircraft list</a>
   </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${d.name} (${d.designation})`,
+    description: d.summary,
+    dateModified: d.updatedAt.toISOString(),
+    isPartOf: {
+      '@type': 'VideoGame',
+      name: 'Ace Combat 8: Wings of Theve',
+    },
+  })} />
 </BaseLayout>
 
 <style>
@@ -62,6 +78,11 @@ function stars(n: number) {
   }
   .aircraft-detail__designation {
     color: var(--hud-amber);
+    margin: 0 0 4px;
+  }
+  .aircraft-detail__updated {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
     margin: 0 0 28px;
   }
   .aircraft-detail__stats {

@@ -1,6 +1,7 @@
 ---
 name: "Deluxe Edition"
 order: 2
+updatedAt: 2026-07-03
 highlights:
   - "包含标准版全部内容"
   - "提前 3 天早鸟体验（9月28日 3PM PDT 开始）"

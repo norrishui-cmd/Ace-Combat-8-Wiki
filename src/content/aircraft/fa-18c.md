@@ -13,6 +13,7 @@ specialWeaponSlots: 2
 confirmed: true
 summary: "系列常青机体，基础游戏内即可通过机体树解锁。豪华版额外附赠 Team Zvezda 专属涂装，机体本体不需要购买豪华版也能获得。"
 order: 3
+updatedAt: 2026-07-03
 ---
 
 ## 获取方式

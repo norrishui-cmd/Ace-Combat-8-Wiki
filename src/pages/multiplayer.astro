@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <BaseLayout
   title="Ace Combat Online — Multiplayer Guide"
   description="Everything confirmed about Ace Combat Online, the biggest multiplayer mode in Ace Combat 8: Wings of Theve — lobby, avatars, cross-platform play, and Co-Op modes."
 >
+  <Breadcrumbs items={[{ label: 'Multiplayer' }]} />
   <article class="container article">
     <span class="eyebrow">"The franchise's largest online mode" — Bandai Namco</span>
     <h1>Ace Combat Online</h1>

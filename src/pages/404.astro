@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Page Not Found"
+  description="This page doesn't exist. Head back to the Ace Combat 8: Wings of Theve guide hub."
+  noindex={true}
+>
+  <section class="container not-found">
+    <span class="eyebrow">Radar contact lost</span>
+    <h1>404</h1>
+    <p>That page isn't in our flight plan. It may have been moved or never existed.</p>
+    <div class="not-found__links">
+      <a href="/" class="btn">Return to base</a>
+      <a href="/aircraft" class="btn btn--ghost">Browse aircraft</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .not-found h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--hud-amber);
+  }
+  .not-found p {
+    max-width: 440px;
+    margin: 0 auto 32px;
+  }
+  .not-found__links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

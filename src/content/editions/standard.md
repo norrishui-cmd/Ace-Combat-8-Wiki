@@ -1,6 +1,7 @@
 ---
 name: "Standard Edition"
 order: 1
+updatedAt: 2026-07-03
 highlights:
   - "ACE COMBAT 8: WINGS OF THEVE 完整游戏"
   - "预购赠送：F-14A 可用机体"
