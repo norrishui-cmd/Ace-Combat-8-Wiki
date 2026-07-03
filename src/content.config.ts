@@ -1,0 +1,37 @@
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+// 机体图鉴集合。每一架机体一个 .md 文件，写作团队后续只需要
+// 复制一份现有文件改数值即可上新，不用碰代码。
+const aircraft = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/aircraft' }),
+  schema: z.object({
+    name: z.string(),
+    designation: z.string(), // 如 "F-14A"
+    category: z.enum(['Multirole', 'Air Superiority', 'Attacker', 'Interceptor']),
+    manufacturer: z.string().optional(),
+    unlockMethod: z.string(), // 如 "Pre-order bonus", "Ace Pass reward", "Aircraft Tree"
+    speed: z.number().min(1).max(5),
+    mobility: z.number().min(1).max(5),
+    stability: z.number().min(1).max(5),
+    firepower: z.number().min(1).max(5),
+    defense: z.number().min(1).max(5),
+    specialWeaponSlots: z.number().default(2),
+    confirmed: z.boolean().default(false),
+    image: z.string().optional(),
+    summary: z.string(),
+    order: z.number().default(999),
+  }),
+});
+
+const editions = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/editions' }),
+  schema: z.object({
+    name: z.string(),
+    price: z.string().optional(),
+    order: z.number().default(999),
+    highlights: z.array(z.string()),
+  }),
+});
+
+export const collections = { aircraft, editions };

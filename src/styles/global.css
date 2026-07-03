@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* --- 色板：夜空HUD --- */
+  --sky-900: #0B1220;      /* 主背景：深空蓝，不用纯黑 */
+  --sky-800: #121C2E;      /* 次级背景 */
+  --cloud-700: #1C2B3D;    /* 卡片背景 */
+  --cloud-600: #263B52;    /* 卡片hover/边框 */
+  --hud-amber: #E8A33D;    /* 主强调色：平显琥珀 */
+  --hud-amber-dim: #B57F2E;
+  --radar-green: #6FCF97;  /* 数据强调色：雷达磷光绿，克制使用 */
+  --dossier-100: #EDE7D9;  /* 任务简报纸色，用于对比表格等浅色区块 */
+  --alert-red: #C4432B;
+  --text-primary: #EAEFF5;
+  --text-secondary: #9AAAC0;
+  --text-on-dossier: #2A2620;
+
+  /* --- 字体 --- */
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius: 4px;
+  --border-thin: 1px solid var(--cloud-600);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--sky-900);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232, 163, 61, 0.08), transparent),
+    linear-gradient(180deg, var(--sky-900) 0%, var(--sky-800) 100%);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: 0.03em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+h3 { font-size: 1.25rem; }
+
+p { color: var(--text-secondary); }
+
+a {
+  color: var(--hud-amber);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--hud-amber);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.mono { font-family: var(--font-mono); }
+
+/* --- HUD 数据带（签名元素）--- */
+.hud-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: var(--border-thin);
+  border-bottom: var(--border-thin);
+  background: var(--sky-800);
+}
+.hud-strip__item {
+  flex: 1 1 160px;
+  padding: 18px 24px;
+  border-right: var(--border-thin);
+}
+.hud-strip__item:last-child { border-right: none; }
+.hud-strip__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+.hud-strip__value {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--hud-amber);
+}
+.hud-strip__value--green { color: var(--radar-green); }
+
+/* --- 卡片 --- */
+.card {
+  background: var(--cloud-700);
+  border: var(--border-thin);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.card:hover {
+  border-color: var(--hud-amber-dim);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* --- 徽标/eyebrow：航向刻度风格，非编号列表 --- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--radar-green);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--radar-green);
+}
+
+/* --- 星级评分 --- */
+.rating {
+  font-family: var(--font-mono);
+  color: var(--hud-amber);
+  letter-spacing: 2px;
+}
+.rating__dim { color: var(--cloud-600); }
+
+/* --- 徽章：已确认 / 编辑预估 --- */
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+.badge--confirmed { color: var(--radar-green); }
+.badge--estimate { color: var(--hud-amber); }
+
+/* --- 简报式对比表格 --- */
+.dossier-table {
+  background: var(--dossier-100);
+  color: var(--text-on-dossier);
+  border-radius: var(--radius);
+  overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+}
+.dossier-table th, .dossier-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid rgba(42, 38, 32, 0.15);
+}
+.dossier-table th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(42, 38, 32, 0.06);
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  background: var(--hud-amber);
+  color: var(--sky-900);
+  border: none;
+  cursor: pointer;
+}
+.btn:hover { background: #f0b358; text-decoration: none; }
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--hud-amber-dim);
+  color: var(--hud-amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,48 @@
+---
+// 签名元素：仿座舱底部状态条。发售日倒计时用少量客户端JS实时计算，
+// 其余数值是静态占位，后续随官方放料更新 content collection 数据即可自动联动
+// （机体数量已经从 aircraft collection 里动态取，不用手改）。
+import { getCollection } from 'astro:content';
+const aircraftList = await getCollection('aircraft');
+const confirmedCount = aircraftList.filter((a) => a.data.confirmed).length;
+---
+<section class="hud-strip" aria-label="Mission clock">
+  <div class="hud-strip__item">
+    <span class="hud-strip__label">Days to launch</span>
+    <span class="hud-strip__value" id="countdown-days">--</span>
+  </div>
+  <div class="hud-strip__item">
+    <span class="hud-strip__label">Global release</span>
+    <span class="hud-strip__value mono" style="font-size:1.1rem;">OCT 02 2026</span>
+  </div>
+  <div class="hud-strip__item">
+    <span class="hud-strip__label">Deluxe early access</span>
+    <span class="hud-strip__value mono" style="font-size:1.1rem;">SEP 28 2026</span>
+  </div>
+  <div class="hud-strip__item">
+    <span class="hud-strip__label">Confirmed aircraft</span>
+    <span class="hud-strip__value hud-strip__value--green">{confirmedCount}+</span>
+  </div>
+  <div class="hud-strip__item">
+    <span class="hud-strip__label">Joker Flight roster</span>
+    <span class="hud-strip__value hud-strip__value--green">4</span>
+  </div>
+</section>
+
+<script>
+  const target = new Date('2026-10-02T00:00:00Z').getTime();
+  const el = document.getElementById('countdown-days');
+  function tick() {
+    const now = Date.now();
+    const diff = target - now;
+    if (!el) return;
+    if (diff <= 0) {
+      el.textContent = 'LIVE';
+      return;
+    }
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    el.textContent = String(days);
+  }
+  tick();
+  setInterval(tick, 1000 * 60 * 60);
+</script>

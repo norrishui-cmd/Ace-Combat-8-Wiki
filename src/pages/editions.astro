@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const editions = (await getCollection('editions')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(editions.map(async (e) => ({ ...e, Content: (await render(e)).Content })));
+---
+<BaseLayout
+  title="Editions & Pre-order Bonuses Compared"
+  description="Standard Edition vs Deluxe Edition vs Joker Flight Pack for Ace Combat 8: Wings of Theve — what each one actually includes, and which pre-order bonus matters most."
+>
+  <section class="container page-head">
+    <span class="eyebrow">Pre-orders open now</span>
+    <h1>Editions Compared</h1>
+    <p>
+      All digital pre-orders — regardless of edition — include the F-14A and a digital copy
+      of ACE COMBAT ZERO: THE BELKAN WAR. The real decision is whether the Premium Ace Pass
+      Plus voucher and early access are worth the price jump to Deluxe.
+    </p>
+  </section>
+
+  <section class="container editions-grid">
+    {rendered.map((e) => (
+      <div class="card edition-card">
+        <h2>{e.data.name}</h2>
+        <ul>
+          {e.data.highlights.map((h: string) => <li>{h}</li>)}
+        </ul>
+        <div class="edition-card__note">
+          <e.Content />
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 56px 0 40px;
+    max-width: 720px;
+  }
+  .page-head p { font-size: 0.95rem; }
+  .editions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding-bottom: 80px;
+  }
+  .edition-card ul {
+    padding-left: 18px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .edition-card ul li { margin-bottom: 6px; }
+  .edition-card__note {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: var(--border-thin);
+    font-size: 0.85rem;
+  }
+  .edition-card__note :global(p) { margin: 0; }
+</style>

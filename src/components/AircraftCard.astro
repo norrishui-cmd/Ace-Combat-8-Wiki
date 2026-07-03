@@ -1,0 +1,62 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  designation: string;
+  category: string;
+  unlockMethod: string;
+  confirmed: boolean;
+  summary: string;
+}
+const { slug, name, designation, category, unlockMethod, confirmed, summary } = Astro.props;
+---
+<a href={`/aircraft/${slug}`} class="aircraft-card">
+  <div class="aircraft-card__top">
+    <span class="eyebrow">{category}</span>
+    <span class={`badge ${confirmed ? 'badge--confirmed' : 'badge--estimate'}`}>
+      {confirmed ? 'Confirmed' : 'Est.'}
+    </span>
+  </div>
+  <h3>{name}</h3>
+  <p class="mono aircraft-card__designation">{designation}</p>
+  <p class="aircraft-card__summary">{summary}</p>
+  <p class="mono aircraft-card__unlock">▸ {unlockMethod}</p>
+</a>
+
+<style>
+  .aircraft-card {
+    display: block;
+    background: var(--cloud-700);
+    border: var(--border-thin);
+    border-radius: var(--radius);
+    padding: 22px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+  .aircraft-card:hover {
+    border-color: var(--hud-amber-dim);
+    text-decoration: none;
+  }
+  .aircraft-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .aircraft-card h3 { margin-bottom: 2px; font-size: 1.3rem; }
+  .aircraft-card__designation {
+    color: var(--hud-amber);
+    font-size: 0.8rem;
+    margin: 0 0 10px;
+  }
+  .aircraft-card__summary {
+    font-size: 0.88rem;
+    margin: 0 0 12px;
+  }
+  .aircraft-card__unlock {
+    font-size: 0.72rem;
+    color: var(--radar-green);
+    margin: 0;
+  }
+</style>

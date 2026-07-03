@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HudStrip from '../components/HudStrip.astro';
+
+const navCards = [
+  {
+    href: '/aircraft',
+    label: 'Aircraft List',
+    desc: '30+ playable aircraft across four categories — updated as new confirmations drop.',
+  },
+  {
+    href: '/editions',
+    label: 'Editions & Pre-order',
+    desc: 'Standard vs Deluxe vs Joker Flight Pack, and what each bonus actually unlocks.',
+  },
+  {
+    href: '/ace-style-system',
+    label: 'Ace Style System',
+    desc: 'How your in-mission choices shape your pilot identity and the story outcome.',
+  },
+  {
+    href: '/new-mechanics',
+    label: 'New Mechanics',
+    desc: 'Debris damage, dual special weapons, no more weak-point-only hits, and more.',
+  },
+  {
+    href: '/multiplayer',
+    label: 'Ace Combat Online',
+    desc: "The franchise's largest multiplayer mode — lobby, avatars, cross-platform play.",
+  },
+  {
+    href: '/ace-combat-zero-bonus',
+    label: 'Ace Combat Zero Bonus',
+    desc: 'Why every pre-order includes The Belkan War, and how to claim it.',
+  },
+];
+---
+<BaseLayout
+  title="Ace Combat 8: Wings of Theve — Guide Hub"
+  description="The unofficial guide to Ace Combat 8: Wings of Theve — aircraft list, editions comparison, Ace Style system, new mechanics, and multiplayer, updated through launch on October 2, 2026."
+>
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Strangereal / FCU vs Republic of Sotoa / 2029</span>
+      <h1>ACE COMBAT 8<br />WINGS OF THEVE</h1>
+      <p class="hero__sub">
+        Everything you need before you take the name "Wings of Theve" — aircraft, editions,
+        new systems, and multiplayer, tracked and updated all the way to launch.
+      </p>
+      <div class="hero__cta">
+        <a href="/aircraft" class="btn">Browse Aircraft</a>
+        <a href="/editions" class="btn btn--ghost">Compare Editions</a>
+      </div>
+    </div>
+  </section>
+
+  <HudStrip />
+
+  <section class="container nav-section">
+    <span class="eyebrow">Guide sections</span>
+    <div class="card-grid">
+      {navCards.map((c) => (
+        <a href={c.href} class="card nav-card">
+          <h3>{c.label}</h3>
+          <p>{c.desc}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 72px 0 0;
+  }
+  .hero__sub {
+    max-width: 560px;
+    font-size: 1.05rem;
+    margin: 18px 0 32px;
+  }
+  .hero__cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+  .nav-section {
+    padding: 64px 0;
+  }
+  .nav-card {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block;
+  }
+  .nav-card:hover { text-decoration: none; }
+  .nav-card p { font-size: 0.9rem; margin: 0; }
+</style>

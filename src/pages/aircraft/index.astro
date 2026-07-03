@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AircraftCard from '../../components/AircraftCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('aircraft');
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+const categories = ['Multirole', 'Air Superiority', 'Attacker', 'Interceptor'];
+---
+<BaseLayout
+  title="Aircraft List"
+  description="Full Ace Combat 8: Wings of Theve aircraft list — Multirole, Air Superiority, Attacker, and Interceptor categories, updated as Bandai Namco confirms new planes."
+>
+  <section class="container page-head">
+    <span class="eyebrow">30+ aircraft at launch, 4 categories</span>
+    <h1>Aircraft List</h1>
+    <p>
+      Every confirmed aircraft in ACE COMBAT 8: WINGS OF THEVE, plus editor estimates for
+      stats that haven't been officially detailed yet. Ratings marked
+      <span class="badge badge--estimate" style="margin: 0 4px;">Est.</span>
+      will be replaced with real in-game numbers within 48 hours of launch.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="card-grid">
+      {sorted.map((a) => (
+        <AircraftCard
+          slug={a.id}
+          name={a.data.name}
+          designation={a.data.designation}
+          category={a.data.category}
+          unlockMethod={a.data.unlockMethod}
+          confirmed={a.data.confirmed}
+          summary={a.data.summary}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 56px 0 40px;
+    max-width: 720px;
+  }
+  .page-head p { font-size: 0.95rem; }
+</style>

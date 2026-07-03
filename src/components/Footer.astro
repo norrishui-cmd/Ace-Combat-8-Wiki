@@ -1,0 +1,26 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p class="mono">
+      This is an unofficial fan guide. ACE COMBAT 8: WINGS OF THEVE™ &amp; © Bandai Namco Entertainment Inc.
+      Not affiliated with or endorsed by Bandai Namco Entertainment Inc.
+    </p>
+    <p class="mono">&copy; {year} AC8 Wings of Theve Guide</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: var(--border-thin);
+    margin-top: 80px;
+    padding: 32px 0;
+  }
+  .site-footer__inner p {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin: 0 0 8px;
+  }
+</style>

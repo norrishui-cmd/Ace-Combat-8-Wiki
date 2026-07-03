@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('aircraft');
+  return all.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+function stars(n: number) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+---
+<BaseLayout
+  title={`${d.name} (${d.designation})`}
+  description={d.summary}
+>
+  <article class="container aircraft-detail">
+    <span class="eyebrow">{d.category}</span>
+    <div class="aircraft-detail__title-row">
+      <h1>{d.name}</h1>
+      <span class={`badge ${d.confirmed ? 'badge--confirmed' : 'badge--estimate'}`}>
+        {d.confirmed ? 'Officially confirmed' : 'Editor estimate'}
+      </span>
+    </div>
+    <p class="mono aircraft-detail__designation">{d.designation}</p>
+
+    <div class="aircraft-detail__stats card">
+      <div class="stat-row"><span>Speed</span><span class="rating">{stars(d.speed)}</span></div>
+      <div class="stat-row"><span>Mobility</span><span class="rating">{stars(d.mobility)}</span></div>
+      <div class="stat-row"><span>Stability</span><span class="rating">{stars(d.stability)}</span></div>
+      <div class="stat-row"><span>Firepower</span><span class="rating">{stars(d.firepower)}</span></div>
+      <div class="stat-row"><span>Defense</span><span class="rating">{stars(d.defense)}</span></div>
+      <div class="stat-row"><span>Special weapon slots</span><span class="mono">{d.specialWeaponSlots}</span></div>
+    </div>
+
+    <div class="aircraft-detail__body">
+      <Content />
+    </div>
+
+    <a href="/aircraft" class="btn btn--ghost">&larr; Back to aircraft list</a>
+  </article>
+</BaseLayout>
+
+<style>
+  .aircraft-detail {
+    padding: 56px 0 80px;
+    max-width: 760px;
+  }
+  .aircraft-detail__title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .aircraft-detail__designation {
+    color: var(--hud-amber);
+    margin: 0 0 28px;
+  }
+  .aircraft-detail__stats {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+  }
+  .aircraft-detail__body {
+    margin-bottom: 40px;
+  }
+  .aircraft-detail__body :global(h2) {
+    font-size: 1.2rem;
+    margin-top: 32px;
+  }
+  .aircraft-detail__body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .aircraft-detail__body :global(th),
+  .aircraft-detail__body :global(td) {
+    border: var(--border-thin);
+    padding: 8px 14px;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  .aircraft-detail__body :global(blockquote) {
+    border-left: 3px solid var(--hud-amber-dim);
+    margin: 20px 0;
+    padding: 4px 18px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const mechanics = [
+  {
+    name: 'No more weak-point-only damage',
+    body: "Unlike previous entries, hostile aircraft can now take damage anywhere they're hit — you no longer need to target specific weak points to bring a plane down. Large enemies still have distinct damage zones, but even their unmarked parts can now be damaged, a first for the series.",
+  },
+  {
+    name: 'Debris damage system',
+    body: 'A new physics layer means wreckage from a downed aircraft can collide with and damage other nearby enemies. Chain kills near tight enemy formations become a real tactical option instead of just a visual flourish.',
+  },
+  {
+    name: 'Dual special weapons',
+    body: "For the first time, you can carry two Special Weapons into a sortie instead of one. Loadout planning before each mission becomes a bigger part of preparation — expect this to be one of the most-searched mechanics once players start theorycrafting builds.",
+  },
+  {
+    name: 'Wingman Command, refined',
+    body: 'The Wingman Command system returns with functionality similar to Ace Combat 5: The Unsung War, plus additional behavior options. Squadmates React to and issue new SP commands and are said to react more distinctly to different combat situations.',
+  },
+  {
+    name: 'Aircraft customization & wear',
+    body: "Aircraft can now pick up dirt over the course of missions, which can be cleaned off between sorties. It's unconfirmed whether this affects performance — we'll update this the moment it's tested.",
+  },
+  {
+    name: '"Living Skies" — the Cloudly system',
+    body: 'A proprietary cloud and weather rendering system drives dynamic, multi-layered cloudscapes and changing conditions mid-mission. Beyond visuals, radar remains useful but players can also track enemies visually via contrails, smoke, and reflections.',
+  },
+];
+---
+<BaseLayout
+  title="New Mechanics Explained"
+  description="Every new gameplay mechanic in Ace Combat 8: Wings of Theve compared to Ace Combat 7 — debris damage, dual special weapons, no weak-point-only hits, and more."
+>
+  <article class="container article">
+    <span class="eyebrow">vs. Ace Combat 7: Skies Unknown</span>
+    <h1>New Mechanics</h1>
+    <p>
+      Wings of Theve keeps the arcade-style dogfighting the series is known for, but layers in
+      several mechanical changes worth knowing before launch — especially if you're coming
+      back after Skies Unknown.
+    </p>
+
+    <div class="mechanics-list">
+      {mechanics.map((m) => (
+        <div class="card">
+          <h3>{m.name}</h3>
+          <p>{m.body}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article {
+    padding: 56px 0 80px;
+    max-width: 760px;
+  }
+  .article > p { font-size: 0.98rem; margin-bottom: 32px; }
+  .mechanics-list {
+    display: grid;
+    gap: 16px;
+  }
+  .mechanics-list p { font-size: 0.92rem; margin: 0; }
+</style>
