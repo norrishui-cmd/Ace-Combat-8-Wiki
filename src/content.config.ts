@@ -36,4 +36,18 @@ const editions = defineCollection({
   }),
 });
 
-export const collections = { aircraft, editions };
+// 快讯/新闻反应型内容 —— 这类"官方刚发消息、几小时内出解读"的短文
+// 是新站对抗老牌wiki站的时间差打法：wiki类站点更新通常滞后几天，
+// 而这类内容抓的是"新鲜事件词"的窗口期。
+const news = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    publishedAt: z.date(),
+    sourceLabel: z.string().optional(), // 如 "Bandai Namco press release"
+    sourceUrl: z.string().url().optional(),
+  }),
+});
+
+export const collections = { aircraft, editions, news };

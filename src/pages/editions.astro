@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 import { getCollection, render } from 'astro:content';
 
 const editions = (await getCollection('editions')).sort((a, b) => a.data.order - b.data.order);
@@ -76,6 +77,12 @@ const faqJsonLd = {
   </section>
 
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <RelatedLinks items={[
+    { href: '/ace-combat-zero-bonus', label: 'Ace Combat Zero Bonus', desc: 'Every pre-order includes a free copy of the 2006 classic — see how to claim it.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'See every confirmed aircraft, including which ones are tied to specific editions.' },
+    { href: '/ace-style-system', label: 'Ace Style System', desc: 'How your in-game choices shape your pilot identity and the story.' },
+  ]} />
 </BaseLayout>
 
 <style>

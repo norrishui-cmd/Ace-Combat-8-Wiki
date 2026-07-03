@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+<BaseLayout
+  title="About This Guide"
+  description="Who runs this Ace Combat 8: Wings of Theve guide, how we source information, and how often it's updated."
+>
+  <Breadcrumbs items={[{ label: 'About' }]} />
+  <article class="container article">
+    <span class="eyebrow">Editorial transparency</span>
+    <h1>About This Guide</h1>
+
+    <p>
+      This is an independent, unofficial fan guide to <strong>ACE COMBAT 8: WINGS OF THEVE</strong>.
+      We are not affiliated with, endorsed by, or operated by Bandai Namco Entertainment Inc.
+      or Bandai Namco Aces Inc. All trademarks, aircraft names, and game assets referenced
+      belong to their respective owners.
+    </p>
+
+    <h2>How we source information</h2>
+    <p>
+      Every claim on this site is either sourced directly from Bandai Namco's official
+      channels (press releases, the official game site, State of Play/Game Awards trailers,
+      Steam and PlayStation Store listings) or clearly labeled as an editor estimate pending
+      official confirmation. Pages that contain estimated data — like aircraft stat ratings
+      before launch — carry a visible
+      <span class="badge badge--estimate" style="margin: 0 4px;">Est.</span>
+      badge so it's never confused with confirmed information.
+    </p>
+
+    <h2>How often this is updated</h2>
+    <p>
+      We're tracking every official Bandai Namco announcement in the run-up to the
+      October 2, 2026 launch. Aircraft and edition pages show a "Last updated" date so you can
+      see at a glance whether information reflects the latest official reveal. After launch,
+      we shift to verifying every editor estimate against real gameplay.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Spotted something outdated or incorrect? We'd rather fix it fast than leave it wrong —
+      reach out via the contact details on our social channels linked in the footer.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .article {
+    padding: 56px 0 80px;
+    max-width: 720px;
+  }
+  .article p { font-size: 0.98rem; }
+</style>

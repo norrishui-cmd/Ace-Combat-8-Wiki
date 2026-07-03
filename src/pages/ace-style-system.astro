@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 ---
 <BaseLayout
   title="Ace Style System Explained"
@@ -43,6 +44,12 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
       had narrative weight, rather than existing purely as an optional combat log.
     </p>
   </article>
+
+  <RelatedLinks items={[
+    { href: '/new-mechanics', label: 'New Mechanics', desc: 'Every other gameplay change from Ace Combat 7, in one place.' },
+    { href: '/ace-combat-zero-bonus', label: 'Ace Combat Zero Bonus', desc: 'The 2006 game that introduced this same Ace Style gauge, free with pre-order.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'Browse every confirmed aircraft and their unlock methods.' },
+  ]} />
 </BaseLayout>
 
 <style>

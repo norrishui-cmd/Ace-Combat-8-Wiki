@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 ---
 <BaseLayout
   title="Ace Combat Zero: The Belkan War Pre-order Bonus Explained"
@@ -51,6 +52,11 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
       </p>
     </div>
   </article>
+
+  <RelatedLinks items={[
+    { href: '/editions', label: 'Editions Compared', desc: 'See exactly which editions include this bonus and what else you get.' },
+    { href: '/ace-style-system', label: 'Ace Style System', desc: 'The mechanic Ace Combat Zero introduced, now returning in Wings of Theve.' },
+  ]} />
 </BaseLayout>
 
 <style>

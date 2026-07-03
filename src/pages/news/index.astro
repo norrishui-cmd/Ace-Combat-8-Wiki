@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('news')).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+---
+<BaseLayout
+  title="Latest News"
+  description="Every confirmed Ace Combat 8: Wings of Theve announcement, reveal, and update — tracked as Bandai Namco releases new information ahead of the October 2, 2026 launch."
+>
+  <Breadcrumbs items={[{ label: 'News' }]} />
+  <section class="container page-head">
+    <span class="eyebrow">Updated as Bandai Namco announces</span>
+    <h1>Latest News</h1>
+    <p>Every confirmed reveal, tracked close to when it happens.</p>
+  </section>
+
+  <section class="container news-list">
+    {posts.map((p) => (
+      <a href={`/news/${p.id}`} class="card news-item">
+        <p class="mono news-item__date">{p.data.publishedAt.toISOString().slice(0, 10)}</p>
+        <h2>{p.data.title}</h2>
+        <p class="news-item__summary">{p.data.summary}</p>
+      </a>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 56px 0 32px;
+    max-width: 720px;
+  }
+  .news-list {
+    display: grid;
+    gap: 16px;
+    padding-bottom: 80px;
+  }
+  .news-item {
+    display: block;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .news-item:hover { text-decoration: none; border-color: var(--hud-amber-dim); }
+  .news-item__date {
+    font-size: 0.72rem;
+    color: var(--radar-green);
+    margin: 0 0 6px;
+  }
+  .news-item h2 { font-size: 1.15rem; margin: 0 0 8px; }
+  .news-item__summary { font-size: 0.9rem; margin: 0; }
+</style>

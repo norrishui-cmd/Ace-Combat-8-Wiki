@@ -1,19 +1,34 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const all = await getCollection('aircraft');
   return all.map((entry) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: { entry, all },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, all } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+
+// 同类别机体互相引用，强化"这个站对机体分类有系统性覆盖"的主题信号，
+// 比单纯链回列表页更有内部链接价值。
+const sameCategory = all
+  .filter((a) => a.data.category === d.category && a.id !== entry.id)
+  .slice(0, 3);
+const relatedItems = [
+  ...sameCategory.map((a) => ({
+    href: `/aircraft/${a.id}`,
+    label: a.data.name,
+    desc: `Another ${a.data.category} aircraft — ${a.data.unlockMethod}.`,
+  })),
+  { href: '/editions', label: 'Editions Compared', desc: 'See which edition unlocks which aircraft bonus.' },
+];
 
 function stars(n: number) {
   return '★'.repeat(n) + '☆'.repeat(5 - n);
@@ -63,6 +78,8 @@ const updatedLabel = d.updatedAt.toISOString().slice(0, 10);
       name: 'Ace Combat 8: Wings of Theve',
     },
   })} />
+
+  <RelatedLinks items={relatedItems} heading="More aircraft & related pages" />
 </BaseLayout>
 
 <style>

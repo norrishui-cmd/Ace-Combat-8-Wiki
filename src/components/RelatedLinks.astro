@@ -1,0 +1,60 @@
+---
+// 内部链接密度是新站起量最直接的免费杠杆——不需要等外链，
+// 只要让每篇内容互相指向,就能帮 Google 判断站点主题集中度和内容深度。
+interface RelatedLink {
+  href: string;
+  label: string;
+  desc: string;
+}
+interface Props {
+  items: RelatedLink[];
+  heading?: string;
+}
+const { items, heading = 'Related pages' } = Astro.props;
+---
+<section class="related container">
+  <span class="eyebrow">{heading}</span>
+  <div class="related__grid">
+    {items.map((item) => (
+      <a href={item.href} class="related__item">
+        <h3>{item.label}</h3>
+        <p>{item.desc}</p>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .related {
+    padding: 40px 0 80px;
+    border-top: var(--border-thin);
+    margin-top: 40px;
+  }
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .related__item {
+    display: block;
+    background: var(--cloud-700);
+    border: var(--border-thin);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .related__item:hover {
+    border-color: var(--hud-amber-dim);
+    text-decoration: none;
+  }
+  .related__item h3 {
+    font-size: 0.95rem;
+    margin: 0 0 6px;
+  }
+  .related__item p {
+    font-size: 0.82rem;
+    margin: 0;
+  }
+</style>

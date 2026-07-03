@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 ---
 <BaseLayout
   title="Ace Combat Online — Multiplayer Guide"
@@ -36,6 +37,11 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
       </p>
     </div>
   </article>
+
+  <RelatedLinks items={[
+    { href: '/editions', label: 'Editions Compared', desc: 'Ace Pass tiers tie into online progression — see what each edition includes.' },
+    { href: '/new-mechanics', label: 'New Mechanics', desc: 'Dual special weapons and other systems that carry over into multiplayer.' },
+  ]} />
 </BaseLayout>
 
 <style>
