@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HudStrip from '../components/HudStrip.astro';
+import CountdownHero from '../components/CountdownHero.astro';
 
 const navCards = [
   {
@@ -9,9 +10,19 @@ const navCards = [
     desc: 'Every confirmed reveal and update, tracked close to when it happens.',
   },
   {
+    href: '/getting-started',
+    label: "Getting Started",
+    desc: 'New to the series? What\'s actually different (and easier) in Wings of Theve.',
+  },
+  {
     href: '/aircraft',
     label: 'Aircraft List',
     desc: '30+ playable aircraft across four categories — updated as new confirmations drop.',
+  },
+  {
+    href: '/aircraft/compare',
+    label: 'Compare Aircraft',
+    desc: 'Put up to 4 aircraft head-to-head — speed, mobility, firepower, and more.',
   },
   {
     href: '/story',
@@ -74,6 +85,7 @@ const navCards = [
     <div class="container">
       <span class="eyebrow">Strangereal / FCU vs Republic of Sotoa / 2029</span>
       <h1>ACE COMBAT 8<br />WINGS OF THEVE</h1>
+      <CountdownHero />
       <p class="hero__sub">
         Everything you need before you take the name "Wings of Theve" — aircraft, editions,
         new systems, and multiplayer, tracked and updated all the way to launch.

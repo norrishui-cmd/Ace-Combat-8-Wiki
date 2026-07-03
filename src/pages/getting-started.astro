@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+
+const tips = [
+  {
+    title: 'Aim anywhere, not just the marked weak point',
+    body: "Wings of Theve removes the old requirement to hit specific weak points to bring an aircraft down — you can damage hostile targets anywhere they're hit. If you're new to the series, this alone makes dogfights far more forgiving than older entries.",
+  },
+  {
+    title: 'Use visual cues, not just the radar',
+    body: 'Contrails, engine smoke, and reflections can reveal enemy positions even before your radar locks them. New players relying purely on the HUD radar are missing half the information the game gives you.',
+  },
+  {
+    title: 'Let your wingmen do work for you',
+    body: "The Wingman Command system lets you issue orders to your squad mid-fight. Assigning a wingman to harass a target while you focus elsewhere is a legitimate strategy, not a crutch — use it especially against superweapons and multi-target waves.",
+  },
+  {
+    title: "Special weapons aren't just for emergencies",
+    body: 'With two Special Weapon slots available per sortie, plan your loadout around the mission type rather than saving them "just in case." A wasted slot at the end of a mission accomplishes nothing.',
+  },
+  {
+    title: "Don't chase a single playstyle for the Ace Style gauge",
+    body: "Since the Ace Style system reacts to how you actually fly, played missions naturally rather than trying to game a specific outcome — we'll update this section with concrete guidance once we can verify how the gauge responds after launch.",
+  },
+];
+---
+<BaseLayout
+  title="Beginner's Guide — Getting Started"
+  description="Ace Combat 8: Wings of Theve is designed to be more accessible than Ace Combat 7. Here's what's changed for new players, and practical tips before your first sortie."
+>
+  <Breadcrumbs items={[{ label: "Getting Started" }]} />
+  <article class="container article">
+    <span class="eyebrow">For newcomers to the series</span>
+    <h1>Getting Started</h1>
+    <p>
+      If Ace Combat 7: Skies Unknown felt intimidating, Wings of Theve is built to be a
+      friendlier entry point. Here's what's actually different for new players, plus a few
+      practical tips before your first sortie.
+    </p>
+
+    <h2>Bandai Namco explicitly designed this entry to be more accessible</h2>
+    <p>
+      After feedback that Ace Combat 7 was difficult for newcomers, the development team has
+      said they refined the difficulty curve, tutorials, and training modes specifically to
+      make Wings of Theve more approachable — while still aiming to give series veterans a
+      real challenge on higher difficulty settings. A comprehensive tutorial and multiple
+      training modes are confirmed to teach the game's mechanics and systems before you're
+      thrown into the campaign proper.
+    </p>
+
+    <h2>What's mechanically easier than Ace Combat 7</h2>
+    <ul>
+      <li><strong>No more weak-point-only damage.</strong> You can damage hostile aircraft anywhere they're hit, not just specific marked components — a first for the series, and a significant accessibility improvement for players who struggle to track weak points mid-dogfight.</li>
+      <li><strong>More visual tracking tools.</strong> Contrails, smoke, and reflections give you enemy position information beyond just the radar.</li>
+      <li><strong>A refined Wingman Command system.</strong> Returning from Ace Combat 5, with added behavior options — delegate targets to your squad instead of handling every threat yourself.</li>
+    </ul>
+
+    <h2>Tips before your first sortie</h2>
+    <div class="tips-list">
+      {tips.map((t) => (
+        <div class="card">
+          <h3>{t.title}</h3>
+          <p>{t.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">Which aircraft should I start with?</p>
+      <p style="margin:0;">
+        Multirole aircraft like the <a href="/aircraft/fa-18c">F/A-18C Hornet</a> are
+        historically the most balanced starting point in the series — no single weakness to
+        work around while you're still learning the controls. See our full
+        <a href="/aircraft">aircraft list</a> once you're ready to specialize.
+      </p>
+    </div>
+  </article>
+
+  <RelatedLinks items={[
+    { href: '/new-mechanics', label: 'New Mechanics', desc: 'Every gameplay change from Ace Combat 7, explained in full.' },
+    { href: '/ace-style-system', label: 'Ace Style System', desc: 'How your in-mission choices shape your pilot identity.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'Browse every confirmed aircraft and their unlock methods.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 40px; max-width: 760px; }
+  .article > p { font-size: 0.98rem; }
+  .article ul { padding-left: 20px; font-size: 0.98rem; }
+  .article li { margin-bottom: 10px; }
+  .tips-list { display: grid; gap: 14px; margin: 20px 0 32px; }
+  .tips-list h3 { font-size: 1rem; margin-bottom: 8px; }
+  .tips-list p { font-size: 0.9rem; margin: 0; }
+  .callout { margin: 24px 0 40px; }
+</style>

@@ -1,0 +1,121 @@
+---
+// 放在首页 hero 里的大倒计时——和 HudStrip 里那个小的"Days to launch"不同，
+// 这个是视觉主角，DD:HH:MM:SS 实时跳动，营造"飞行任务倒计时"的感觉。
+---
+<div class="countdown" aria-label="Countdown to launch">
+  <div class="countdown__unit">
+    <span class="countdown__value" id="cd-days">--</span>
+    <span class="countdown__label">Days</span>
+  </div>
+  <span class="countdown__sep">:</span>
+  <div class="countdown__unit">
+    <span class="countdown__value" id="cd-hours">--</span>
+    <span class="countdown__label">Hrs</span>
+  </div>
+  <span class="countdown__sep">:</span>
+  <div class="countdown__unit">
+    <span class="countdown__value" id="cd-minutes">--</span>
+    <span class="countdown__label">Min</span>
+  </div>
+  <span class="countdown__sep">:</span>
+  <div class="countdown__unit">
+    <span class="countdown__value" id="cd-seconds">--</span>
+    <span class="countdown__label">Sec</span>
+  </div>
+  <div class="countdown__tag">
+    <a href="/release-date" class="mono">TO GLOBAL LAUNCH — OCT 02 2026</a>
+  </div>
+</div>
+
+<script>
+  const target = new Date('2026-10-02T00:00:00Z').getTime();
+  const els = {
+    days: document.getElementById('cd-days'),
+    hours: document.getElementById('cd-hours'),
+    minutes: document.getElementById('cd-minutes'),
+    seconds: document.getElementById('cd-seconds'),
+  };
+  function pad(n: number) {
+    return String(n).padStart(2, '0');
+  }
+  function tick() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      if (els.days) els.days.textContent = '00';
+      if (els.hours) els.hours.textContent = '00';
+      if (els.minutes) els.minutes.textContent = '00';
+      if (els.seconds) els.seconds.textContent = '00';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    if (els.days) els.days.textContent = pad(days);
+    if (els.hours) els.hours.textContent = pad(hours);
+    if (els.minutes) els.minutes.textContent = pad(minutes);
+    if (els.seconds) els.seconds.textContent = pad(seconds);
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+<style>
+  .countdown {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    background: var(--sky-800);
+    border: var(--border-thin);
+    border-radius: var(--radius);
+    padding: 20px 26px;
+    margin: 8px 0 32px;
+  }
+  .countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 52px;
+  }
+  .countdown__value {
+    font-family: var(--font-mono);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 600;
+    color: var(--hud-amber);
+    line-height: 1;
+  }
+  .countdown__label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .countdown__sep {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    color: var(--cloud-600);
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .countdown__tag {
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: var(--border-thin);
+  }
+  .countdown__tag .mono {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--radar-green);
+  }
+  .countdown__tag a.mono:hover {
+    color: var(--hud-amber);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .countdown__value { transition: none; }
+  }
+</style>

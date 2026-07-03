@@ -1,0 +1,315 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { getCollection } from 'astro:content';
+
+// 旗舰互动功能：机体对比工具。数据在构建时从 content collection 取出，
+// 序列化成 JSON 内嵌进页面，交互逻辑用纯 vanilla JS 实现——
+// 不引入 React/Vue，保持 Norris 现有的技术栈不变，新增机体自动出现在工具里，
+// 不需要碰这个文件本身。
+const all = await getCollection('aircraft');
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+
+const aircraftData = sorted.map((a) => ({
+  id: a.id,
+  name: a.data.name,
+  designation: a.data.designation,
+  category: a.data.category,
+  unlockMethod: a.data.unlockMethod,
+  confirmed: a.data.confirmed,
+  specialWeaponSlots: a.data.specialWeaponSlots,
+  stats: {
+    Speed: a.data.speed,
+    Mobility: a.data.mobility,
+    Stability: a.data.stability,
+    Firepower: a.data.firepower,
+    Defense: a.data.defense,
+  },
+}));
+
+const categories = ['All', 'Multirole', 'Air Superiority', 'Attacker', 'Interceptor'];
+---
+<BaseLayout
+  title="Aircraft Comparison Tool"
+  description="Compare up to 4 Ace Combat 8: Wings of Theve aircraft side by side — speed, mobility, stability, firepower, and defense, updated as Bandai Namco confirms real stats."
+>
+  <Breadcrumbs items={[{ label: 'Aircraft', href: '/aircraft' }, { label: 'Compare' }]} />
+  <section class="container page-head">
+    <span class="eyebrow">Select up to 4 aircraft</span>
+    <h1>Aircraft Comparison Tool</h1>
+    <p>
+      Pick any combination of confirmed aircraft to compare their stats side by side. Ratings
+      marked <span class="badge badge--estimate" style="margin:0 4px;">Est.</span> are editor
+      estimates pending official confirmation — see each aircraft's page for details.
+    </p>
+  </section>
+
+  <section class="container compare-tool" id="compare-tool">
+    <div class="compare-tool__filters" role="group" aria-label="Filter by category">
+      {categories.map((c, i) => (
+        <button type="button" class="filter-chip" data-category={c} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {c}
+        </button>
+      ))}
+    </div>
+
+    <div class="compare-tool__layout">
+      <div class="compare-tool__picker" id="picker-list" aria-label="Aircraft picker">
+        {aircraftData.map((a) => (
+          <label class="picker-item" data-category={a.category}>
+            <input type="checkbox" class="picker-checkbox" value={a.id} />
+            <span class="picker-item__main">
+              <span class="picker-item__name">{a.name}</span>
+              <span class="mono picker-item__meta">
+                {a.category} · {a.confirmed ? 'Confirmed' : 'Est.'}
+              </span>
+            </span>
+          </label>
+        ))}
+      </div>
+
+      <div class="compare-tool__panel" id="compare-panel">
+        <p class="compare-tool__empty" id="compare-empty">
+          Select at least one aircraft on the left to see its stats here.
+        </p>
+        <div id="compare-cards" class="compare-cards"></div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/json" id="aircraft-data" set:html={JSON.stringify(aircraftData)} />
+
+  <script>
+    type Aircraft = {
+      id: string;
+      name: string;
+      designation: string;
+      category: string;
+      unlockMethod: string;
+      confirmed: boolean;
+      specialWeaponSlots: number;
+      stats: Record<string, number>;
+    };
+
+    const dataEl = document.getElementById('aircraft-data');
+    const aircraftList: Aircraft[] = dataEl ? JSON.parse(dataEl.textContent || '[]') : [];
+    const aircraftById = new Map(aircraftList.map((a) => [a.id, a]));
+
+    const MAX_SELECTED = 4;
+    const COLORS = ['#E8A33D', '#6FCF97', '#7EA6E0', '#E0708A'];
+
+    const checkboxes = Array.from(
+      document.querySelectorAll<HTMLInputElement>('.picker-checkbox')
+    );
+    const emptyMsg = document.getElementById('compare-empty');
+    const cardsWrap = document.getElementById('compare-cards');
+    const filterChips = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('.filter-chip')
+    );
+    const pickerItems = Array.from(
+      document.querySelectorAll<HTMLElement>('.picker-item')
+    );
+
+    function getSelected(): string[] {
+      return checkboxes.filter((cb) => cb.checked).map((cb) => cb.value);
+    }
+
+    function statBar(label: string, value: number, color: string) {
+      const pct = (value / 5) * 100;
+      return `
+        <div class="stat-bar">
+          <div class="stat-bar__label mono">
+            <span>${label}</span><span>${value}/5</span>
+          </div>
+          <div class="stat-bar__track">
+            <div class="stat-bar__fill" style="width:${pct}%; background:${color};"></div>
+          </div>
+        </div>`;
+    }
+
+    function render() {
+      const selected = getSelected();
+
+      // 超过4个禁用剩余复选框，避免对比面板过挤
+      checkboxes.forEach((cb) => {
+        if (!cb.checked) {
+          cb.disabled = selected.length >= MAX_SELECTED;
+          cb.closest('.picker-item')?.classList.toggle('picker-item--disabled', cb.disabled);
+        } else {
+          cb.disabled = false;
+          cb.closest('.picker-item')?.classList.remove('picker-item--disabled');
+        }
+      });
+
+      if (!cardsWrap || !emptyMsg) return;
+
+      if (selected.length === 0) {
+        emptyMsg.style.display = 'block';
+        cardsWrap.innerHTML = '';
+        return;
+      }
+      emptyMsg.style.display = 'none';
+
+      cardsWrap.innerHTML = selected
+        .map((id, i) => {
+          const a = aircraftById.get(id);
+          if (!a) return '';
+          const color = COLORS[i % COLORS.length];
+          const statsHtml = Object.entries(a.stats)
+            .map(([label, value]) => statBar(label, value, color))
+            .join('');
+          return `
+            <div class="compare-card" style="border-color:${color}66;">
+              <div class="compare-card__head">
+                <span class="mono compare-card__designation" style="color:${color};">${a.designation}</span>
+                <span class="badge ${a.confirmed ? 'badge--confirmed' : 'badge--estimate'}">${a.confirmed ? 'Confirmed' : 'Est.'}</span>
+              </div>
+              <h3>${a.name}</h3>
+              <p class="mono compare-card__meta">${a.category} · ${a.specialWeaponSlots} special weapon slots</p>
+              ${statsHtml}
+              <p class="mono compare-card__unlock">▸ ${a.unlockMethod}</p>
+              <a href="/aircraft/${a.id}" class="compare-card__link">View full profile &rarr;</a>
+            </div>`;
+        })
+        .join('');
+    }
+
+    checkboxes.forEach((cb) => cb.addEventListener('change', render));
+
+    filterChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        chip.setAttribute('aria-pressed', 'true');
+        const cat = chip.dataset.category;
+        pickerItems.forEach((item) => {
+          const show = cat === 'All' || item.dataset.category === cat;
+          (item as HTMLElement).style.display = show ? 'flex' : 'none';
+        });
+      });
+    });
+
+    render();
+  </script>
+
+  <RelatedLinks items={[
+    { href: '/aircraft', label: 'Aircraft List', desc: 'Browse full profiles for every confirmed aircraft.' },
+    { href: '/getting-started', label: 'Getting Started', desc: 'New to the series? Which category to pick first.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 32px; max-width: 720px; }
+  .page-head p { font-size: 0.95rem; }
+
+  .compare-tool { padding-bottom: 80px; }
+  .compare-tool__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--cloud-600);
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .filter-chip[aria-pressed="true"] {
+    border-color: var(--hud-amber);
+    color: var(--hud-amber);
+  }
+
+  .compare-tool__layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 780px) {
+    .compare-tool__layout { grid-template-columns: 1fr; }
+  }
+
+  .compare-tool__picker {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--cloud-700);
+    border: var(--border-thin);
+    border-radius: var(--radius);
+    padding: 10px;
+    max-height: 520px;
+    overflow-y: auto;
+  }
+  .picker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .picker-item:hover { background: var(--cloud-600); }
+  .picker-item--disabled { opacity: 0.35; cursor: not-allowed; }
+  .picker-checkbox { accent-color: var(--hud-amber); width: 16px; height: 16px; flex-shrink: 0; }
+  .picker-item__main { display: flex; flex-direction: column; gap: 2px; }
+  .picker-item__name { font-size: 0.88rem; }
+  .picker-item__meta { font-size: 0.66rem; color: var(--text-secondary); }
+
+  .compare-tool__panel { min-height: 200px; }
+  .compare-tool__empty {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    padding: 40px 24px;
+    text-align: center;
+    border: 1px dashed var(--cloud-600);
+    border-radius: var(--radius);
+  }
+  .compare-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .compare-card {
+    background: var(--cloud-700);
+    border: 1px solid var(--cloud-600);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .compare-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .compare-card__designation { font-size: 0.78rem; }
+  .compare-card h3 { font-size: 1.05rem; margin: 4px 0 4px; }
+  .compare-card__meta { font-size: 0.7rem; color: var(--text-secondary); margin: 0 0 14px; }
+  .compare-card__unlock { font-size: 0.68rem; color: var(--radar-green); margin: 14px 0 10px; }
+  .compare-card__link { font-size: 0.78rem; }
+
+  .stat-bar { margin-bottom: 9px; }
+  .stat-bar__label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.66rem;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+  }
+  .stat-bar__track {
+    height: 6px;
+    background: var(--sky-800);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .stat-bar__fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+</style>
