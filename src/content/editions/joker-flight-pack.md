@@ -1,12 +1,12 @@
 ---
 name: "Joker Flight Pack"
 order: 3
-updatedAt: 2026-07-03
 highlights:
-  - "包含豪华版全部内容"
-  - "The Vinyl Collection：原声黑胶唱片 2 张"
-  - "《ACES at WAR HISTORY 2029》200页官方设定集"
-  - "收藏级外盒 + 唱片垫"
+  - "Everything in the Deluxe Edition"
+  - "The Vinyl Collection: 2 original soundtrack vinyl records"
+  - "200-page official ACES at WAR HISTORY 2029 artbook"
+  - "Collector's slipcase + slipmat"
+updatedAt: 2026-07-03
 ---
 
-仅在 Bandai Namco 官方商店销售的实体收藏向套装，不含额外游戏内容，纯粹面向收藏党。如果你只关心游戏内容和赛季机体，豪华版数字版性价比更高。
+A physical collector's bundle sold exclusively through the Bandai Namco Store, with no extra in-game content beyond what Deluxe already includes. Purely for collectors — if you only care about in-game content and the seasonal aircraft, the digital Deluxe Edition is the better value.

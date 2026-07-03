@@ -11,25 +11,25 @@ firepower: 4
 defense: 2
 specialWeaponSlots: 2
 confirmed: true
-summary: "系列经典试验机 ADFX-02 的全新涂装版本，作为首赛季 Premium Ace Pass 的专属奖励机体登场，需要付费通行证并达到对应等级才能解锁。"
+summary: "A new livery of the series' classic experimental ADFX-02, offered as the exclusive reward aircraft for the first season of the Premium Ace Pass. Requires the paid pass and reaching the corresponding level to unlock."
 order: 2
 updatedAt: 2026-07-03
 ---
 
-## 获取方式
+## How to unlock it
 
-购买 **Premium Ace Pass** 并完成第一赛季进度解锁，或购买豪华版随附的 **Premium Ace Pass Plus 兑换券**（可直接跳过前 30 级进度）提前拿到。
+Buy the **Premium Ace Pass** and reach the required level during Season 1, or buy the Deluxe Edition's included **Premium Ace Pass Plus voucher** (which skips straight to level 30) to get it early.
 
-这是官方目前唯一明确"仅限赛季限定"的机体，赛季结束后是否会加入常驻内容尚未公布，建议关注我们后续更新。
+This is the only aircraft Bandai Namco has explicitly confirmed as season-limited so far. Whether it becomes permanently available after the season ends hasn't been announced — we'll update this page as soon as that's confirmed.
 
-## 星级评分说明
+## About the star ratings
 
-> 编辑组预估评级，基于系列内 ADFX 系列机体历史定位（高机动、低稳定性的实验机）给出，实测后更新。
+> Editor estimate, based on the historical role of ADFX-series aircraft in the franchise (high mobility, low stability experimental jets). Will be updated after launch.
 
-| 属性 | 评分 |
+| Stat | Rating |
 |---|---|
-| 速度 | ★★★★★ |
-| 机动性 | ★★★★☆ |
-| 稳定性 | ★★☆☆☆ |
-| 火力 | ★★★★☆ |
-| 防御 | ★★☆☆☆ |
+| Speed | ★★★★★ |
+| Mobility | ★★★★☆ |
+| Stability | ★★☆☆☆ |
+| Firepower | ★★★★☆ |
+| Defense | ★★☆☆☆ |

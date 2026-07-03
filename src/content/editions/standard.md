@@ -1,11 +1,11 @@
 ---
 name: "Standard Edition"
 order: 1
-updatedAt: 2026-07-03
 highlights:
-  - "ACE COMBAT 8: WINGS OF THEVE 完整游戏"
-  - "预购赠送：F-14A 可用机体"
-  - "预购赠送：《皇牌空战0：贝尔卡战争》数字版"
+  - "The full ACE COMBAT 8: WINGS OF THEVE game"
+  - "Pre-order bonus: playable F-14A aircraft"
+  - "Pre-order bonus: digital copy of Ace Combat Zero: The Belkan War"
+updatedAt: 2026-07-03
 ---
 
-标准版即可获得预购的两项核心福利——这也是为什么老玩家哪怕不想要豪华版内容，也建议至少预购标准版的原因：《皇牌空战0》本身是系列公认神作，单独出售价值就不低。
+The Standard Edition already gets you both core pre-order bonuses — which is exactly why we'd recommend pre-ordering at least the Standard Edition even if you don't want the Deluxe content. Ace Combat Zero alone is a fan-favorite entry worth owning on its own.

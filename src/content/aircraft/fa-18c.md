@@ -11,25 +11,25 @@ firepower: 3
 defense: 3
 specialWeaponSlots: 2
 confirmed: true
-summary: "系列常青机体，基础游戏内即可通过机体树解锁。豪华版额外附赠 Team Zvezda 专属涂装，机体本体不需要购买豪华版也能获得。"
+summary: "A series mainstay, unlocked through the in-game Aircraft Tree in the base game. The Deluxe Edition adds an exclusive Team Zvezda livery, but the aircraft itself doesn't require Deluxe to obtain."
 order: 3
 updatedAt: 2026-07-03
 ---
 
-## 获取方式
+## How to unlock it
 
-游戏内**机体树（Aircraft Tree）**常规解锁，所有版本玩家均可获得机体本体。
+Unlocked through the in-game **Aircraft Tree** during normal progression — every edition gets access to the aircraft itself.
 
-**Team Zvezda 涂装**为豪华版"可自定义外观套装（Customisable Cosmetic Set）"内容，仅涂装限定，不影响是否能拿到机体本身。
+The **Team Zvezda livery** is part of the Deluxe Edition's "Customisable Cosmetic Set" and is a skin-only bonus; it doesn't affect whether you get the aircraft.
 
-## 星级评分说明
+## About the star ratings
 
-> 编辑组预估评级，多用途机体历史定位通常均衡不偏科，实测后更新。
+> Editor estimate. Multirole aircraft are historically well-rounded rather than specialized in one stat — will be updated after launch.
 
-| 属性 | 评分 |
+| Stat | Rating |
 |---|---|
-| 速度 | ★★★☆☆ |
-| 机动性 | ★★★★☆ |
-| 稳定性 | ★★★★☆ |
-| 火力 | ★★★☆☆ |
-| 防御 | ★★★☆☆ |
+| Speed | ★★★☆☆ |
+| Mobility | ★★★★☆ |
+| Stability | ★★★★☆ |
+| Firepower | ★★★☆☆ |
+| Defense | ★★★☆☆ |
