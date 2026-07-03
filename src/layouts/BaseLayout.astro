@@ -6,21 +6,68 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description: string;
+  ogImage?: string;
+  noindex?: boolean;
+  bareTitle?: boolean; // true 时不自动拼接站点后缀，用于首页等已自成一句的标题
 }
-const { title, description } = Astro.props;
+const { title, description, ogImage = '/og/og-default.png', noindex = false, bareTitle = false } = Astro.props;
+
+// canonical URL 用 Astro.site + 当前路径自动拼，页面不用手动传，
+// 避免像/aircraft和/aircraft/两个版本被当成重复内容收录。
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const fullTitle = bareTitle ? title : `${title} | Ace Combat 8: Wings of Theve Guide`;
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B1220" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>{title} | Ace Combat 8 Guide</title>
+  <link rel="canonical" href={canonicalURL} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <title>{fullTitle}</title>
   <meta name="description" content={description} />
-  <meta property="og:title" content={`${title} | Ace Combat 8 Guide`} />
-  <meta property="og:description" content={description} />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ace Combat 8: Wings of Theve Guide" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={ogImageURL} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageURL} />
+
+  <!-- 站点级结构化数据：告诉搜索引擎这是一个关于哪款游戏的网站 -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Ace Combat 8: Wings of Theve Guide',
+    url: Astro.site,
+    description: 'Unofficial guide to Ace Combat 8: Wings of Theve — aircraft, editions, mechanics, and multiplayer.',
+    about: {
+      '@type': 'VideoGame',
+      name: 'Ace Combat 8: Wings of Theve',
+      applicationCategory: 'Game',
+      operatingSystem: 'PlayStation 5, Xbox Series X|S, Windows',
+      genre: 'Flight combat simulation',
+      publisher: {
+        '@type': 'Organization',
+        name: 'Bandai Namco Entertainment',
+      },
+      datePublished: '2026-10-02',
+    },
+  })} />
 </head>
 <body>
   <Header />

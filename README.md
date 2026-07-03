@@ -31,10 +31,31 @@
 
 **改文案/新增独立页面**（比如 Mission Walkthrough 这种发售后才补的大页面）：在 `src/pages/` 下参考现有的 `.astro` 文件（比如 `multiplayer.astro`）复制修改即可，交给 AI 生成新页面时把这份文件贴给它当模板，能极大提高一次成型率。
 
-## 上线前必须改的两处
+## SEO 检查清单（上线时过一遍）
 
-1. `astro.config.mjs` 里的 `site: 'https://acecombat8guide.com'` —— 换成你实际买的域名，这个值决定 sitemap 里的链接是否正确，**忘改的话 GSC 提交会全错**（这个坑之前在 Star Wars Zero Company 项目上踩过）
-2. `public/robots.txt` 里的 sitemap 链接同理要改成真实域名
+- [x] `astro.config.mjs` 的 `site` 已改成 `https://acecombat8.wiki`
+- [x] 已加入 canonical 标签（自动按当前路径生成，不用每页手填，避免 `/aircraft` 和 `/aircraft/` 被判重复内容）
+- [x] 已加入 Open Graph / Twitter Card meta（含默认分享卡片图 `public/og/og-default.png`）
+- [x] 已加入站点级 JSON-LD 结构化数据（`WebSite` + `VideoGame`），帮助 Google 理解站点主题
+- [ ] Vercel 部署后，访问 `https://acecombat8.wiki/sitemap-index.xml` 确认能正常打开且没有 404
+- [ ] 提交 sitemap 到 Google Search Console
+
+## GSC 提交流程（照着做，避免上次踩过的"提交报错"问题）
+
+上次 Star Wars Zero Company 项目的 sitemap 提交报错，本质是**域名还没完全生效/构建还没跑完就去提交**导致的时序问题。这次按顺序来，一次通过：
+
+1. **先确认站点已经能公开访问**：浏览器直接打开 `https://acecombat8.wiki`，确认不是 Vercel 预览域名，是绑定后的正式域名，且 HTTPS 锁标志正常（没有证书错误）
+2. **验证 GSC 站点归属权，选"域名"类型而不是"网址前缀"**：
+   - 进入 [Google Search Console](https://search.google.com/search-console) → 添加资源 → 选择 **域名 (Domain)** 属性，输入 `acecombat8.wiki`
+   - GSC 会给你一条 TXT 记录，去 **NameSilo** 后台该域名的 DNS 管理里添加这条 TXT 记录
+   - 域名属性的好处是一次验证覆盖 `www` 和非 `www`、所有子路径，不用每个前缀单独验证
+   - DNS 记录生效有延迟，添加后**等 10-30 分钟再回 GSC 点验证**，不要立刻点（这是上次报错的直接原因）
+3. **验证通过后再提交 sitemap**：左侧菜单"站点地图" → 填入 `sitemap-index.xml`（不用填完整 URL，GSC 会自动拼域名）→ 提交
+4. **提交后检查状态**：正常应显示"成功"，如果显示"无法提取"，先自己在浏览器里打开一遍 `https://acecombat8.wiki/sitemap-index.xml` 确认能访问，能访问的话回 GSC 里点"重新提交"通常就好了，一般还是时序问题
+
+## 上线前必须改的一处（如果之后又换域名）
+
+- `astro.config.mjs` 里的 `site` 字段和 `public/robots.txt` 里的 sitemap 链接，两处需要保持一致 —— 目前已经写好 `acecombat8.wiki`，正常不用再动，除非你之后换域名。
 
 ## 发售前后的内容优先级（对应之前讨论的发布节奏）
 
@@ -42,9 +63,6 @@
 - **发售前 2-3 周**：搭好 Mission Walkthrough、Trophy Guide、Boss 攻略（Land Battleship 等）的页面骨架，内容先留空/占位
 - **发售当天起**：疯狂填充上面这些骨架页面的实测内容，抢首日搜索流量；同时把所有标了 "Est."（编辑预估）的机体数值页面替换成实测数据
 
-## SEO 检查清单（上线时过一遍）
+## 内容页 SEO 小提醒
 
-- [ ] `astro.config.mjs` 的 `site` 已改成真实域名
-- [ ] Vercel 部署后，访问 `/sitemap-index.xml` 确认能正常打开
-- [ ] 把 sitemap 提交到 Google Search Console
-- [ ] 每个页面的 `<title>` 和 `description` 是否包含目标关键词（已在各页面 BaseLayout 的 props 里预置，新增页面记得同样传）
+新增页面时记得给 `<title>` 和 `description` 带上目标关键词（已在各页面 `BaseLayout` 的 props 里预置好格式，照抄就行）。
