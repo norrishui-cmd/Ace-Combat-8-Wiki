@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+---
+<BaseLayout
+  title="Superweapons & Boss Previews"
+  description="Every confirmed superweapon and boss encounter in Ace Combat 8: Wings of Theve, starting with the Land Battleship — a 450-meter ground weapon revealed in the June 2026 trailer."
+>
+  <Breadcrumbs items={[{ label: 'Superweapons' }]} />
+  <article class="container article">
+    <span class="eyebrow">A returning series staple</span>
+    <h1>Superweapons &amp; Boss Encounters</h1>
+    <p>
+      Massive superweapons — colossal, multi-phase enemies that dwarf standard aircraft — are
+      a signature of the Ace Combat series, and Wings of Theve continues the tradition. Here's
+      every one Bandai Namco has confirmed so far.
+    </p>
+
+    <div class="card boss-card">
+      <span class="eyebrow">Confirmed in the June 2026 State of Play trailer</span>
+      <h2>The Land Battleship</h2>
+      <div class="boss-card__stats">
+        <div><span class="mono label">Length</span><span class="mono value">~450 meters</span></div>
+        <div><span class="mono label">Type</span><span class="mono value">Ground-based superweapon</span></div>
+        <div><span class="mono label">Location</span><span class="mono value">Theve (FCU capital)</span></div>
+      </div>
+      <p>
+        The Land Battleship is a massive vehicular weapon encroaching on Theve, destroying
+        surrounding skyscrapers and everything in its path as it advances. Bandai Namco has
+        confirmed it plays a key role in the story — described as "holding the key to the
+        story" — rather than being a one-off spectacle encounter.
+      </p>
+      <p>
+        In the reveal footage, Joker Flight engages it by dodging its main gun attacks while
+        looking for openings to strike. Given Wings of Theve's new damage system — where
+        hostile targets can now take damage anywhere, not just marked weak points — expect
+        this fight to reward sustained, mobile engagement over hunting for a single weak spot
+        like in older entries.
+      </p>
+    </div>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">More bosses expected</p>
+      <p style="margin:0;">
+        Bandai Namco hasn't confirmed the full roster of superweapons yet — with a "largest
+        online mode" and a campaign built around escalating stakes, more are almost certainly
+        coming. We'll add each one here as it's revealed, and build out full attack-pattern
+        breakdowns once we can verify them in the actual game.
+      </p>
+    </div>
+  </article>
+
+  <RelatedLinks items={[
+    { href: '/new-mechanics', label: 'New Mechanics', desc: 'The no-weak-point-only damage system that changes how boss fights play out.' },
+    { href: '/story', label: 'Story & Setting', desc: 'Why Theve — and what\'s at stake when the Land Battleship attacks it.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'Pick the right aircraft before you take on a superweapon.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 80px; max-width: 760px; }
+  .article > p { font-size: 0.98rem; }
+  .boss-card { margin: 24px 0; }
+  .boss-card h2 { margin: 6px 0 16px; }
+  .boss-card p { font-size: 0.95rem; }
+  .boss-card__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 14px 0 18px;
+    padding: 14px 0;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .boss-card__stats > div { display: flex; flex-direction: column; gap: 4px; }
+  .boss-card__stats .label { font-size: 0.68rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .boss-card__stats .value { color: var(--hud-amber); font-size: 0.95rem; }
+  .callout { margin: 24px 0; }
+</style>

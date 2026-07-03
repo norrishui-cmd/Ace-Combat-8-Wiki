@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+
+const faqs = [
+  {
+    q: 'What time does Ace Combat 8 unlock on release day?',
+    a: 'Bandai Namco has confirmed a global release of October 2, 2026, though exact unlock times vary by platform store and region — Steam, PlayStation Store, and Xbox typically unlock at different local times. We\'ll confirm exact regional unlock times as launch approaches.',
+  },
+  {
+    q: 'Is Deluxe Edition early access worth buying just for the head start?',
+    a: 'Early access gets you three extra days (from September 28) before the October 2 global launch. If avoiding spoilers matters to you and you were already leaning toward Deluxe for the Premium Ace Pass Plus voucher, the early access is a bonus rather than a separate purchase decision.',
+  },
+];
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<BaseLayout
+  title="Release Date & Platforms"
+  description="Ace Combat 8: Wings of Theve releases October 2, 2026 on PS5, Xbox Series X|S, and PC. Deluxe Edition early access begins September 28. Full platform and regional details."
+>
+  <Breadcrumbs items={[{ label: 'Release Date' }]} />
+  <article class="container article">
+    <span class="eyebrow">Confirmed by Bandai Namco</span>
+    <h1>Release Date &amp; Platforms</h1>
+
+    <div class="card release-card">
+      <div class="release-card__row">
+        <span class="mono">Global release</span>
+        <span class="mono release-card__value">October 2, 2026</span>
+      </div>
+      <div class="release-card__row">
+        <span class="mono">Deluxe early access</span>
+        <span class="mono release-card__value">September 28, 2026 · 3:00 PM PDT</span>
+      </div>
+      <div class="release-card__row">
+        <span class="mono">Platforms</span>
+        <span class="mono release-card__value">PS5 · Xbox Series X|S · PC (Steam)</span>
+      </div>
+      <div class="release-card__row">
+        <span class="mono">VR support</span>
+        <span class="mono release-card__value">Not supported</span>
+      </div>
+    </div>
+
+    <h2>Why there's no VR this time</h2>
+    <p>
+      Unlike Ace Combat 7: Skies Unknown, Wings of Theve drops VR support entirely. Director
+      Kazutoki Kono explained that building separately for VR and flat-screen would have meant
+      effectively developing two different games — VR requires double the rendering work to
+      keep framerate stable across both eyes — and the team judged the project too large to do
+      both at the quality bar they wanted.
+    </p>
+
+    <h2>North America vs Europe timing</h2>
+    <p>
+      Because of time zone differences, the game unlocks a day earlier for North American
+      players relative to the October 2 European release — expect October 1 evening in US
+      time zones depending on your platform's rollout schedule.
+    </p>
+
+    <h2>Frequently asked</h2>
+    <div class="faq-list">
+      {faqs.map((f) => (
+        <div class="card">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <RelatedLinks items={[
+    { href: '/system-requirements', label: 'System Requirements', desc: 'What you need to run Wings of Theve on PC.' },
+    { href: '/editions', label: 'Editions Compared', desc: 'Standard vs Deluxe vs Joker Flight Pack, side by side.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'Every confirmed aircraft, updated as Bandai Namco reveals more.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 80px; max-width: 720px; }
+  .article p, .article li { font-size: 0.98rem; }
+  .release-card { margin: 24px 0 32px; display: grid; gap: 12px; }
+  .release-card__row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding-bottom: 12px;
+    border-bottom: var(--border-thin);
+  }
+  .release-card__row:last-child { border-bottom: none; padding-bottom: 0; }
+  .release-card__value { color: var(--hud-amber); }
+  .faq-list { display: grid; gap: 14px; margin-top: 16px; }
+  .faq-list h3 { font-size: 1rem; margin-bottom: 8px; }
+  .faq-list p { font-size: 0.9rem; margin: 0; }
+</style>

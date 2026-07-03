@@ -1,14 +1,65 @@
 ---
 const year = new Date().getFullYear();
+
+const siteMap = [
+  {
+    heading: 'Core info',
+    links: [
+      { href: '/release-date', label: 'Release Date & Platforms' },
+      { href: '/system-requirements', label: 'System Requirements' },
+      { href: '/editions', label: 'Editions Compared' },
+    ],
+  },
+  {
+    heading: 'World & story',
+    links: [
+      { href: '/story', label: 'Story & Setting' },
+      { href: '/characters', label: 'Characters' },
+    ],
+  },
+  {
+    heading: 'Gameplay',
+    links: [
+      { href: '/aircraft', label: 'Aircraft List' },
+      { href: '/ace-style-system', label: 'Ace Style System' },
+      { href: '/new-mechanics', label: 'New Mechanics' },
+      { href: '/superweapons', label: 'Superweapons & Bosses' },
+      { href: '/multiplayer', label: 'Ace Combat Online' },
+    ],
+  },
+  {
+    heading: 'More',
+    links: [
+      { href: '/ace-combat-zero-bonus', label: 'Ace Combat Zero Bonus' },
+      { href: '/news', label: 'Latest News' },
+      { href: '/about', label: 'About This Guide' },
+    ],
+  },
+];
 ---
 <footer class="site-footer">
-  <div class="container site-footer__inner">
-    <p class="mono">
-      This is an unofficial fan guide. ACE COMBAT 8: WINGS OF THEVE™ &amp; © Bandai Namco Entertainment Inc.
-      Not affiliated with or endorsed by Bandai Namco Entertainment Inc.
-      <a href="/about">About this guide &amp; how we source information</a>.
-    </p>
-    <p class="mono">&copy; {year} AC8 Wings of Theve Guide</p>
+  <div class="container">
+    <nav class="site-index" aria-label="Site index">
+      {siteMap.map((group) => (
+        <div class="site-index__group">
+          <p class="mono site-index__heading">{group.heading}</p>
+          <ul>
+            {group.links.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+
+    <div class="site-footer__inner">
+      <p class="mono">
+        This is an unofficial fan guide. ACE COMBAT 8: WINGS OF THEVE™ &amp; © Bandai Namco Entertainment Inc.
+        Not affiliated with or endorsed by Bandai Namco Entertainment Inc.
+        <a href="/about">About this guide &amp; how we source information</a>.
+      </p>
+      <p class="mono">&copy; {year} AC8 Wings of Theve Guide</p>
+    </div>
   </div>
 </footer>
 
@@ -16,7 +67,37 @@ const year = new Date().getFullYear();
   .site-footer {
     border-top: var(--border-thin);
     margin-top: 80px;
-    padding: 32px 0;
+    padding: 40px 0 32px;
+  }
+  .site-index {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px;
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+    border-bottom: var(--border-thin);
+  }
+  .site-index__heading {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--radar-green);
+    margin: 0 0 12px;
+  }
+  .site-index__group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .site-index__group a {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .site-index__group a:hover {
+    color: var(--hud-amber);
+    text-decoration: none;
   }
   .site-footer__inner p {
     font-size: 0.72rem;

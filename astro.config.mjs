@@ -22,7 +22,21 @@ export default defineConfig({
         } else if (url.endsWith('/aircraft') || url.endsWith('/news')) {
           item.priority = 0.9;
           item.changefreq = 'daily';
+        } else if (
+          url.endsWith('/release-date') ||
+          url.endsWith('/system-requirements') ||
+          url.endsWith('/editions')
+        ) {
+          item.priority = 0.85;
+          item.changefreq = 'weekly';
         } else if (url.includes('/aircraft/') || url.includes('/news/')) {
+          item.priority = 0.7;
+          item.changefreq = 'weekly';
+        } else if (
+          url.endsWith('/story') ||
+          url.endsWith('/characters') ||
+          url.endsWith('/superweapons')
+        ) {
           item.priority = 0.7;
           item.changefreq = 'weekly';
         } else if (url.endsWith('/about')) {

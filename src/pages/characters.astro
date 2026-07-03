@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+
+const squad = [
+  {
+    name: 'Wings of Theve (Player character)',
+    role: 'Squadron leader',
+    desc: "You. A fighter pilot pulled from the sea by the FCU Endurance, ordered to take on the \"Wings of Theve\" identity after its original bearer, Cope, is killed in action. Voiced and framed through first-person cinematic scenes for the first time in the series.",
+  },
+  {
+    name: 'Ellington "Professor" Baxter',
+    role: 'Joker Flight wingman',
+    desc: "One of your three squadmates in Joker Flight. Full role and background details are still being revealed by Bandai Namco — we'll expand this profile as more story information is confirmed.",
+  },
+  {
+    name: 'Tasha Seversky',
+    role: 'Joker Flight wingman',
+    desc: 'Another member of Joker Flight. Confirmed to have an exclusive costume item tied to the Deluxe Edition\'s Customisable Cosmetic Set, suggesting she has a meaningful presence in the game\'s marketing and story beats.',
+  },
+  {
+    name: 'William "Noise" Coster',
+    role: 'Joker Flight wingman',
+    desc: "The third confirmed member of Joker Flight, rounding out your squadron alongside Baxter and Tasha.",
+  },
+];
+---
+<BaseLayout
+  title="Characters — Joker Flight Squadron"
+  description="Meet Joker Flight, your squadron in Ace Combat 8: Wings of Theve — Baxter, Tasha, and Coster, flying alongside the player character out of the FCU Endurance."
+>
+  <Breadcrumbs items={[{ label: 'Characters' }]} />
+  <article class="container article">
+    <span class="eyebrow">FCU Endurance · Joker Flight</span>
+    <h1>Characters</h1>
+    <p>
+      Your squadron in Wings of Theve is called <strong>Joker Flight</strong> — you and three
+      wingmen, operating out of the aircraft carrier FCU Endurance. Here's what's confirmed
+      about each of them so far.
+    </p>
+
+    <div class="squad-grid">
+      {squad.map((c) => (
+        <div class="card">
+          <span class="eyebrow">{c.role}</span>
+          <h2>{c.name}</h2>
+          <p>{c.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2>A note on Cope</h2>
+    <p>
+      Before you take on the "Wings of Theve" name, that identity belongs to a pilot referred
+      to as <strong>Cope</strong>. His death in action is the story beat that puts you in the
+      role — he isn't part of Joker Flight going forward, but understanding his role explains
+      why the "Wings of Theve" legend exists at all. See our
+      <a href="/story">Story &amp; Setting page</a> for the full context.
+    </p>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">This page will grow</p>
+      <p style="margin:0;">
+        Bandai Namco has been revealing character details gradually — we'll expand each
+        profile with confirmed backstory, callsigns, and aircraft assignments as more
+        marketing material and preview coverage lands.
+      </p>
+    </div>
+  </article>
+
+  <RelatedLinks items={[
+    { href: '/story', label: 'Story & Setting', desc: 'The full setup: the FCU, the Sotoa invasion, and what "Wings of Theve" means.' },
+    { href: '/ace-style-system', label: 'Ace Style System', desc: 'How your choices as squadron leader shape the narrative.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 40px; max-width: 760px; }
+  .article > p { font-size: 0.98rem; }
+  .article h2 { margin-top: 32px; }
+  .squad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 24px 0 8px;
+  }
+  .squad-grid h2 { font-size: 1.15rem; margin: 4px 0 8px; }
+  .squad-grid p { font-size: 0.9rem; margin: 0; }
+  .callout { margin: 24px 0 40px; }
+</style>

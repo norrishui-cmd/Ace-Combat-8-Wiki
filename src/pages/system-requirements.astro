@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+---
+<BaseLayout
+  title="PC System Requirements"
+  description="Ace Combat 8: Wings of Theve PC requirements — SSD, hardware ray tracing GPU, and DirectX 12 Shader Model 6.6 are mandatory. Full breakdown of what you need to run it."
+>
+  <Breadcrumbs items={[{ label: 'System Requirements' }]} />
+  <article class="container article">
+    <span class="eyebrow">PC (Steam) — confirmed by Bandai Namco</span>
+    <h1>System Requirements</h1>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">Hard requirements — not optional</p>
+      <p style="margin:0;">
+        Wings of Theve requires an <strong>SSD</strong>, a <strong>hardware ray
+        tracing-capable graphics card</strong>, and <strong>DirectX 12 with Shader Model 6.6
+        or higher</strong>. If your GPU doesn't support hardware ray tracing, the game will not
+        run regardless of your other specs — this isn't a "recommended" setting you can turn
+        off.
+      </p>
+    </div>
+
+    <h2>Baseline performance target</h2>
+    <p>
+      Bandai Namco's own estimate for minimum-spec hardware is <strong>1080p with upscaling
+      at roughly 30fps on "Low" graphics settings</strong>, with framerate expected to drop
+      further in graphics-intensive scenes (large-scale battles, superweapon encounters). This
+      is a performance-mode baseline, not a locked 30fps guarantee.
+    </p>
+
+    <h2>What this means if you're upgrading</h2>
+    <ul>
+      <li>Any GPU older than the ray-tracing generation (pre-RTX 20-series / pre-RX 6000-series equivalents) won't be able to launch the game at all.</li>
+      <li>A SATA HDD is not sufficient — the SSD requirement is almost certainly tied to the "Cloudly" weather/streaming system needing fast asset loading for its multi-layered cloud rendering.</li>
+      <li>Shader Model 6.6 support generally lines up with DirectX 12 Ultimate-capable GPUs — if your card supports DX12U, you likely clear this bar.</li>
+    </ul>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">Still unconfirmed</p>
+      <p style="margin:0;">
+        Bandai Namco hasn't published full minimum/recommended CPU, RAM, or exact GPU model
+        tables yet — only the hard requirements and the 1080p/30fps low-settings performance
+        target above. We'll add the full spec table the moment Steam publishes it.
+      </p>
+    </div>
+  </article>
+
+  <RelatedLinks items={[
+    { href: '/release-date', label: 'Release Date & Platforms', desc: 'When and where you can play, on every platform.' },
+    { href: '/editions', label: 'Editions Compared', desc: 'Standard vs Deluxe vs Joker Flight Pack.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 80px; max-width: 720px; }
+  .article p, .article li { font-size: 0.98rem; }
+  .article ul { padding-left: 20px; }
+  .article li { margin-bottom: 8px; }
+  .callout { margin: 24px 0; }
+</style>

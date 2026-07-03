@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+---
+<BaseLayout
+  title="Story & Setting Explained"
+  description="The full setup for Ace Combat 8: Wings of Theve's campaign — the Federation of Central Usea, the Republic of Sotoa invasion, and what 'Wings of Theve' actually means."
+>
+  <Breadcrumbs items={[{ label: 'Story & Setting' }]} />
+  <article class="container article">
+    <span class="eyebrow">Strangereal · July 2029 · Ten years after the Lighthouse War</span>
+    <h1>Story &amp; Setting</h1>
+
+    <p>
+      Wings of Theve is set in <strong>Strangereal</strong>, the fictional world shared across
+      the entire Ace Combat series — a world that looks like ours but runs on its own
+      geography, nations, and history. This entry takes place in <strong>July 2029</strong>,
+      roughly a decade after the events of the Lighthouse War depicted in Ace Combat 7.
+    </p>
+
+    <h2>The setup</h2>
+    <p>
+      The <strong>Federation of Central Usea (FCU)</strong> — a state that absorbed most other
+      nations on the Usean continent as member states in the years after the Lighthouse War —
+      is suddenly invaded by the neighboring <strong>Republic of Sotoa</strong>. The attack is
+      fast and overwhelming: Sotoan forces capture <strong>Theve</strong>, the FCU capital,
+      within the opening of the campaign. What's left of the FCU navy is shattered, and
+      civilians are displaced across a country thrown into crisis.
+    </p>
+
+    <h2>How you enter the story</h2>
+    <p>
+      You play a fighter pilot pulled from the sea by the <strong>FCU Endurance</strong>, an
+      aging aircraft carrier long past its prime and withdrawn far from the front lines — its
+      decks now crowded with refugees rather than a functioning battle group. It's from this
+      unlikely, half-obsolete ship that your story begins.
+    </p>
+
+    <h2>Why it's called "Wings of Theve"</h2>
+    <p>
+      "Wings of Theve" is a name, not just a title — a legendary ace pilot tied to the FCU
+      capital, used by the military as a symbol of hope to keep national morale alive. The
+      twist Bandai Namco has confirmed: that legend was, in part, a story constructed to serve
+      that purpose. When the pilot originally carrying that name — a character referred to as
+      <strong>Cope</strong> — is killed in action, you're ordered to assume the "Wings of
+      Theve" identity and lead the squadron in his place, carrying a legend that was never
+      fully true to begin with.
+    </p>
+
+    <div class="card callout">
+      <p class="mono eyebrow" style="margin-bottom:8px;">Where this is going, mechanically</p>
+      <p style="margin:0;">
+        This premise ties directly into the returning <strong>Ace Style system</strong> — how
+        you fly and the choices you make as "Wings of Theve" shape both your pilot's identity
+        and which parts of this legend become true. See our
+        <a href="/ace-style-system">Ace Style System breakdown</a> for how that mechanic works.
+      </p>
+    </div>
+
+    <h2>A regional parallel, by the director's own admission</h2>
+    <p>
+      Director Kazutoki Kono has said the antagonist nation's name and cultural identity were
+      deliberately worldbuilt with real-world influence in mind — he's described Sotoa's
+      portrayal as drawing from Iran. As with every Ace Combat entry, Strangereal politics
+      echo real-world geopolitics without being a direct 1:1 mapping.
+    </p>
+  </article>
+
+  <RelatedLinks items={[
+    { href: '/characters', label: 'Joker Flight — Characters', desc: 'Meet your squadron: Baxter, Tasha, and Coster.' },
+    { href: '/ace-style-system', label: 'Ace Style System', desc: 'How your choices as "Wings of Theve" shape the story.' },
+    { href: '/aircraft', label: 'Aircraft List', desc: 'The planes you\'ll fly through this campaign.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 80px; max-width: 720px; }
+  .article p { font-size: 0.98rem; }
+  .callout { margin: 24px 0; }
+</style>
