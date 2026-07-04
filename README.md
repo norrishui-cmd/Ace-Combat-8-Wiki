@@ -53,6 +53,18 @@
 3. **验证通过后再提交 sitemap**：左侧菜单"站点地图" → 填入 `sitemap-index.xml`（不用填完整 URL，GSC 会自动拼域名）→ 提交
 4. **提交后检查状态**：正常应显示"成功"，如果显示"无法提取"，先自己在浏览器里打开一遍 `https://acecombat8.wiki/sitemap-index.xml` 确认能访问，能访问的话回 GSC 里点"重新提交"通常就好了，一般还是时序问题
 
+## Sitemap Lastmod 修复（2026-07-03 第七轮）
+
+之前 sitemap 只有 priority/changefreq，没有 lastmod，等于"Last updated"这个新鲜度信号在页面上显示了，但没同步给 Google。现在修好了：
+
+- 新增 `lastmod.config.mjs`，给没有 frontmatter 的静态页面（story、characters、getting-started等）手动维护日期表
+- `astro.config.mjs` 里新增逻辑，直接读取 `aircraft`/`news`/`editions` 内容文件的 frontmatter 日期字段，构建 URL→日期映射喂给 sitemap
+- **特意没有用 `fs.stat` 读文件系统修改时间**——Vercel 每次构建都是全新 git checkout，所有文件的系统 mtime 会被重置成同一个时间，这样算出来的 lastmod 全站雷同，等于没有信号价值。这是从 Star Wars Zero Company 项目上学到的教训，这次直接应用
+
+已验证：`fa-18e-su-57-reveal.md` 这条 news 的 lastmod 正确输出为它自己的 `publishedAt: 2026-03-27`，而不是构建当天日期，证明映射逻辑生效。
+
+**你以后维护的动作不变**：改机体/版本/新闻内容时同步改 frontmatter 里的日期字段，改静态页面（story、characters等没有 frontmatter 的）时去 `lastmod.config.mjs` 里改对应日期——两处都是纯手动维护，没有自动化的"猜测"逻辑，保证数据真实可信。
+
 ## 机体库存扩充（2026-07-03 第六轮）
 
 新增3架有真实官方信源的机体，机体总数从3架变成**6架**，四个分类首次全部覆盖到：
