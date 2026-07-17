@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+
+const faqs = [
+  { q: 'Is the Ace Pass free?', a: 'The base Ace Pass is a free seasonal progression track for all players. Premium tiers add rewards.' },
+  { q: 'What is Premium Ace Pass Plus?', a: 'It includes Premium Ace Pass rewards plus an immediate 30-level skip. A voucher is included in the Deluxe Edition.' },
+  { q: 'Is the ADFX-02 Morgan–PIXY free?', a: 'Bandai Namco describes it as a Season 1 exclusive Premium Ace Pass reward, not a reward on the free track.' },
+  { q: 'Can I buy Premium separately?', a: 'Yes. Bandai Namco says both Premium Ace Pass tiers will also be sold separately.' },
+];
+const faqJsonLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout
+  title="Ace Pass Explained — Free, Premium & Premium Plus"
+  description="Ace Combat 8 Ace Pass tiers explained: free rewards, Premium content, Premium Plus 30-level skip, Deluxe voucher, and the Season 1 Morgan–PIXY aircraft."
+>
+  <Breadcrumbs items={[{ label: 'Ace Pass' }]} />
+  <article class="container article">
+    <span class="eyebrow">Official tier details</span>
+    <h1>Ace Pass Explained</h1>
+    <p class="direct-answer">
+      Ace Combat 8 has three seasonal progression options: a <strong>free Ace Pass</strong>, a
+      paid <strong>Premium Ace Pass</strong>, and <strong>Premium Ace Pass Plus</strong>, which
+      adds a 30-level skip. Deluxe Edition includes a Premium Plus voucher, but both paid tiers
+      can also be purchased separately.
+    </p>
+
+    <div class="table-wrap">
+      <table class="dossier-table">
+        <thead><tr><th>Tier</th><th>Confirmed contents</th><th>How to access</th></tr></thead>
+        <tbody>
+          <tr><td>Ace Pass</td><td>Free seasonal track with cosmetics and aircraft-upgrade items</td><td>Available to all players</td></tr>
+          <tr><td>Premium</td><td>Extra level rewards and premium seasonal content, including Season 1 Morgan–PIXY</td><td>Separate purchase</td></tr>
+          <tr><td>Premium Plus</td><td>All Premium rewards plus an instant 30-level skip</td><td>Deluxe voucher or separate purchase</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What the Ace Pass changes</h2>
+    <p>
+      The pass is a seasonal progression system rather than the mission DLC-style Season Pass
+      used by Ace Combat 7. Bandai Namco says rewards include playable aircraft, cosmetic items,
+      and items used to upgrade aircraft. The publisher has not yet released a complete Season 1
+      reward table, XP curve, season length, or individual tier prices.
+    </p>
+
+    <h2>Is Deluxe worth it for the pass?</h2>
+    <p>
+      Deluxe is the simplest route if you already want its three days of early access and
+      cosmetic set. If you only care about pass rewards, the official FAQ confirms that paid
+      tiers can be bought separately, so you do not need Deluxe solely to access Premium. Wait
+      for standalone pricing and the complete reward track before comparing exact value.
+    </p>
+
+    <h2>Morgan–PIXY and Season 1</h2>
+    <p>
+      The ADFX-02 Morgan–PIXY is officially described as a Season 1 exclusive in the Premium
+      track. “Exclusive” identifies its Season 1 pass placement; it does not tell us whether the
+      aircraft can return later. The site will not label it permanently missable unless Bandai
+      Namco publishes that restriction.
+    </p>
+
+    <h2>Ace Pass FAQ</h2>
+    <div class="faq-list">{faqs.map((f) => <section class="card"><h3>{f.q}</h3><p>{f.a}</p></section>)}</div>
+    <aside class="source-note">
+      <p class="mono">Verified July 17, 2026 from the <a href="https://www.bandainamcoent.com/games/ace-combat-8" rel="nofollow">official Bandai Namco FAQ and edition listing</a>.</p>
+    </aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <RelatedLinks items={[
+    { href: '/editions', label: 'Editions Compared', desc: 'See every Deluxe and preorder inclusion side by side.' },
+    { href: '/multiplayer', label: 'Ace Combat Online', desc: 'Confirmed online, co-op and cross-platform details.' },
+    { href: '/aircraft/adfx-02-morgan-pixy', label: 'ADFX-02 Morgan–PIXY', desc: 'The confirmed Season 1 Premium aircraft.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 72px; max-width: 780px; }
+  .article h2 { margin-top: 40px; }
+  .direct-answer { font-size: 1.08rem; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .table-wrap { overflow-x: auto; margin: 28px 0; }
+  .faq-list { display: grid; gap: 14px; }
+  .faq-list h3 { font-size: 1rem; }
+  .faq-list p { margin: 0; }
+  .source-note { margin-top: 36px; padding-top: 18px; border-top: var(--border-thin); }
+  .source-note p { font-size: .8rem; }
+</style>
+

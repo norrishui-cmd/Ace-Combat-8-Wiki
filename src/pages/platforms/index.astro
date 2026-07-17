@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { confirmedPlatforms, unannouncedPlatforms } from '../../data/platformGuides';
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Ace Combat 8 platform availability',
+  itemListElement: [...confirmedPlatforms, ...unannouncedPlatforms].map((guide, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: guide.name,
+    url: new URL(`/platforms/${guide.slug}`, Astro.site).href,
+  })),
+};
+---
+<BaseLayout
+  title="Platforms — PS5, Xbox, PC & Compatibility Status"
+  description="Every Ace Combat 8 platform checked: confirmed PS5, Xbox Series X|S and Steam releases, plus current PS4, Xbox One, Switch 2 and Steam Deck status."
+>
+  <Breadcrumbs items={[{ label: 'Platforms' }]} />
+  <article class="container article article--wide">
+    <span class="eyebrow">Official status checked July 17, 2026</span>
+    <h1>Ace Combat 8 Platforms</h1>
+    <p class="direct-answer">
+      <strong>Ace Combat 8: Wings of Theve is officially confirmed for PS5, Xbox Series X|S,
+      and Windows PC via Steam.</strong> No PS4, Xbox One, Nintendo Switch 2, or original Switch
+      version has been announced. Steam Deck compatibility is not yet confirmed.
+    </p>
+
+    <h2>Confirmed launch platforms</h2>
+    <div class="card-grid platform-grid">
+      {confirmedPlatforms.map((guide) => (
+        <a class="card platform-card" href={`/platforms/${guide.slug}`}>
+          <span class="badge badge--confirmed">Confirmed</span>
+          <h3>{guide.name}</h3>
+          <p>{guide.answer}</p>
+          <span class="mono card-link">View platform details →</span>
+        </a>
+      ))}
+    </div>
+
+    <h2>Not announced or not yet verified</h2>
+    <p>
+      These pages answer common compatibility searches using the official platform list. “Not
+      announced” is a dated status, not a claim that a later port is impossible.
+    </p>
+    <div class="card-grid platform-grid">
+      {unannouncedPlatforms.map((guide) => (
+        <a class="card platform-card" href={`/platforms/${guide.slug}`}>
+          <span class="badge badge--estimate">{guide.status}</span>
+          <h3>{guide.name}</h3>
+          <p>{guide.answer}</p>
+          <span class="mono card-link">Read the evidence →</span>
+        </a>
+      ))}
+    </div>
+
+    <h2>How this tracker is maintained</h2>
+    <p>
+      We treat Bandai Namco’s game page, platform-holder product pages, and publisher release
+      announcements as primary evidence. A retailer placeholder or another site repeating a
+      rumor does not change a platform’s status. Each detail page separates confirmed features
+      from unanswered questions so players can make a purchase decision without mistaking an
+      inference for an announcement.
+    </p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
+  <RelatedLinks items={[
+    { href: '/release-date', label: 'Release Date & Unlock Times', desc: 'Launch and Deluxe early-access timing by region.' },
+    { href: '/system-requirements', label: 'PC Requirements', desc: 'Track confirmed PC hardware and performance information.' },
+    { href: '/editions', label: 'Compare Editions', desc: 'Standard, Deluxe and Joker Flight Pack contents.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 48px; }
+  .article--wide { max-width: 960px; }
+  .article h2 { margin-top: 44px; }
+  .direct-answer { font-size: 1.08rem; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .platform-grid { margin-top: 18px; }
+  .platform-card { color: var(--text-primary); text-decoration: none; }
+  .platform-card:hover { text-decoration: none; }
+  .platform-card h3 { margin-top: 14px; }
+  .platform-card p { font-size: .9rem; }
+  .card-link { color: var(--hud-amber); font-size: .76rem; }
+</style>
+

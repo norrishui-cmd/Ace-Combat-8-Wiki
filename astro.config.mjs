@@ -76,17 +76,18 @@ export default defineConfig({
         if (url === 'https://acecombat8.wiki/' || url === 'https://acecombat8.wiki') {
           item.priority = 1.0;
           item.changefreq = 'daily';
-        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare')) {
+        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare') || url.endsWith('/platforms') || url.endsWith('/faq')) {
           item.priority = 0.9;
           item.changefreq = 'daily';
         } else if (
           url.endsWith('/release-date') ||
           url.endsWith('/system-requirements') ||
-          url.endsWith('/editions')
+          url.endsWith('/editions') ||
+          url.endsWith('/ace-pass')
         ) {
           item.priority = 0.85;
           item.changefreq = 'weekly';
-        } else if (url.includes('/aircraft/') || url.includes('/news/')) {
+        } else if (url.includes('/aircraft/') || url.includes('/news/') || url.includes('/platforms/')) {
           item.priority = 0.7;
           item.changefreq = 'weekly';
         } else if (

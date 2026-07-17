@@ -6,7 +6,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
 const faqs = [
   {
     q: 'What time does Ace Combat 8 unlock on release day?',
-    a: 'Bandai Namco has confirmed a global release of October 2, 2026, though exact unlock times vary by platform store and region — Steam, PlayStation Store, and Xbox typically unlock at different local times. We\'ll confirm exact regional unlock times as launch approaches.',
+    a: 'The global release date is October 2, 2026. PlayStation lists October 1 at 3:00 PM PT / 6:00 PM ET, October 2 at 12:00 AM CEST, and October 2 at 7:00 AM JST. Check your own store countdown for the final platform and regional timing.',
   },
   {
     q: 'Is Deluxe Edition early access worth buying just for the head start?',
@@ -46,25 +46,24 @@ const faqJsonLd = {
         <span class="mono release-card__value">PS5 · Xbox Series X|S · PC (Steam)</span>
       </div>
       <div class="release-card__row">
-        <span class="mono">VR support</span>
-        <span class="mono release-card__value">Not supported</span>
+        <span class="mono">VR / PSVR2</span>
+        <span class="mono release-card__value">Not announced</span>
       </div>
     </div>
 
-    <h2>Why there's no VR this time</h2>
+    <h2>VR and PSVR2 status</h2>
     <p>
-      Unlike Ace Combat 7: Skies Unknown, Wings of Theve drops VR support entirely. Director
-      Kazutoki Kono explained that building separately for VR and flat-screen would have meant
-      effectively developing two different games — VR requires double the rendering work to
-      keep framerate stable across both eyes — and the team judged the project too large to do
-      both at the quality bar they wanted.
+      Bandai Namco and the PlayStation Store do not list a VR or PSVR2 mode as of July 17,
+      2026. First-person story cinematics are a confirmed presentation feature, but they do not
+      establish headset support. Treat VR as unannounced unless the publisher adds it to the
+      official feature list.
     </p>
 
     <h2>North America vs Europe timing</h2>
     <p>
-      Because of time zone differences, the game unlocks a day earlier for North American
-      players relative to the October 2 European release — expect October 1 evening in US
-      time zones depending on your platform's rollout schedule.
+      PlayStation lists October 1 at 3:00 PM PT / 6:00 PM ET, October 2 at 12:00 AM CEST,
+      and October 2 at 7:00 AM JST. Steam currently displays October 1 in the US storefront.
+      Use the countdown in your own platform store as the final regional check.
     </p>
 
     <h2>Frequently asked</h2>
@@ -81,7 +80,7 @@ const faqJsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 
   <RelatedLinks items={[
-    { href: '/system-requirements', label: 'System Requirements', desc: 'What you need to run Wings of Theve on PC.' },
+    { href: '/platforms', label: 'Platform Compatibility', desc: 'PS5, Xbox, PC, old-gen, Switch 2 and Steam Deck status.' },
     { href: '/editions', label: 'Editions Compared', desc: 'Standard vs Deluxe vs Joker Flight Pack, side by side.' },
     { href: '/aircraft', label: 'Aircraft List', desc: 'Every confirmed aircraft, updated as Bandai Namco reveals more.' },
   ]} />

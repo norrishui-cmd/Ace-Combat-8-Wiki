@@ -5,7 +5,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
 ---
 <BaseLayout
   title="PC System Requirements"
-  description="Ace Combat 8: Wings of Theve PC requirements — SSD, hardware ray tracing GPU, and DirectX 12 Shader Model 6.6 are mandatory. Full breakdown of what you need to run it."
+  description="Official Ace Combat 8 PC requirements: Windows 11, i7-10700K or Ryzen 5 3600X, 16GB RAM, RTX 2060 or RX 6600 XT, SSD and 125GB storage."
 >
   <Breadcrumbs items={[{ label: 'System Requirements' }]} />
   <article class="container article">
@@ -21,6 +21,21 @@ import RelatedLinks from '../components/RelatedLinks.astro';
         run regardless of your other specs — this isn't a "recommended" setting you can turn
         off.
       </p>
+    </div>
+
+    <h2>Official minimum PC specifications</h2>
+    <div class="table-wrap">
+      <table class="dossier-table">
+        <tbody>
+          <tr><th>OS</th><td>Windows 11, 64-bit</td></tr>
+          <tr><th>CPU</th><td>Intel Core i7-10700K or AMD Ryzen 5 3600X</td></tr>
+          <tr><th>Memory</th><td>16 GB RAM</td></tr>
+          <tr><th>GPU</th><td>NVIDIA GeForce RTX 2060 6 GB or AMD Radeon RX 6600 XT 8 GB</td></tr>
+          <tr><th>DirectX</th><td>Version 12, Shader Model 6.6+</td></tr>
+          <tr><th>Storage</th><td>125 GB available space on an SSD</td></tr>
+          <tr><th>Target</th><td>1080p upscaled / 30 fps / Low; drops possible in intensive scenes</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <h2>Baseline performance target</h2>
@@ -41,9 +56,9 @@ import RelatedLinks from '../components/RelatedLinks.astro';
     <div class="card callout">
       <p class="mono eyebrow" style="margin-bottom:8px;">Still unconfirmed</p>
       <p style="margin:0;">
-        Bandai Namco hasn't published full minimum/recommended CPU, RAM, or exact GPU model
-        tables yet — only the hard requirements and the 1080p/30fps low-settings performance
-        target above. We'll add the full spec table the moment Steam publishes it.
+        Steam has published the minimum table above, but the recommended CPU, GPU, memory and
+        performance target are still listed as TBD. Do not treat a third-party “recommended
+        build” as an official specification.
       </p>
     </div>
   </article>
@@ -60,4 +75,5 @@ import RelatedLinks from '../components/RelatedLinks.astro';
   .article ul { padding-left: 20px; }
   .article li { margin-bottom: 8px; }
   .callout { margin: 24px 0; }
+  .table-wrap { overflow-x: auto; margin: 24px 0 32px; }
 </style>

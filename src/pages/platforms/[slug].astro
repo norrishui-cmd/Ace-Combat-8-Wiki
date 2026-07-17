@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { platformGuides } from '../../data/platformGuides';
+
+export function getStaticPaths() {
+  return platformGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: guide.faqs.map((faq: { q: string; a: string }) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+const otherPlatforms = platformGuides
+  .filter((item) => item.slug !== guide.slug)
+  .slice(0, 3)
+  .map((item) => ({ href: `/platforms/${item.slug}`, label: item.name, desc: item.answer }));
+---
+<BaseLayout title={`Is Ace Combat 8 on ${guide.shortName}? ${guide.status}`} description={guide.description}>
+  <Breadcrumbs items={[{ label: 'Platforms', href: '/platforms' }, { label: guide.shortName }]} />
+  <article class="container article">
+    <span class={`badge ${guide.status === 'Confirmed' ? 'badge--confirmed' : 'badge--estimate'}`}>{guide.status}</span>
+    <h1>Is Ace Combat 8 on {guide.shortName}?</h1>
+    <p class="direct-answer">{guide.answer}</p>
+
+    <div class="card fact-grid" aria-label={`${guide.name} quick facts`}>
+      {guide.facts.map((fact) => (
+        <div class="fact">
+          <span class="mono fact__label">{fact.label}</span>
+          <strong>{fact.value}</strong>
+        </div>
+      ))}
+    </div>
+
+    {guide.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+      </section>
+    ))}
+
+    <h2>{guide.shortName} FAQ</h2>
+    <div class="faq-list">
+      {guide.faqs.map((faq) => (
+        <section class="card">
+          <h3>{faq.q}</h3>
+          <p>{faq.a}</p>
+        </section>
+      ))}
+    </div>
+
+    <aside class="source-note">
+      <p class="mono">Status last verified: July 17, 2026</p>
+      <p>Primary sources:</p>
+      <ul>{guide.sources.map((source) => <li><a href={source.href} rel="nofollow">{source.label}</a></li>)}</ul>
+    </aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <RelatedLinks heading="Compare other platforms" items={otherPlatforms} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 72px; max-width: 760px; }
+  .article h1 { margin-top: 12px; }
+  .article h2 { margin-top: 40px; }
+  .article p, .article li { font-size: .98rem; }
+  .direct-answer { font-size: 1.08rem !important; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .fact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: 28px 0; padding: 0; }
+  .fact { padding: 18px; border-bottom: var(--border-thin); }
+  .fact:nth-child(odd) { border-right: var(--border-thin); }
+  .fact:nth-last-child(-n+2) { border-bottom: 0; }
+  .fact__label { display: block; color: var(--text-secondary); font-size: .7rem; text-transform: uppercase; margin-bottom: 6px; }
+  .faq-list { display: grid; gap: 14px; }
+  .faq-list h3 { font-size: 1rem; }
+  .faq-list p { margin-bottom: 0; }
+  .source-note { margin-top: 40px; padding-top: 22px; border-top: var(--border-thin); }
+  .source-note p, .source-note li { font-size: .8rem; }
+  @media (max-width: 560px) {
+    .fact-grid { grid-template-columns: 1fr; }
+    .fact, .fact:nth-child(odd), .fact:nth-last-child(-n+2) { border-right: 0; border-bottom: var(--border-thin); }
+    .fact:last-child { border-bottom: 0; }
+  }
+</style>
+

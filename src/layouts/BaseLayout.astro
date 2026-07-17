@@ -16,7 +16,10 @@ const { title, description, ogImage = '/og/og-default.png', noindex = false, bar
 // 避免像/aircraft和/aircraft/两个版本被当成重复内容收录。
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
-const fullTitle = bareTitle ? title : `${title} | Ace Combat 8: Wings of Theve Guide`;
+const fullTitle = bareTitle ? title : `${title} | AC8 Wiki`;
+const safeDescription = description.length > 165
+  ? `${description.slice(0, 161).replace(/\s+\S*$/, '')}…`
+  : description;
 ---
 <!doctype html>
 <html lang="en">
@@ -28,16 +31,16 @@ const fullTitle = bareTitle ? title : `${title} | Ace Combat 8: Wings of Theve G
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={canonicalURL} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
   <title>{fullTitle}</title>
-  <meta name="description" content={description} />
+  <meta name="description" content={safeDescription} />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ace Combat 8: Wings of Theve Guide" />
   <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:description" content={safeDescription} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={ogImageURL} />
   <meta property="og:image:width" content="1200" />
@@ -47,7 +50,7 @@ const fullTitle = bareTitle ? title : `${title} | Ace Combat 8: Wings of Theve G
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
+  <meta name="twitter:description" content={safeDescription} />
   <meta name="twitter:image" content={ogImageURL} />
 
   <!-- Site-level structured data: tells search engines what game this site is about -->
@@ -62,12 +65,14 @@ const fullTitle = bareTitle ? title : `${title} | Ace Combat 8: Wings of Theve G
       name: 'Ace Combat 8: Wings of Theve',
       applicationCategory: 'Game',
       operatingSystem: 'PlayStation 5, Xbox Series X|S, Windows',
-      genre: 'Flight combat simulation',
+      genre: 'Flight shooter',
+      gamePlatform: ['PlayStation 5', 'Xbox Series X|S', 'Windows PC'],
       publisher: {
         '@type': 'Organization',
         name: 'Bandai Namco Entertainment',
       },
       datePublished: '2026-10-02',
+      sameAs: 'https://www.bandainamcoent.com/games/ace-combat-8',
     },
   })} />
 </head>
