@@ -1,7 +1,8 @@
 ---
-title: "This Guide Is Now Tracking Ace Combat 8: Wings of Theve Through Launch"
+title: "Guide Launch: Tracking Ace Combat 8 Through Release"
 summary: "We're covering every confirmed aircraft, edition, and mechanic for Ace Combat 8: Wings of Theve ahead of its October 2, 2026 release — updated as Bandai Namco reveals more."
 publishedAt: 2026-07-03
+updatedAt: 2026-07-18
 ---
 
 Ace Combat 8: Wings of Theve launches October 2, 2026 (early access September 28 for Deluxe
@@ -17,7 +18,7 @@ within a day of the official announcement.
 
 - **Release date**: October 2, 2026 globally, with Deluxe Edition early access from
   September 28 at 3PM PDT
-- **Platforms**: PS5, Xbox Series X|S, PC (Steam) — no VR support this time
+- **Platforms**: PS5, Xbox Series X|S, PC (Steam) — VR support has not been announced
 - **Pre-order bonus**: F-14A aircraft plus a digital copy of Ace Combat Zero: The Belkan War
 - **Aircraft count**: "over 30" playable aircraft confirmed by producer Manabu Shimomoto,
   split across Multirole, Air Superiority, Attacker, and Interceptor categories

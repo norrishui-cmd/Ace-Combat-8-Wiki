@@ -16,11 +16,12 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 const dateLabel = d.publishedAt.toISOString().slice(0, 10);
+const modifiedLabel = (d.updatedAt ?? d.publishedAt).toISOString().slice(0, 10);
 ---
 <BaseLayout title={d.title} description={d.summary}>
   <Breadcrumbs items={[{ label: 'News', href: '/news' }, { label: d.title }]} />
   <article class="container article">
-    <p class="mono eyebrow">{dateLabel}{d.sourceLabel ? ` · Source: ${d.sourceLabel}` : ''}</p>
+    <p class="mono eyebrow">Published {dateLabel} · Updated {modifiedLabel}{d.sourceLabel ? ` · Source: ${d.sourceLabel}` : ''}</p>
     <h1>{d.title}</h1>
     <div class="article__body">
       <Content />
@@ -34,7 +35,7 @@ const dateLabel = d.publishedAt.toISOString().slice(0, 10);
     headline: d.title,
     description: d.summary,
     datePublished: d.publishedAt.toISOString(),
-    dateModified: d.publishedAt.toISOString(),
+    dateModified: (d.updatedAt ?? d.publishedAt).toISOString(),
     ...(d.sourceUrl ? { isBasedOn: d.sourceUrl } : {}),
   })} />
 

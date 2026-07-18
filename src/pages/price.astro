@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+
+const faqs = [
+  { q: 'How much is Ace Combat 8?', a: 'On the US Steam store, Standard is $69.99 and Deluxe is $89.99 as checked July 18, 2026.' },
+  { q: 'How much more is Deluxe Edition?', a: 'The current US Steam and EU Bandai Namco prices put Deluxe $20 or €20 above Standard.' },
+  { q: 'Is the Joker Flight Pack available digitally?', a: 'The Joker Flight Pack adds physical collectibles to Deluxe and is sold only in selected platform and regional configurations.' },
+  { q: 'Can the price change?', a: 'Yes. Regional pricing, tax, retailer promotions, and publisher changes can alter the amount shown at checkout.' },
+];
+const faqJsonLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout
+  title="Price — Standard, Deluxe & Joker Pack"
+  description="Ace Combat 8 prices checked July 18, 2026: $69.99 Standard and $89.99 Deluxe on US Steam, plus current EU edition and Joker Flight Pack pricing."
+>
+  <Breadcrumbs items={[{ label: 'Price' }]} />
+  <article class="container article">
+    <span class="eyebrow">Prices checked July 18, 2026</span>
+    <h1>Ace Combat 8 Price</h1>
+    <p class="direct-answer" data-concrete-answer>
+      <strong>US Steam currently lists Standard Edition at $69.99 and Deluxe Edition at
+      $89.99.</strong> Bandai Namco’s EU PC store lists €69.99 and €89.99 respectively. Prices
+      vary by platform, country, tax and retailer, so the checkout page for your region is final.
+    </p>
+
+    <div class="table-wrap">
+      <table class="dossier-table">
+        <thead><tr><th>Edition</th><th>US Steam</th><th>EU Bandai PC Store</th><th>Main difference</th></tr></thead>
+        <tbody>
+          <tr><td>Standard</td><td>$69.99</td><td>€69.99</td><td>Base game</td></tr>
+          <tr><td>Deluxe</td><td>$89.99</td><td>€89.99</td><td>Premium Ace Pass Plus, cosmetics, preorder early access</td></tr>
+          <tr><td>Joker Flight Pack</td><td>Varies by platform/store</td><td>€149.99 listed</td><td>Deluxe plus artbook, vinyl and slipmat</td></tr>
+          <tr><td>Premium Joker Flight Pack</td><td>Not shown on US Steam</td><td>€179.99 listed</td><td>Regional collector configuration</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What the $20 Deluxe upgrade pays for</h2>
+    <p>
+      Deluxe includes the base game, a Premium Ace Pass Plus voucher, a customizable cosmetic
+      set, and three days of early access for eligible digital preorders. Premium Plus includes
+      Premium pass rewards and a 30-level seasonal skip. Because both Premium tiers can be
+      purchased separately, wait for standalone pass pricing if the pass is the only Deluxe
+      feature you want.
+    </p>
+
+    <h2>Preorder bonuses do not require Deluxe</h2>
+    <p>
+      Both Standard and Deluxe preorders include the playable F-14A and Ace Combat Zero: The
+      Belkan War in the version tied to the purchased platform. Deluxe adds early access and its
+      own contents; it is not required for the two general preorder bonuses.
+    </p>
+
+    <h2>How to compare regional prices correctly</h2>
+    <p>
+      Do not convert the displayed dollar and euro amounts as if tax treatment were identical.
+      Check the same edition, platform, physical or digital format, included collectibles,
+      shipping, and final tax. The Joker Flight packs are especially sensitive to platform and
+      region availability.
+    </p>
+
+    <h2>Price FAQ</h2>
+    <div class="faq-list">{faqs.map((f) => <section class="card"><h3>{f.q}</h3><p>{f.a}</p></section>)}</div>
+    <aside class="source-note">
+      <p class="mono">Primary price sources:</p>
+      <ul>
+        <li><a href="https://store.steampowered.com/app/2288340/ACE_COMBAT_8_WINGS_OF_THEVE/" rel="nofollow">Official US Steam listing</a></li>
+        <li><a href="https://de.store.bandainamcoent.eu/ace-combat-8-wings-of-theve-digital-full-game-pc-standard-edition/" rel="nofollow">Official Bandai Namco EU store</a></li>
+      </ul>
+    </aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <RelatedLinks items={[
+    { href: '/editions', label: 'Editions Compared', desc: 'Compare every included digital and physical item.' },
+    { href: '/ace-pass', label: 'Ace Pass Explained', desc: 'Free, Premium and Premium Plus differences.' },
+    { href: '/release-date', label: 'Release & Early Access', desc: 'Exact launch and Deluxe early-access timing.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 72px; max-width: 840px; }
+  .article h2 { margin-top: 40px; }
+  .direct-answer { font-size: 1.08rem; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .table-wrap { overflow-x: auto; margin: 28px 0; }
+  .faq-list { display: grid; gap: 14px; }
+  .faq-list h3 { font-size: 1rem; }
+  .faq-list p { margin: 0; }
+  .source-note { margin-top: 36px; padding-top: 20px; border-top: var(--border-thin); }
+  .source-note p, .source-note li { font-size: .8rem; }
+</style>
+

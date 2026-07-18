@@ -1,7 +1,8 @@
 ---
-title: "Project Aces Reveals the F/A-18E and Su-57 in New Screenshots"
+title: "F/A-18E and Su-57 Revealed in New Screenshots"
 summary: "Bandai Namco's first aircraft-focused reveal posts confirm the player's starting F/A-18E Super Hornet and a stealthy Su-57 Felon rival."
 publishedAt: 2026-03-27
+updatedAt: 2026-07-18
 sourceLabel: "Project Aces official X/Twitter posts"
 ---
 

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { multiplayerGuides, multiplayerSources } from '../../data/multiplayerGuides';
+
+export function getStaticPaths() {
+  return multiplayerGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+const { guide } = Astro.props;
+const related = multiplayerGuides.filter((item) => item.slug !== guide.slug).map((item) => ({
+  href: `/multiplayer/${item.slug}`, label: item.title, desc: item.answer,
+})).slice(0, 3);
+const faqJsonLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: guide.faqs.map((faq: { q: string; a: string }) => ({
+    '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+---
+<BaseLayout title={guide.searchTitle} description={guide.description}>
+  <Breadcrumbs items={[{ label: 'Multiplayer', href: '/multiplayer' }, { label: guide.title }]} />
+  <article class="container article">
+    <span class="badge badge--confirmed">Official online feature</span>
+    <h1>{guide.title}</h1>
+    <p class="direct-answer" data-concrete-answer>{guide.answer}</p>
+    <div class="status-grid">
+      <section class="card status status--confirmed"><h2>Confirmed</h2><ul>{guide.confirmed.map((item) => <li>{item}</li>)}</ul></section>
+      <section class="card status"><h2>Not detailed yet</h2><ul>{guide.unknown.map((item) => <li>{item}</li>)}</ul></section>
+    </div>
+    {guide.sections.map((section) => <section><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
+    <h2>{guide.title} FAQ</h2>
+    <div class="faq-list">{guide.faqs.map((faq) => <section class="card"><h3>{faq.q}</h3><p>{faq.a}</p></section>)}</div>
+    <aside class="source-note"><p class="mono">Evidence reviewed: July 18, 2026</p><ul>{multiplayerSources.map((source) => <li><a href={source.href} rel="nofollow">{source.label}</a></li>)}</ul></aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <RelatedLinks heading="More Ace Combat Online guides" items={related} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 72px; max-width: 800px; }
+  .article h1 { margin-top: 12px; }
+  .article > section > h2, .article > h2 { margin-top: 40px; }
+  .article p, .article li { font-size: .98rem; }
+  .direct-answer { font-size: 1.08rem !important; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 28px 0; }
+  .status h2 { font-size: 1rem; margin: 0 0 10px; }
+  .status ul { margin: 0; padding-left: 18px; }
+  .status--confirmed { border-color: rgba(111, 207, 151, .55); }
+  .faq-list { display: grid; gap: 14px; }
+  .faq-list h3 { font-size: 1rem; }
+  .faq-list p { margin: 0; }
+  .source-note { margin-top: 40px; padding-top: 20px; border-top: var(--border-thin); }
+  .source-note p, .source-note li { font-size: .8rem; }
+  @media (max-width: 650px) { .status-grid { grid-template-columns: 1fr; } }
+</style>

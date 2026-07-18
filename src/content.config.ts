@@ -45,6 +45,7 @@ const news = defineCollection({
     title: z.string(),
     summary: z.string(),
     publishedAt: z.date(),
+    updatedAt: z.date().optional(),
     sourceLabel: z.string().optional(), // 如 "Bandai Namco press release"
     sourceUrl: z.string().url().optional(),
   }),

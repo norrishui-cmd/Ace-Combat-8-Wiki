@@ -192,9 +192,28 @@ const categories = ['All', 'Multirole', 'Air Superiority', 'Attacker', 'Intercep
     render();
   </script>
 
+  <section class="container compare-notes">
+    <h2>How to use the comparison</h2>
+    <p>
+      Start with the mission role rather than the highest single rating. Speed helps close
+      distance and move between objectives, mobility supports tighter dogfights, stability makes
+      the aircraft easier to control, firepower reflects offensive potential, and defense
+      represents survivability. A balanced multirole aircraft may be more useful than a specialist
+      when a briefing mixes air and surface targets.
+    </p>
+    <p>
+      Confirmed roster status and confirmed performance data are different things. Pre-release
+      aircraft ratings on this tool remain clearly marked as estimates until Bandai Namco or the
+      retail game supplies comparable values. Use the tool to shortlist aircraft, then open each
+      profile to check its source, unlock method, role, and special-weapon information before
+      making a final loadout decision.
+    </p>
+  </section>
+
   <RelatedLinks items={[
     { href: '/aircraft', label: 'Aircraft List', desc: 'Browse full profiles for every confirmed aircraft.' },
-    { href: '/getting-started', label: 'Getting Started', desc: 'New to the series? Which category to pick first.' },
+    { href: '/gameplay/mission-briefings', label: 'Mission Briefings', desc: 'Turn objective information into a practical loadout.' },
+    { href: '/gameplay/aircraft-upgrades', label: 'Aircraft Upgrades', desc: 'How parts tailor a jet to a mission.' },
   ]} />
 </BaseLayout>
 
@@ -203,6 +222,7 @@ const categories = ['All', 'Multirole', 'Air Superiority', 'Attacker', 'Intercep
   .page-head p { font-size: 0.95rem; }
 
   .compare-tool { padding-bottom: 80px; }
+  .compare-notes { max-width: 760px; padding-bottom: 24px; }
   .compare-tool__filters {
     display: flex;
     flex-wrap: wrap;

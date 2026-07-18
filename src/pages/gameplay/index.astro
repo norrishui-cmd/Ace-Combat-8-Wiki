@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { gameplayGuides } from '../../data/gameplayGuides';
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Ace Combat 8 gameplay systems',
+  itemListElement: gameplayGuides.map((guide, index) => ({
+    '@type': 'ListItem', position: index + 1, name: guide.title,
+    url: new URL(`/gameplay/${guide.slug}`, Astro.site).href,
+  })),
+};
+---
+<BaseLayout
+  title="Gameplay Systems — Weapons, Upgrades & Commands"
+  description="Evidence-checked Ace Combat 8 gameplay guides for aircraft upgrades, special weapons, wingman commands, MRP unlocks, mission briefings, high-G turns and weather."
+>
+  <Breadcrumbs items={[{ label: 'Gameplay' }]} />
+  <article class="container article article--wide">
+    <span class="eyebrow">Official systems, no invented stats</span>
+    <h1>Ace Combat 8 Gameplay Systems</h1>
+    <p class="direct-answer" data-concrete-answer>
+      Prepare each sortie by reading the mission briefing, choosing an aircraft and special
+      weapon, combining upgrade parts, setting squadron composition, and then commanding
+      wingmen in combat. These guides separate confirmed mechanics from details that still need
+      the retail build.
+    </p>
+    <div class="card-grid guide-grid">
+      {gameplayGuides.map((guide) => (
+        <a class="card guide-card" href={`/gameplay/${guide.slug}`}>
+          <span class="badge badge--confirmed">Confirmed system</span>
+          <h2>{guide.title}</h2>
+          <p>{guide.answer}</p>
+          <span class="mono card-link">Open guide →</span>
+        </a>
+      ))}
+    </div>
+    <h2>Why the guides stop at the evidence boundary</h2>
+    <p>
+      Before release, exact damage, unlock cost, mission payout, slot count and AI behavior can
+      change or remain hidden. A useful pre-release guide explains the decision players can make
+      now and identifies the missing input. Individual database pages will be added when official
+      tables or tested retail gameplay provide concrete values.
+    </p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
+  <RelatedLinks items={[
+    { href: '/aircraft', label: 'Aircraft Database', desc: 'Browse every evidence-checked aircraft profile.' },
+    { href: '/multiplayer', label: 'Ace Combat Online', desc: 'Crossplay, co-op, PvP and the air-base lobby.' },
+    { href: '/getting-started', label: 'Beginner Guide', desc: 'The fundamentals to learn before your first sortie.' },
+  ]} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 64px; }
+  .article--wide { max-width: 1000px; }
+  .article > h2 { margin-top: 48px; }
+  .direct-answer { max-width: 780px; font-size: 1.08rem; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .guide-grid { margin-top: 28px; }
+  .guide-card { color: var(--text-primary); text-decoration: none; }
+  .guide-card:hover { text-decoration: none; }
+  .guide-card h2 { font-size: 1.15rem; margin-top: 14px; }
+  .guide-card p { font-size: .88rem; }
+  .card-link { color: var(--hud-amber); font-size: .74rem; }
+</style>
+

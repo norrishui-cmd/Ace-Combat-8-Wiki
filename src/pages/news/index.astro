@@ -15,7 +15,10 @@ const posts = (await getCollection('news')).sort(
   <section class="container page-head">
     <span class="eyebrow">Updated as Bandai Namco announces</span>
     <h1>Latest News</h1>
-    <p>Every confirmed reveal, tracked close to when it happens.</p>
+    <p>
+      Every confirmed reveal, tracked close to when it happens. News posts record what changed;
+      evergreen guides turn the confirmed information into direct answers for players.
+    </p>
   </section>
 
   <section class="container news-list">
@@ -26,6 +29,21 @@ const posts = (await getCollection('news')).sort(
         <p class="news-item__summary">{p.data.summary}</p>
       </a>
     ))}
+  </section>
+  <section class="container news-policy">
+    <h2>How updates become guide changes</h2>
+    <p>
+      We prioritize Bandai Namco, Project Aces, Steam and platform-holder announcements. A new
+      aircraft, mode or mechanic is added to the relevant database only when the source identifies
+      it clearly. Trailer interpretation and retailer placeholders stay labeled as unconfirmed
+      instead of being converted into permanent wiki facts.
+    </p>
+    <p>
+      For the latest confirmed systems, use the <a href="/gameplay">gameplay hub</a>, the
+      <a href="/multiplayer">Ace Combat Online guide</a>, or the
+      <a href="/aircraft">aircraft database</a>. These pages are updated when a news item changes
+      a player-facing answer.
+    </p>
   </section>
 </BaseLayout>
 
@@ -52,4 +70,5 @@ const posts = (await getCollection('news')).sort(
   }
   .news-item h2 { font-size: 1.15rem; margin: 0 0 8px; }
   .news-item__summary { font-size: 0.9rem; margin: 0; }
+  .news-policy { max-width: 760px; padding: 16px 24px 64px; }
 </style>

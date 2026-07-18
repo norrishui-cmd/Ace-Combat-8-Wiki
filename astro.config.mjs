@@ -31,13 +31,13 @@ function buildContentLastmodMap() {
   let maxNewsDate = null;
   for (const file of fs.readdirSync(newsDir)) {
     const id = file.replace(/\.md$/, '');
-    const date = readFrontmatterDate(path.join(newsDir, file), 'publishedAt');
+    const date = readFrontmatterDate(path.join(newsDir, file), 'updatedAt') || readFrontmatterDate(path.join(newsDir, file), 'publishedAt');
     if (date) {
       map[`/news/${id}`] = date;
       if (!maxNewsDate || date > maxNewsDate) maxNewsDate = date;
     }
   }
-  if (maxNewsDate) map['/news'] = maxNewsDate;
+  if (maxNewsDate && (!map['/news'] || maxNewsDate > map['/news'])) map['/news'] = maxNewsDate;
 
   const editionsDir = path.resolve('./src/content/editions');
   let maxEditionsDate = null;
@@ -76,18 +76,19 @@ export default defineConfig({
         if (url === 'https://acecombat8.wiki/' || url === 'https://acecombat8.wiki') {
           item.priority = 1.0;
           item.changefreq = 'daily';
-        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare') || url.endsWith('/platforms') || url.endsWith('/faq')) {
+        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare') || url.endsWith('/platforms') || url.endsWith('/gameplay') || url.endsWith('/multiplayer') || url.endsWith('/faq')) {
           item.priority = 0.9;
           item.changefreq = 'daily';
         } else if (
           url.endsWith('/release-date') ||
           url.endsWith('/system-requirements') ||
           url.endsWith('/editions') ||
-          url.endsWith('/ace-pass')
+          url.endsWith('/ace-pass') ||
+          url.endsWith('/price')
         ) {
           item.priority = 0.85;
           item.changefreq = 'weekly';
-        } else if (url.includes('/aircraft/') || url.includes('/news/') || url.includes('/platforms/')) {
+        } else if (url.includes('/aircraft/') || url.includes('/news/') || url.includes('/platforms/') || url.includes('/gameplay/') || url.includes('/multiplayer/')) {
           item.priority = 0.7;
           item.changefreq = 'weekly';
         } else if (

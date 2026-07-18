@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { platformGuides } from '../data/platformGuides';
+import { gameplayGuides } from '../data/gameplayGuides';
+import { multiplayerGuides } from '../data/multiplayerGuides';
 
 const groups = [
   {
@@ -9,6 +11,7 @@ const groups = [
     links: [
       { href: '/release-date', label: 'When does Ace Combat 8 release?', answer: 'October 2, 2026; Deluxe digital preorder early access starts September 28.' },
       { href: '/editions', label: 'Which edition should I buy?', answer: 'Compare Standard, Deluxe, and the physical Joker Flight Pack.' },
+      { href: '/price', label: 'How much does Ace Combat 8 cost?', answer: 'US Steam lists $69.99 Standard and $89.99 Deluxe as checked July 18, 2026.' },
       { href: '/ace-combat-zero-bonus', label: 'How does the Ace Combat Zero bonus work?', answer: 'It is a preorder bonus alongside the playable F-14A.' },
       { href: '/ace-pass', label: 'Is the Ace Pass free?', answer: 'The base track is free; Premium and Premium Plus are paid tiers.' },
     ],
@@ -18,12 +21,19 @@ const groups = [
     links: platformGuides.map((guide) => ({ href: `/platforms/${guide.slug}`, label: `Is Ace Combat 8 on ${guide.shortName}?`, answer: guide.answer })),
   },
   {
-    heading: 'Gameplay and online',
+    heading: 'Gameplay systems',
     links: [
       { href: '/getting-started', label: 'Is Ace Combat 8 beginner-friendly?', answer: 'Start with the control, missile-warning, turning, and loadout fundamentals.' },
-      { href: '/multiplayer', label: 'Does Ace Combat 8 have multiplayer and co-op?', answer: 'Yes. Ace Combat Online includes a social lobby, co-op, competitive play, and cross-platform support.' },
       { href: '/ace-style-system', label: 'What is Ace Style?', answer: 'Mission actions shape the player’s pilot identity and parts of the story presentation.' },
       { href: '/aircraft', label: 'Which aircraft are confirmed?', answer: 'Browse the evidence-checked aircraft database.' },
+      ...gameplayGuides.map((guide) => ({ href: `/gameplay/${guide.slug}`, label: guide.searchTitle, answer: guide.answer })),
+    ],
+  },
+  {
+    heading: 'Ace Combat Online',
+    links: [
+      { href: '/multiplayer', label: 'What is Ace Combat Online?', answer: 'The largest online mode in series history, with a lobby, co-op, PvP and cross-platform play.' },
+      ...multiplayerGuides.map((guide) => ({ href: `/multiplayer/${guide.slug}`, label: guide.searchTitle, answer: guide.answer })),
     ],
   },
 ];
@@ -38,7 +48,7 @@ const groups = [
     <h1>Ace Combat 8 FAQ</h1>
     <p class="intro">
       Find the short answer first, then open the linked guide for sources, limitations, and
-      purchase advice. Status-sensitive answers were checked July 17, 2026.
+      purchase advice. Status-sensitive answers were checked July 18, 2026.
     </p>
     {groups.map((group) => (
       <section>

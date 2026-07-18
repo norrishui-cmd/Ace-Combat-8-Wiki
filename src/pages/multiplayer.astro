@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
+import { multiplayerGuides } from '../data/multiplayerGuides';
 ---
 <BaseLayout
   title="Ace Combat Online — Multiplayer Guide"
@@ -12,12 +13,10 @@ import RelatedLinks from '../components/RelatedLinks.astro';
     <span class="eyebrow">"The franchise's largest online mode" — Bandai Namco</span>
     <h1>Ace Combat Online</h1>
 
-    <p>
+    <p class="direct-answer" data-concrete-answer>
       Wings of Theve introduces <strong>Ace Combat Online</strong>, described by producer
-      Manabu Shimomoto as the biggest online mode in series history. This is the series'
-      first-ever social lobby, and one of the least-covered parts of the game right now —
-      which makes it worth bookmarking this page if you're planning to play with friends
-      at launch.
+      Manabu Shimomoto as the biggest online mode in series history. It includes an explorable
+      air-base lobby with custom avatars, online co-op, online PvP, and cross-platform play.
     </p>
 
     <h2>Confirmed so far</h2>
@@ -25,22 +24,33 @@ import RelatedLinks from '../components/RelatedLinks.astro';
       <li>A persistent <strong>online lobby</strong> set at an air base, where you explore with a customizable avatar before queuing into matches.</li>
       <li><strong>Cross-platform play</strong> between PS5, Xbox Series X|S, and PC.</li>
       <li><strong>Co-Op missions</strong> alongside other multiplayer modes Bandai Namco has said it will detail closer to launch.</li>
-      <li>The Ace Pass progression track (free, Premium, and Premium Plus tiers) ties into online play — seasonal rewards include aircraft skins, avatar cosmetics, and upgrade materials.</li>
+      <li>Steam separately lists <strong>Online PvP</strong> and <strong>Online Co-op</strong>.</li>
     </ul>
 
     <div class="card callout">
       <p class="mono eyebrow" style="margin-bottom:8px;">Still unconfirmed</p>
       <p style="margin:0;">
-        Full PvP mode list, matchmaking structure, and cross-play restrictions by platform
-        haven't been detailed yet. We're tracking every Bandai Namco dev diary and will keep
-        this page current through launch.
+        Full playlist names, co-op player count, matchmaking structure, account linking,
+        cross-progression, private-room options, and crossplay settings have not been detailed.
       </p>
     </div>
   </article>
 
+  <section class="container mode-grid" aria-label="Ace Combat Online guides">
+    {multiplayerGuides.map((guide) => (
+      <a class="card mode-card" href={`/multiplayer/${guide.slug}`}>
+        <span class="badge badge--confirmed">Confirmed online feature</span>
+        <h2>{guide.title}</h2>
+        <p>{guide.answer}</p>
+        <span class="mono">Read full guide →</span>
+      </a>
+    ))}
+  </section>
+
   <RelatedLinks items={[
     { href: '/editions', label: 'Editions Compared', desc: 'Ace Pass tiers tie into online progression — see what each edition includes.' },
-    { href: '/new-mechanics', label: 'New Mechanics', desc: 'Dual special weapons and other systems that carry over into multiplayer.' },
+    { href: '/gameplay', label: 'Gameplay Systems', desc: 'Weapons, upgrades, commands and mission planning.' },
+    { href: '/ace-pass', label: 'Ace Pass', desc: 'Free and paid seasonal progression tiers.' },
   ]} />
 </BaseLayout>
 
@@ -53,4 +63,12 @@ import RelatedLinks from '../components/RelatedLinks.astro';
   .article ul { padding-left: 20px; }
   .article li { margin-bottom: 8px; }
   .callout { margin: 28px 0; }
+  .direct-answer { font-size: 1.08rem !important; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .mode-grid { max-width: 960px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding-bottom: 32px; }
+  .mode-card { color: var(--text-primary); text-decoration: none; }
+  .mode-card:hover { text-decoration: none; }
+  .mode-card h2 { font-size: 1.1rem; margin-top: 12px; }
+  .mode-card p { font-size: .88rem; }
+  .mode-card span:last-child { color: var(--hud-amber); font-size: .74rem; }
+  @media (max-width: 650px) { .mode-grid { grid-template-columns: 1fr; } }
 </style>
