@@ -28,6 +28,7 @@ const errors = [];
 const warnings = [];
 const seenTitles = new Map();
 const seenDescriptions = new Map();
+const adsensePublisher = 'ca-pub-9505220977121599';
 const strip = (value) => value.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&[^;]+;/g, ' ').replace(/\s+/g, ' ').trim();
 
 for (const [route, html] of pages) {
@@ -43,6 +44,8 @@ for (const [route, html] of pages) {
   if (!title) errors.push(`${route}: missing title`);
   if (!description) errors.push(`${route}: missing meta description`);
   if (!canonical) errors.push(`${route}: missing canonical`);
+  if (!html.includes(`<meta name="google-adsense-account" content="${adsensePublisher}"`)) errors.push(`${route}: missing AdSense account meta`);
+  if (!html.includes(`adsbygoogle.js?client=${adsensePublisher}`)) errors.push(`${route}: missing AdSense loader`);
   if (h1Count !== 1 && route !== '/404') errors.push(`${route}: expected 1 H1, found ${h1Count}`);
   if (title && title.length > 70) warnings.push(`${route}: title is ${title.length} characters`);
   const descriptionTooShort = route.startsWith('/ja') ? description?.length < 50 : description?.length < 90;
