@@ -1,5 +1,6 @@
 ---
-const navItems = [
+const { lang = 'en' } = Astro.props;
+const navSets = { en: [
   { href: '/aircraft', label: 'Aircraft' },
   { href: '/gameplay', label: 'Gameplay' },
   { href: '/platforms', label: 'Platforms' },
@@ -8,11 +9,21 @@ const navItems = [
   { href: '/editions', label: 'Editions' },
   { href: '/pc', label: 'PC' },
   { href: '/faq', label: 'FAQ' },
-];
+], de: [
+  { href: '/de/plattformen', label: 'Plattformen' }, { href: '/de/spielsysteme', label: 'Gameplay' },
+  { href: '/de/charaktere', label: 'Charaktere' }, { href: '/de/mehrspieler', label: 'Mehrspieler' },
+  { href: '/de/faq', label: 'FAQ' },
+], ja: [
+  { href: '/ja/platforms', label: '対応機種' }, { href: '/ja/gameplay', label: 'ゲームプレイ' },
+  { href: '/ja/characters', label: '登場人物' }, { href: '/ja/multiplayer', label: 'オンライン' },
+  { href: '/ja/faq', label: 'FAQ' },
+]};
+const navItems = navSets[lang] || navSets.en;
+const home = lang === 'de' ? '/de' : lang === 'ja' ? '/ja' : '/';
 ---
 <header class="site-header">
   <div class="container site-header__inner">
-    <a href="/" class="brand">
+    <a href={home} class="brand">
       <span class="brand__mark">AC8</span>
       <span class="brand__text">WINGS OF THEVE GUIDE</span>
     </a>
@@ -21,6 +32,7 @@ const navItems = [
         <a href={item.href}>{item.label}</a>
       ))}
     </nav>
+    <nav class="language-nav" aria-label="Language"><a href="/">EN</a><a href="/de">DE</a><a href="/ja">日本語</a></nav>
   </div>
 </header>
 
@@ -79,4 +91,6 @@ const navItems = [
     color: var(--hud-amber);
     text-decoration: none;
   }
+  .language-nav { display:flex; gap:8px; margin-left:auto; }
+  .language-nav a { font: .68rem var(--font-mono); color:var(--text-secondary); border:var(--border-thin); padding:3px 6px; }
 </style>

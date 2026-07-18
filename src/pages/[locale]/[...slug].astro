@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { localizedGuides } from '../../data/localizedGuides';
+
+export function getStaticPaths() {
+  return localizedGuides.map((guide) => ({
+    params: { locale: guide.locale, slug: guide.slug || undefined }, props: { guide },
+  }));
+}
+const { guide } = Astro.props;
+const langName = guide.locale === 'de' ? 'Deutsch' : '日本語';
+const localizedPeers = localizedGuides.filter((g) => g.locale === guide.locale && g.slug !== guide.slug);
+const related = localizedPeers.slice(0, 3).map((g) => ({
+  href: `/${g.locale}${g.slug ? `/${g.slug}` : ''}`, label: g.h1, desc: g.answer,
+}));
+const faqJsonLd = {'@context':'https://schema.org','@type':'FAQPage',mainEntity:guide.faqs.map((faq) => ({'@type':'Question',name:faq.q,acceptedAnswer:{'@type':'Answer',text:faq.a}}))};
+const articleJsonLd = {'@context':'https://schema.org','@type':'Article',headline:guide.h1,inLanguage:guide.locale,mainEntityOfPage:new URL(Astro.url.pathname,Astro.site).href,dateModified:'2026-07-18',about:{'@type':'VideoGame',name:'ACE COMBAT 8: WINGS OF THEVE'}};
+---
+<BaseLayout title={guide.title} description={guide.description} lang={guide.locale}>
+  <Breadcrumbs items={guide.slug ? [{ label: langName, href: `/${guide.locale}` }, { label: guide.h1 }] : [{ label: langName }]} />
+  <article class="container article">
+    <span class="eyebrow">{guide.locale === 'de' ? 'Offiziell belegter deutscher Guide' : '公式情報に基づく日本語ガイド'}</span>
+    <h1>{guide.h1}</h1>
+    <p class="direct-answer" data-concrete-answer>{guide.answer}</p>
+    {guide.sections.map((section) => <section><h2>{section.heading}</h2><p>{section.body}</p></section>)}
+    <h2>{guide.locale === 'de' ? 'Häufige Fragen' : 'よくある質問'}</h2>
+    <div class="faq-list">{guide.faqs.map((faq) => <section class="card"><h3>{faq.q}</h3><p>{faq.a}</p></section>)}</div>
+    <aside class="source-note">
+      <p class="mono">{guide.locale === 'de' ? 'Quellen geprüft: 18. Juli 2026' : '情報確認日：2026年7月18日'}</p>
+      <ul><li><a href="https://www.bandainamcoent.com/games/ace-combat-8" rel="nofollow">Bandai Namco – ACE COMBAT 8</a></li><li><a href="https://store.steampowered.com/app/2288340/ACE_COMBAT_8_WINGS_OF_THEVE/" rel="nofollow">Steam – offizielle Produktseite</a></li></ul>
+    </aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  <RelatedLinks heading={guide.locale === 'de' ? 'Weitere deutsche Guides' : '関連する日本語ガイド'} items={related} />
+</BaseLayout>
+<style>
+  .article{padding:56px 0 72px;max-width:780px}.article h2{margin-top:40px}.article p{font-size:.98rem}.direct-answer{font-size:1.08rem!important;border-left:3px solid var(--hud-amber);padding-left:18px}.faq-list{display:grid;gap:14px}.faq-list h3{font-size:1rem}.faq-list p{margin:0}.source-note{margin-top:40px;padding-top:20px;border-top:var(--border-thin);font-size:.8rem}
+</style>

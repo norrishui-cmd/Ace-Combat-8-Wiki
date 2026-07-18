@@ -35,17 +35,27 @@ for (const [route, html] of pages) {
   const description = html.match(/<meta name="description" content="([^"]*)"/i)?.[1]?.trim();
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/i)?.[1];
   const h1Count = (html.match(/<h1(?:\s|>)/gi) || []).length;
-  const words = strip(html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] || '').split(/\s+/).filter(Boolean).length;
-  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms|\/characters|\/languages|\/pc)(\/|$)/.test(route) || ['/price', '/ace-pass', '/preorder-bonuses'].includes(route);
+  const mainText = strip(html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] || '');
+  const words = mainText.split(/\s+/).filter(Boolean).length;
+  const cjkChars = (mainText.match(/[\u3040-\u30ff\u3400-\u9fff]/g) || []).length;
+  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms|\/characters|\/languages|\/pc|\/de|\/ja)(\/|$)/.test(route) || ['/price', '/ace-pass', '/preorder-bonuses'].includes(route);
 
   if (!title) errors.push(`${route}: missing title`);
   if (!description) errors.push(`${route}: missing meta description`);
   if (!canonical) errors.push(`${route}: missing canonical`);
   if (h1Count !== 1 && route !== '/404') errors.push(`${route}: expected 1 H1, found ${h1Count}`);
   if (title && title.length > 70) warnings.push(`${route}: title is ${title.length} characters`);
-  if (description && (description.length < 90 || description.length > 170)) warnings.push(`${route}: description is ${description.length} characters`);
-  if (words < 150 && route !== '/404') warnings.push(`${route}: only ${words} visible main-content words`);
+  const descriptionTooShort = route.startsWith('/ja') ? description?.length < 50 : description?.length < 90;
+  if (description && (descriptionTooShort || description.length > 170)) warnings.push(`${route}: description is ${description.length} characters`);
+  if (words < 150 && cjkChars < 500 && route !== '/404') warnings.push(`${route}: only ${words} visible words / ${cjkChars} CJK characters`);
   if (needsConcreteAnswer && !html.includes('direct-answer')) errors.push(`${route}: missing visible concrete-answer block`);
+  if (/^\/(de|ja)(\/|$)/.test(route)) {
+    const locale = route.split('/')[1];
+    if (!html.includes(`hreflang="${locale}"`)) errors.push(`${route}: missing self-language hreflang`);
+    if (!html.includes('hreflang="en"')) errors.push(`${route}: missing English hreflang`);
+    if (!html.includes('hreflang="x-default"')) errors.push(`${route}: missing x-default hreflang`);
+    if (!html.includes(`<html lang="${locale}"`)) errors.push(`${route}: incorrect HTML lang`);
+  }
 
   if (title) {
     if (seenTitles.has(title)) errors.push(`${route}: duplicate title with ${seenTitles.get(title)}`);
