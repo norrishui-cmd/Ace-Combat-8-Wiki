@@ -36,7 +36,7 @@ for (const [route, html] of pages) {
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/i)?.[1];
   const h1Count = (html.match(/<h1(?:\s|>)/gi) || []).length;
   const words = strip(html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] || '').split(/\s+/).filter(Boolean).length;
-  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms)(\/|$)/.test(route) || ['/price', '/ace-pass'].includes(route);
+  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms|\/characters|\/languages|\/pc)(\/|$)/.test(route) || ['/price', '/ace-pass', '/preorder-bonuses'].includes(route);
 
   if (!title) errors.push(`${route}: missing title`);
   if (!description) errors.push(`${route}: missing meta description`);

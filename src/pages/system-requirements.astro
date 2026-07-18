@@ -17,9 +17,8 @@ import RelatedLinks from '../components/RelatedLinks.astro';
       <p style="margin:0;">
         Wings of Theve requires an <strong>SSD</strong>, a <strong>hardware ray
         tracing-capable graphics card</strong>, and <strong>DirectX 12 with Shader Model 6.6
-        or higher</strong>. If your GPU doesn't support hardware ray tracing, the game will not
-        run regardless of your other specs — this isn't a "recommended" setting you can turn
-        off.
+        or higher</strong>. A PC without hardware ray-tracing support does not meet the published
+        minimum specification; no non-ray-tracing fallback has been confirmed.
       </p>
     </div>
 
@@ -48,9 +47,9 @@ import RelatedLinks from '../components/RelatedLinks.astro';
 
     <h2>What this means if you're upgrading</h2>
     <ul>
-      <li>Any GPU older than the ray-tracing generation (pre-RTX 20-series / pre-RX 6000-series equivalents) won't be able to launch the game at all.</li>
-      <li>A SATA HDD is not sufficient — the SSD requirement is almost certainly tied to the "Cloudly" weather/streaming system needing fast asset loading for its multi-layered cloud rendering.</li>
-      <li>Shader Model 6.6 support generally lines up with DirectX 12 Ultimate-capable GPUs — if your card supports DX12U, you likely clear this bar.</li>
+      <li>The named minimum GPUs are an RTX 2060 6GB and RX 6600 XT 8GB. Check a different card for hardware ray tracing, Shader Model 6.6, memory and performance rather than judging only by generation.</li>
+      <li>The game must be installed on an SSD with 125GB available. Steam does not specify SATA versus NVMe or explain the technical reason for the requirement.</li>
+      <li>DirectX 12 support alone is not enough: the listing separately requires Shader Model 6.6 or higher and hardware ray tracing.</li>
     </ul>
 
     <div class="card callout">
@@ -64,6 +63,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
   </article>
 
   <RelatedLinks items={[
+    { href: '/pc', label: 'PC Requirements Guides', desc: 'Check Windows, GPU, SSD and performance questions individually.' },
     { href: '/release-date', label: 'Release Date & Platforms', desc: 'When and where you can play, on every platform.' },
     { href: '/editions', label: 'Editions Compared', desc: 'Standard vs Deluxe vs Joker Flight Pack.' },
   ]} />

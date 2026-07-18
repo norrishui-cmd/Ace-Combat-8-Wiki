@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { languageGuides } from '../../data/languageGuides';
+const itemList = {'@context':'https://schema.org','@type':'ItemList',name:'Ace Combat 8 language guides',itemListElement:languageGuides.map((g,i)=>({'@type':'ListItem',position:i+1,name:g.title,url:new URL(`/languages/${g.slug}`,Astro.site).href}))};
+---
+<BaseLayout title="Languages, Dubs & Subtitles" description="Ace Combat 8 language support: 13 interface and subtitle languages, full English and Japanese audio, plus Ace Combat Zero bonus languages.">
+  <Breadcrumbs items={[{label:'Languages'}]} />
+  <article class="container article article--wide"><span class="eyebrow">Official Steam language table</span><h1>Ace Combat 8 Languages</h1>
+    <p class="direct-answer" data-concrete-answer>Ace Combat 8 lists 13 interface and subtitle languages on Steam. Full voice audio is confirmed in English and Japanese; other listed languages receive text support without a full-audio check.</p>
+    <div class="card-grid">{languageGuides.map((g)=><a class="card guide" href={`/languages/${g.slug}`}><h2>{g.title}</h2><p>{g.answer}</p><span class="mono">Check support →</span></a>)}</div>
+    <h2>How to read the support table</h2><p>Interface, full audio and subtitles are separate store fields. A checked subtitle box does not imply a dubbed voice track. The Ace Combat Zero preorder port also has its own smaller published language list.</p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(itemList)} />
+  <RelatedLinks items={[{href:'/preorder-bonuses',label:'Preorder Bonuses',desc:'Platform-specific F-14A and Ace Combat Zero details.'},{href:'/platforms',label:'Platform Guides',desc:'Compare PS5, Xbox Series and Steam availability.'},{href:'/faq',label:'Frequently Asked Questions',desc:'Fast answers to confirmed release details.'}]} />
+</BaseLayout>
+<style>.article{padding:56px 0 72px}.article--wide{max-width:1000px}.direct-answer{max-width:780px;font-size:1.08rem;border-left:3px solid var(--hud-amber);padding-left:18px}.card-grid{margin-top:28px}.guide{color:var(--text-primary);text-decoration:none}.guide h2{font-size:1.15rem}.guide .mono{color:var(--hud-amber);font-size:.74rem}.article>h2{margin-top:44px}</style>

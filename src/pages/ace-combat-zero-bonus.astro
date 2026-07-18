@@ -5,18 +5,17 @@ import RelatedLinks from '../components/RelatedLinks.astro';
 ---
 <BaseLayout
   title="Ace Combat Zero: The Belkan War Pre-order Bonus Explained"
-  description="Every pre-order of Ace Combat 8: Wings of Theve includes a digital copy of Ace Combat Zero: The Belkan War. Here's how to claim it and why it matters."
+  description="Ace Combat 8 eligible preorders include an Ace Combat Zero: The Belkan War port. Compare platform versions, languages and offer caveats."
 >
   <Breadcrumbs items={[{ label: 'Ace Combat Zero Bonus' }]} />
   <article class="container article">
     <span class="eyebrow">For returning series fans</span>
     <h1>The Ace Combat Zero Bonus</h1>
 
-    <p>
-      Every digital pre-order of ACE COMBAT 8: WINGS OF THEVE — Standard or Deluxe — includes
-      a digital copy of <strong>ACE COMBAT ZERO: THE BELKAN WAR</strong>, ported to the
-      platform you're buying on. If you've been away from the series since the PS2/Xbox era,
-      this alone is a reason to come back.
+    <p class="direct-answer" data-concrete-answer>
+      Eligible ACE COMBAT 8 preorders include a port of <strong>ACE COMBAT ZERO: THE BELKAN
+      WAR</strong> for the purchased platform. PlayStation and Steam explicitly identify their
+      respective versions; verify the current regional storefront terms before payment.
     </p>
 
     <h2>Why this bonus matters</h2>
@@ -36,7 +35,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
       <tbody>
         <tr><td>PS5</td><td>Ace Combat Zero: The Belkan War (PS5 version)</td></tr>
         <tr><td>PC (Steam)</td><td>Ace Combat Zero: The Belkan War (Steam version)</td></tr>
-        <tr><td>Xbox Series X|S</td><td>Ace Combat Zero: The Belkan War (Xbox version)</td></tr>
+        <tr><td>Xbox Series X|S</td><td>Check the current regional Xbox offer listing</td></tr>
       </tbody>
     </table>
     <p style="font-size:0.85rem;">
@@ -54,6 +53,8 @@ import RelatedLinks from '../components/RelatedLinks.astro';
   </article>
 
   <RelatedLinks items={[
+    { href: '/preorder-bonuses', label: 'All Preorder Bonuses', desc: 'See the F-14A offer and timing caveats in one place.' },
+    { href: '/languages/ace-combat-zero', label: 'Bonus Language Guide', desc: 'Check the published six-language Steam list.' },
     { href: '/editions', label: 'Editions Compared', desc: 'See exactly which editions include this bonus and what else you get.' },
     { href: '/ace-style-system', label: 'Ace Style System', desc: 'The mechanic Ace Combat Zero introduced, now returning in Wings of Theve.' },
   ]} />
@@ -66,4 +67,5 @@ import RelatedLinks from '../components/RelatedLinks.astro';
   }
   .article p, .article li { font-size: 0.98rem; }
   .callout { margin: 28px 0; }
+  .direct-answer { font-size: 1.08rem !important; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
 </style>

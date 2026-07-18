@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { characterGuides, characterSources } from '../../data/characterGuides';
+
+export function getStaticPaths() {
+  return characterGuides.map((character) => ({ params: { slug: character.slug }, props: { character } }));
+}
+const { character } = Astro.props;
+const related = characterGuides.filter((item) => item.slug !== character.slug && item.group === character.group).slice(0, 3).map((item) => ({
+  href: `/characters/${item.slug}`, label: item.name, desc: item.answer,
+}));
+if (related.length < 3) {
+  related.push(...characterGuides.filter((item) => item.slug !== character.slug && !related.some((r) => r.href.endsWith(item.slug))).slice(0, 3 - related.length).map((item) => ({ href: `/characters/${item.slug}`, label: item.name, desc: item.answer })));
+}
+const faqJsonLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: character.faqs.map((faq: { q: string; a: string }) => ({ '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a } })),
+};
+---
+<BaseLayout title={`${character.name}${character.callsign ? ` (${character.callsign})` : ''} Character Guide`} description={character.description}>
+  <Breadcrumbs items={[{ label: 'Characters', href: '/characters' }, { label: character.name }]} />
+  <article class="container article">
+    <span class="badge badge--confirmed">Official character</span>
+    <h1>{character.name}{character.callsign ? ` — “${character.callsign}”` : ''}</h1>
+    <p class="direct-answer" data-concrete-answer>{character.answer}</p>
+    <div class="card fact-grid">
+      <div class="fact"><span class="mono">Group</span><strong>{character.group}</strong></div>
+      <div class="fact"><span class="mono">Role</span><strong>{character.role}</strong></div>
+      <div class="fact"><span class="mono">Rank</span><strong>{character.rank}</strong></div>
+      <div class="fact"><span class="mono">Service</span><strong>{character.service}</strong></div>
+    </div>
+    {character.sections.map((section) => <section><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}</section>)}
+    <h2>{character.name} FAQ</h2>
+    <div class="faq-list">{character.faqs.map((faq) => <section class="card"><h3>{faq.q}</h3><p>{faq.a}</p></section>)}</div>
+    <aside class="source-note"><p class="mono">Evidence reviewed: July 18, 2026</p><ul>{characterSources.map((source) => <li><a href={source.href} rel="nofollow">{source.label}</a></li>)}</ul></aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <RelatedLinks heading="More character profiles" items={related} />
+</BaseLayout>
+
+<style>
+  .article { padding: 56px 0 72px; max-width: 800px; }
+  .article h1 { margin-top: 12px; }
+  .article h2 { margin-top: 40px; }
+  .article p, .article li { font-size: .98rem; }
+  .direct-answer { font-size: 1.08rem !important; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .fact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: 28px 0; padding: 0; }
+  .fact { padding: 18px; border-bottom: var(--border-thin); }
+  .fact:nth-child(odd) { border-right: var(--border-thin); }
+  .fact:nth-last-child(-n+2) { border-bottom: 0; }
+  .fact span { display: block; color: var(--text-secondary); font-size: .68rem; text-transform: uppercase; margin-bottom: 6px; }
+  .faq-list { display: grid; gap: 14px; }
+  .faq-list h3 { font-size: 1rem; }
+  .faq-list p { margin: 0; }
+  .source-note { margin-top: 40px; padding-top: 20px; border-top: var(--border-thin); }
+  .source-note p, .source-note li { font-size: .8rem; }
+  @media (max-width: 560px) { .fact-grid { grid-template-columns: 1fr; } .fact, .fact:nth-child(odd), .fact:nth-last-child(-n+2) { border-right: 0; border-bottom: var(--border-thin); } .fact:last-child { border-bottom: 0; } }
+</style>

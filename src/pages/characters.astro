@@ -2,90 +2,75 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
+import { characterGuides } from '../data/characterGuides';
 
-const squad = [
-  {
-    name: 'Wings of Theve (Player character)',
-    role: 'Squadron leader',
-    desc: "You. A fighter pilot pulled from the sea by the FCU Endurance, ordered to take on the \"Wings of Theve\" identity after its original bearer, Cope, is killed in action. Voiced and framed through first-person cinematic scenes for the first time in the series.",
-  },
-  {
-    name: 'Ellington "Professor" Baxter',
-    role: 'Joker Flight wingman',
-    desc: "One of your three squadmates in Joker Flight. Full role and background details are still being revealed by Bandai Namco — we'll expand this profile as more story information is confirmed.",
-  },
-  {
-    name: 'Tasha Seversky',
-    role: 'Joker Flight wingman',
-    desc: 'Another member of Joker Flight. Confirmed to have an exclusive costume item tied to the Deluxe Edition\'s Customisable Cosmetic Set, suggesting she has a meaningful presence in the game\'s marketing and story beats.',
-  },
-  {
-    name: 'William "Noise" Coster',
-    role: 'Joker Flight wingman',
-    desc: "The third confirmed member of Joker Flight, rounding out your squadron alongside Baxter and Tasha.",
-  },
-];
+const groups = ['Joker Flight', 'Queen Flight', 'Endurance Crew'];
+const itemListJsonLd = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'Ace Combat 8 characters',
+  itemListElement: characterGuides.map((character, index) => ({
+    '@type': 'ListItem', position: index + 1, name: character.name,
+    url: new URL(`/characters/${character.slug}`, Astro.site).href,
+  })),
+};
 ---
 <BaseLayout
-  title="Characters — Joker Flight Squadron"
-  description="Meet Joker Flight, your squadron in Ace Combat 8: Wings of Theve — Baxter, Tasha, and Coster, flying alongside the player character out of the FCU Endurance."
+  title="Characters — Joker Flight & Endurance Crew"
+  description="Official Ace Combat 8 character roster: Jan Cope, Baxter, Tasha, Coster, Kate Evans, Jessica Pike, David Jenkins and Adelina Santos with roles and callsigns."
 >
   <Breadcrumbs items={[{ label: 'Characters' }]} />
-  <article class="container article">
-    <span class="eyebrow">FCU Endurance · Joker Flight</span>
-    <h1>Characters</h1>
-    <p>
-      Your squadron in Wings of Theve is called <strong>Joker Flight</strong> — you and three
-      wingmen, operating out of the aircraft carrier FCU Endurance. Here's what's confirmed
-      about each of them so far.
+  <article class="container article article--wide">
+    <span class="eyebrow">Official roster checked July 18, 2026</span>
+    <h1>Ace Combat 8 Characters</h1>
+    <p class="direct-answer" data-concrete-answer>
+      Joker Flight begins with Jan Cope as the original Wings of Theve, followed by Ellington
+      Baxter, Tasha Severskya and William Coster. The Endurance roster also includes Queen Flight
+      leader Kate Evans, executive officer Jessica Pike, chief mechanic David Jenkins and doctor
+      Adelina Santos. The player later inherits the Wings of Theve identity.
     </p>
 
-    <div class="squad-grid">
-      {squad.map((c) => (
-        <div class="card">
-          <span class="eyebrow">{c.role}</span>
-          <h2>{c.name}</h2>
-          <p>{c.desc}</p>
+    {groups.map((group) => (
+      <section>
+        <h2>{group}</h2>
+        <div class="character-grid">
+          {characterGuides.filter((character) => character.group === group).map((character) => (
+            <a class="card character-card" href={`/characters/${character.slug}`}>
+              <span class="badge badge--confirmed">{character.role}</span>
+              <h3>{character.name}{character.callsign ? ` — “${character.callsign}”` : ''}</h3>
+              <p>{character.answer}</p>
+              <span class="mono card-link">Read profile →</span>
+            </a>
+          ))}
         </div>
-      ))}
-    </div>
+      </section>
+    ))}
 
-    <h2>A note on Cope</h2>
+    <h2>Who is the player character?</h2>
     <p>
-      Before you take on the "Wings of Theve" name, that identity belongs to a pilot referred
-      to as <strong>Cope</strong>. His death in action is the story beat that puts you in the
-      role — he isn't part of Joker Flight going forward, but understanding his role explains
-      why the "Wings of Theve" legend exists at all. See our
-      <a href="/story">Story &amp; Setting page</a> for the full context.
+      The player begins as a rescued pilot and is pulled into the manufactured Wings of Theve
+      legend after the original figurehead falls. Bandai Namco’s official roster names the
+      original leader Jan Cope, while PlayStation’s hands-on account calls that figurehead Rex and
+      says the player takes over the Rex callsign. The player remains distinct from the eight
+      named roster profiles above.
     </p>
-
-    <div class="card callout">
-      <p class="mono eyebrow" style="margin-bottom:8px;">This page will grow</p>
-      <p style="margin:0;">
-        Bandai Namco has been revealing character details gradually — we'll expand each
-        profile with confirmed backstory, callsigns, and aircraft assignments as more
-        marketing material and preview coverage lands.
-      </p>
-    </div>
   </article>
-
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
   <RelatedLinks items={[
-    { href: '/story', label: 'Story & Setting', desc: 'The full setup: the FCU, the Sotoa invasion, and what "Wings of Theve" means.' },
-    { href: '/ace-style-system', label: 'Ace Style System', desc: 'How your choices as squadron leader shape the narrative.' },
+    { href: '/story', label: 'Story & Setting', desc: 'The FCU collapse, Sotoan invasion and manufactured ace legend.' },
+    { href: '/gameplay/wingman-commands', label: 'Wingman Commands', desc: 'How the player leads Joker Flight in combat.' },
+    { href: '/ace-style-system', label: 'Ace Style', desc: 'How choices shape the pilot identity and story.' },
   ]} />
 </BaseLayout>
 
 <style>
-  .article { padding: 56px 0 40px; max-width: 760px; }
-  .article > p { font-size: 0.98rem; }
-  .article h2 { margin-top: 32px; }
-  .squad-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-    margin: 24px 0 8px;
-  }
-  .squad-grid h2 { font-size: 1.15rem; margin: 4px 0 8px; }
-  .squad-grid p { font-size: 0.9rem; margin: 0; }
-  .callout { margin: 24px 0 40px; }
+  .article { padding: 56px 0 64px; }
+  .article--wide { max-width: 1000px; }
+  .direct-answer { max-width: 800px; font-size: 1.08rem; border-left: 3px solid var(--hud-amber); padding-left: 18px; }
+  .article h2 { margin-top: 44px; }
+  .character-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .character-card { color: var(--text-primary); text-decoration: none; }
+  .character-card:hover { text-decoration: none; }
+  .character-card h3 { margin-top: 14px; font-size: 1.1rem; }
+  .character-card p { font-size: .88rem; }
+  .card-link { color: var(--hud-amber); font-size: .74rem; }
 </style>
+
