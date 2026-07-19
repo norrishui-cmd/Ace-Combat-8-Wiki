@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
+import TabNews from '../components/TabNews.astro';
 import { characterGuides } from '../data/characterGuides';
 
 const groups = ['Joker Flight', 'Queen Flight', 'Endurance Crew'];
@@ -53,6 +54,7 @@ const itemListJsonLd = {
       named roster profiles above.
     </p>
   </article>
+  <TabNews category="characters" />
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
   <RelatedLinks items={[
     { href: '/story', label: 'Story & Setting', desc: 'The FCU collapse, Sotoan invasion and manufactured ace legend.' },
@@ -73,4 +75,3 @@ const itemListJsonLd = {
   .character-card p { font-size: .88rem; }
   .card-link { color: var(--hud-amber); font-size: .74rem; }
 </style>
-

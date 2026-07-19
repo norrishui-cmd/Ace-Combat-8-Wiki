@@ -71,6 +71,8 @@ export default defineConfig({
 
         if (lastmodMap[pathname]) {
           item.lastmod = lastmodMap[pathname];
+        } else if (pathname.startsWith('/news/')) {
+          item.lastmod = '2026-07-19';
         }
 
         if (url === 'https://acecombat8.wiki/' || url === 'https://acecombat8.wiki') {

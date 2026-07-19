@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
+import { tabNews, newsCategories } from '../../data/tabNews';
 
 const posts = (await getCollection('news')).sort(
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
@@ -27,6 +28,28 @@ const posts = (await getCollection('news')).sort(
         <p class="mono news-item__date">{p.data.publishedAt.toISOString().slice(0, 10)}</p>
         <h2>{p.data.title}</h2>
         <p class="news-item__summary">{p.data.summary}</p>
+      </a>
+    ))}
+  </section>
+  <section class="container topic-desks">
+    <span class="eyebrow">Five reports per guide tab</span>
+    <h2>Browse News by Topic</h2>
+    <div class="card-grid">
+      {Object.entries(newsCategories).map(([key, category]) => (
+        <a class="card desk" href={`/news/category/${key}`}>
+          <h3>{category.label} News</h3>
+          <p>Five official-source updates connected to the {category.label} guide.</p>
+          <span class="mono">Open desk →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="container news-list expanded">
+    <h2>All Topic Updates</h2>
+    {tabNews.map((p) => (
+      <a href={`/news/${p.category}/${p.slug}`} class="card news-item">
+        <p class="mono news-item__date">{p.publishedAt} · {newsCategories[p.category].label}</p>
+        <h2>{p.title}</h2><p class="news-item__summary">{p.summary}</p>
       </a>
     ))}
   </section>
@@ -71,4 +94,9 @@ const posts = (await getCollection('news')).sort(
   .news-item h2 { font-size: 1.15rem; margin: 0 0 8px; }
   .news-item__summary { font-size: 0.9rem; margin: 0; }
   .news-policy { max-width: 760px; padding: 16px 24px 64px; }
+  .topic-desks { padding-bottom:48px; }
+  .topic-desks h2 { margin-top:8px; }
+  .desk { color:var(--text-primary); text-decoration:none; }
+  .desk h3 { font-size:1rem; }.desk p{font-size:.84rem}.desk .mono{color:var(--hud-amber);font-size:.7rem}
+  .expanded { padding-bottom:48px; }
 </style>

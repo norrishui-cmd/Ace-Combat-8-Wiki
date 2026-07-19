@@ -59,6 +59,10 @@ for (const [route, html] of pages) {
     if (!html.includes('hreflang="x-default"')) errors.push(`${route}: missing x-default hreflang`);
     if (!html.includes(`<html lang="${locale}"`)) errors.push(`${route}: incorrect HTML lang`);
   }
+  if (/^\/news\/(aircraft|gameplay|platforms|characters|story|editions|pc|faq)\//.test(route)) {
+    if (!html.includes('direct-answer')) errors.push(`${route}: news page missing direct answer`);
+    if (!html.includes('"@type":"NewsArticle"')) errors.push(`${route}: missing NewsArticle schema`);
+  }
 
   if (title) {
     if (seenTitles.has(title)) errors.push(`${route}: duplicate title with ${seenTitles.get(title)}`);

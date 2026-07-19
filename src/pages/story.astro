@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
+import TabNews from '../components/TabNews.astro';
 ---
 <BaseLayout
   title="Story & Setting Explained"
@@ -66,6 +67,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
       echo real-world geopolitics without being a direct 1:1 mapping.
     </p>
   </article>
+  <TabNews category="story" />
 
   <RelatedLinks items={[
     { href: '/characters', label: 'Joker Flight — Characters', desc: 'Meet your squadron: Baxter, Tasha, and Coster.' },

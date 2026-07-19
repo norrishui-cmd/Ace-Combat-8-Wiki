@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TabNews from '../components/TabNews.astro';
 import { platformGuides } from '../data/platformGuides';
 import { gameplayGuides } from '../data/gameplayGuides';
 import { multiplayerGuides } from '../data/multiplayerGuides';
@@ -65,6 +66,7 @@ const groups = [
       </section>
     ))}
   </article>
+  <TabNews category="faq" />
 </BaseLayout>
 
 <style>

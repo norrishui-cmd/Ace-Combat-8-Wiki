@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
+import TabNews from '../../components/TabNews.astro';
 import { gameplayGuides } from '../../data/gameplayGuides';
 
 const itemListJsonLd = {
@@ -46,6 +47,7 @@ const itemListJsonLd = {
       tables or tested retail gameplay provide concrete values.
     </p>
   </article>
+  <TabNews category="gameplay" />
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
   <RelatedLinks items={[
     { href: '/aircraft', label: 'Aircraft Database', desc: 'Browse every evidence-checked aircraft profile.' },
@@ -66,4 +68,3 @@ const itemListJsonLd = {
   .guide-card p { font-size: .88rem; }
   .card-link { color: var(--hud-amber); font-size: .74rem; }
 </style>
-

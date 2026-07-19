@@ -1,0 +1,10 @@
+---
+import { getTabNews, newsCategories, type NewsCategory } from '../data/tabNews';
+const { category, heading = `Latest ${newsCategories[category].label} Updates` } = Astro.props as {category:NewsCategory;heading?:string};
+const items=getTabNews(category);
+---
+<section class="container tab-news" aria-labelledby={`news-${category}`}>
+  <div class="tab-news__head"><div><span class="eyebrow">Evidence-checked news desk</span><h2 id={`news-${category}`}>{heading}</h2></div><a href={`/news/category/${category}`} class="mono">View all {newsCategories[category].label} updates →</a></div>
+  <div class="card-grid">{items.map((item)=><article class="card"><p class="mono date">{item.publishedAt}</p><h3><a href={`/news/${item.category}/${item.slug}`}>{item.title}</a></h3><p>{item.summary}</p><a class="mono read" href={`/news/${item.category}/${item.slug}`}>Read update →</a></article>)}</div>
+</section>
+<style>.tab-news{padding:48px 0 24px}.tab-news__head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:22px}.tab-news__head h2{margin:6px 0 0}.tab-news__head>a{font-size:.72rem}.card-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.card h3{font-size:1rem}.card h3 a{color:var(--text-primary)}.card p{font-size:.84rem}.date{color:var(--radar-green)!important;font-size:.68rem!important}.read{font-size:.7rem;color:var(--hud-amber)}@media(max-width:600px){.tab-news__head{align-items:start;flex-direction:column}}</style>
