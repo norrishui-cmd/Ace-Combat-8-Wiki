@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+const checked='July 19, 2026';
+const faq=[{q:'Is there an Ace Combat 8 demo?',a:'No public demo or beta has been announced by Bandai Namco, PlayStation or Steam as of July 19, 2026.'},{q:'Does preorder early access mean a demo?',a:'No. Three-day early access is a paid Deluxe Edition benefit, not a public demo.'},{q:'Could a demo still be announced?',a:'Yes. The current status only means none has been announced at the latest evidence check.'}];
+const schema={'@context':'https://schema.org','@type':'FAQPage',mainEntity:faq.map(item=>({'@type':'Question',name:item.q,acceptedAnswer:{'@type':'Answer',text:item.a}}))};
+---
+<BaseLayout title="Demo & Beta Status — No Public Demo Announced" description="Current Ace Combat 8 demo and beta status, checked against Bandai Namco, PlayStation and Steam, plus the difference between a demo and Deluxe early access.">
+  <Breadcrumbs items={[{label:'Demo & Beta Status'}]} />
+  <article class="container article"><span class="badge">Status tracker · checked {checked}</span><h1>Ace Combat 8 Demo & Beta Status</h1>
+    <p class="direct-answer" data-concrete-answer><strong>No public Ace Combat 8 demo, open beta or closed beta has been announced as of {checked}.</strong> The official game page, PlayStation launch coverage and Steam store listing promote the October 2 release and Deluxe early access, but none currently lists a playable trial.</p>
+    <section><h2>What is available instead?</h2><p>The published gameplay walkthrough and hands-on reports show campaign combat, aircraft preparation, wingman commands, the Land Battleship and first-person story scenes. These videos and reports are previews, not downloadable builds. Preordering also includes Ace Combat Zero: The Belkan War and an F-14A, but neither item is an Ace Combat 8 demo.</p></section>
+    <section><h2>Demo versus three-day early access</h2><p>Digital Deluxe preorders can start three days before the standard launch. Early access requires the qualifying purchase and provides the released game entitlement; it is not a time-limited public trial. Buying Deluxe after release does not retroactively provide that preorder timing benefit.</p></section>
+    <section><h2>How this status will be updated</h2><p>This page changes only when an official publisher or platform listing identifies a demo, trial or beta and states its platform, dates and access rules. The absence of an announcement today does not mean Bandai Namco will never offer one.</p></section>
+    <h2>Demo FAQ</h2><div class="faq-list">{faq.map(item=><section class="card"><h3>{item.q}</h3><p>{item.a}</p></section>)}</div>
+    <aside class="source-note"><p class="mono">Official pages checked {checked}</p><ul><li><a rel="nofollow" href="https://www.bandainamcoent.com/games/ace-combat-8">Bandai Namco game page</a></li><li><a rel="nofollow" href="https://blog.playstation.com/2026/06/02/ace-combat-8-wings-of-theve-launches-globally-october-2-on-ps5/">PlayStation launch overview</a></li><li><a rel="nofollow" href="https://store.steampowered.com/app/2285720/ACE_COMBAT_8_WINGS_OF_THEVE/">Steam store page</a></li></ul></aside>
+  </article><script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <RelatedLinks items={[{href:'/release-date',label:'Release date',desc:'Launch and early-access timing.'},{href:'/editions',label:'Editions',desc:'Compare Standard, Deluxe and Joker Flight Pack.'},{href:'/gameplay',label:'Gameplay systems',desc:'Browse mechanics shown in official footage.'}]} />
+</BaseLayout>
+<style>.article{padding:56px 0 72px;max-width:800px}.article h1{margin-top:14px}.article h2{margin-top:40px}.direct-answer{font-size:1.08rem;border-left:3px solid var(--hud-amber);padding-left:18px}.faq-list{display:grid;gap:14px}.faq-list h3{font-size:1rem}.faq-list p{margin:0}.source-note{margin-top:40px;padding-top:20px;border-top:var(--border-thin)}.source-note p,.source-note li{font-size:.8rem}</style>

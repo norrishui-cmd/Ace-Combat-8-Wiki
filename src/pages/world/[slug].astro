@@ -1,0 +1,5 @@
+---
+import EntityDetail from '../../components/EntityDetail.astro'; import {worldGuides} from '../../data/entityGuides';
+export function getStaticPaths(){return worldGuides.map(entry=>({params:{slug:entry.slug},props:{entry}}))} const {entry}=Astro.props;
+---
+<EntityDetail entry={entry} hubTitle="World, Factions & Locations" base="world" entries={worldGuides} />

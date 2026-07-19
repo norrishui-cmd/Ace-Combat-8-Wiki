@@ -1,0 +1,5 @@
+---
+import EntityDetail from '../../components/EntityDetail.astro'; import {collectibleGuides} from '../../data/entityGuides';
+export function getStaticPaths(){return collectibleGuides.map(entry=>({params:{slug:entry.slug},props:{entry}}))} const {entry}=Astro.props;
+---
+<EntityDetail entry={entry} hubTitle="Collector Items & Merchandise" base="collectibles" entries={collectibleGuides} />

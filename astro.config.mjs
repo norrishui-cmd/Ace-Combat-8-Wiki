@@ -71,14 +71,14 @@ export default defineConfig({
 
         if (lastmodMap[pathname]) {
           item.lastmod = lastmodMap[pathname];
-        } else if (pathname.startsWith('/news/') || pathname.startsWith('/faq/')) {
+        } else if (pathname.startsWith('/news/') || pathname.startsWith('/faq/') || pathname.startsWith('/items') || pathname.startsWith('/collectibles') || pathname.startsWith('/squadrons') || pathname.startsWith('/world') || pathname.startsWith('/gameplay/') || pathname === '/demo') {
           item.lastmod = '2026-07-19';
         }
 
         if (url === 'https://acecombat8.wiki/' || url === 'https://acecombat8.wiki') {
           item.priority = 1.0;
           item.changefreq = 'daily';
-        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare') || url.endsWith('/platforms') || url.endsWith('/gameplay') || url.endsWith('/multiplayer') || url.endsWith('/characters') || url.endsWith('/languages') || url.endsWith('/pc') || url.endsWith('/faq') || url.endsWith('/de') || url.endsWith('/ja')) {
+        } else if (url.endsWith('/aircraft') || url.endsWith('/news') || url.endsWith('/aircraft/compare') || url.endsWith('/platforms') || url.endsWith('/gameplay') || url.endsWith('/multiplayer') || url.endsWith('/characters') || url.endsWith('/items') || url.endsWith('/world') || url.endsWith('/squadrons') || url.endsWith('/languages') || url.endsWith('/pc') || url.endsWith('/faq') || url.endsWith('/de') || url.endsWith('/ja')) {
           item.priority = 0.9;
           item.changefreq = 'daily';
         } else if (
@@ -91,7 +91,7 @@ export default defineConfig({
         ) {
           item.priority = 0.85;
           item.changefreq = 'weekly';
-        } else if (url.includes('/aircraft/') || url.includes('/news/') || url.includes('/platforms/') || url.includes('/gameplay/') || url.includes('/multiplayer/') || url.includes('/characters/') || url.includes('/languages/') || url.includes('/pc/') || url.includes('/de/') || url.includes('/ja/')) {
+        } else if (url.includes('/aircraft/') || url.includes('/news/') || url.includes('/platforms/') || url.includes('/gameplay/') || url.includes('/multiplayer/') || url.includes('/characters/') || url.includes('/items/') || url.includes('/collectibles/') || url.includes('/squadrons/') || url.includes('/world/') || url.includes('/languages/') || url.includes('/pc/') || url.includes('/de/') || url.includes('/ja/')) {
           item.priority = 0.7;
           item.changefreq = 'weekly';
         } else if (

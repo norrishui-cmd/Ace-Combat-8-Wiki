@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import RelatedLinks from './RelatedLinks.astro';
+const { entry, hubTitle, base, entries } = Astro.props;
+const related=entries.filter((item:any)=>item.slug!==entry.slug).slice(0,3).map((item:any)=>({href:`/${base}/${item.slug}`,label:item.title,desc:item.answer}));
+const faqSchema={'@context':'https://schema.org','@type':'FAQPage',mainEntity:entry.faqs.map((faq:any)=>({'@type':'Question',name:faq.q,acceptedAnswer:{'@type':'Answer',text:faq.a}}))};
+---
+<BaseLayout title={entry.searchTitle} description={entry.description}>
+  <Breadcrumbs items={[{label:hubTitle,href:`/${base}`},{label:entry.title}]} />
+  <article class="container article">
+    <span class="badge badge--confirmed">{entry.status}</span><h1>{entry.title}</h1>
+    <p class="direct-answer" data-concrete-answer>{entry.answer}</p>
+    <div class="card fact-grid">{entry.facts.map((fact:any)=><div class="fact"><span class="mono">{fact.label}</span><strong>{fact.value}</strong></div>)}</div>
+    {entry.sections.map((section:any)=><section><h2>{section.heading}</h2>{section.paragraphs.map((paragraph:string)=><p>{paragraph}</p>)}</section>)}
+    <h2>{entry.title} FAQ</h2><div class="faq-list">{entry.faqs.map((faq:any)=><section class="card"><h3>{faq.q}</h3><p>{faq.a}</p></section>)}</div>
+    <aside class="source-note"><p class="mono">Evidence reviewed: July 19, 2026</p><ul>{entry.sources.map((source:any)=><li><a href={source.href} rel="nofollow">{source.label}</a></li>)}</ul></aside>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <RelatedLinks heading={`More from ${hubTitle}`} items={related} />
+</BaseLayout>
+<style>
+  .article{padding:56px 0 72px;max-width:800px}.article h1{margin-top:12px}.article h2{margin-top:40px}.article p,.article li{font-size:.98rem}.direct-answer{font-size:1.08rem!important;border-left:3px solid var(--hud-amber);padding-left:18px}.fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin:28px 0;padding:0}.fact{padding:18px;border-bottom:var(--border-thin)}.fact:nth-child(odd){border-right:var(--border-thin)}.fact:nth-last-child(-n+2){border-bottom:0}.fact span{display:block;color:var(--text-secondary);font-size:.68rem;text-transform:uppercase;margin-bottom:6px}.faq-list{display:grid;gap:14px}.faq-list h3{font-size:1rem}.faq-list p{margin:0}.source-note{margin-top:40px;padding-top:20px;border-top:var(--border-thin)}.source-note p,.source-note li{font-size:.8rem}@media(max-width:560px){.fact-grid{grid-template-columns:1fr}.fact,.fact:nth-child(odd),.fact:nth-last-child(-n+2){border-right:0;border-bottom:var(--border-thin)}.fact:last-child{border-bottom:0}}
+</style>

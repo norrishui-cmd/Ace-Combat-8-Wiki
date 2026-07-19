@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+const { title, description, eyebrow, answer, entries, base } = Astro.props;
+const schema = {'@context':'https://schema.org','@type':'ItemList',name:title,itemListElement:entries.map((entry:any,index:number)=>({'@type':'ListItem',position:index+1,url:`https://acecombat8.wiki/${base}/${entry.slug}`,name:entry.title}))};
+---
+<BaseLayout title={title} description={description}>
+  <Breadcrumbs items={[{label:title}]} />
+  <main class="container hub">
+    <span class="eyebrow">{eyebrow}</span><h1>{title}</h1>
+    <p class="direct-answer" data-concrete-answer>{answer}</p>
+    <div class="card-grid">
+      {entries.map((entry:any)=><a class="card entry" href={`/${base}/${entry.slug}`}><span class="mono">{entry.status}</span><h2>{entry.title}</h2><p>{entry.answer}</p></a>)}
+    </div>
+    <section class="method"><h2>Evidence and update policy</h2><p>Entries separate confirmed game content from physical merchandise and mark mode or edition restrictions explicitly. Facts are reviewed against Bandai Namco and first-party platform material; undisclosed stats, prices and mechanics are not inferred.</p></section>
+  </main>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</BaseLayout>
+<style>
+  .hub{padding:56px 0 72px}.hub>p{max-width:780px}.direct-answer{font-size:1.08rem;border-left:3px solid var(--hud-amber);padding-left:18px;margin-bottom:32px}.entry{text-decoration:none;color:var(--text-primary)}.entry:hover{text-decoration:none}.entry h2{font-size:1.15rem;margin:8px 0}.entry p{font-size:.88rem;margin:0}.entry span{font-size:.66rem;color:var(--radar-green);text-transform:uppercase}.method{max-width:760px;margin-top:48px}.method p{font-size:.92rem}
+</style>

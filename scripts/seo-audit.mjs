@@ -39,7 +39,7 @@ for (const [route, html] of pages) {
   const mainText = strip(html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] || '');
   const words = mainText.split(/\s+/).filter(Boolean).length;
   const cjkChars = (mainText.match(/[\u3040-\u30ff\u3400-\u9fff]/g) || []).length;
-  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms|\/characters|\/languages|\/pc|\/de|\/ja)(\/|$)/.test(route) || ['/price', '/ace-pass', '/preorder-bonuses'].includes(route);
+  const needsConcreteAnswer = /^(\/gameplay|\/multiplayer|\/platforms|\/characters|\/items|\/collectibles|\/squadrons|\/world|\/languages|\/pc|\/de|\/ja)(\/|$)/.test(route) || ['/price', '/ace-pass', '/preorder-bonuses', '/demo'].includes(route);
 
   if (!title) errors.push(`${route}: missing title`);
   if (!description) errors.push(`${route}: missing meta description`);

@@ -1,0 +1,5 @@
+---
+import EntityDetail from '../../components/EntityDetail.astro'; import {squadronGuides} from '../../data/entityGuides';
+export function getStaticPaths(){return squadronGuides.map(entry=>({params:{slug:entry.slug},props:{entry}}))} const {entry}=Astro.props;
+---
+<EntityDetail entry={entry} hubTitle="Squadrons & Flights" base="squadrons" entries={squadronGuides} />
