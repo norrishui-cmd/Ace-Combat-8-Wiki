@@ -4,6 +4,7 @@ import AircraftCard from '../../components/AircraftCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import TabNews from '../../components/TabNews.astro';
+import RelatedFaqs from '../../components/RelatedFaqs.astro';
 import { getCollection } from 'astro:content';
 
 const all = await getCollection('aircraft');
@@ -57,6 +58,7 @@ const itemListJsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
 
   <TabNews category="aircraft" />
+  <RelatedFaqs category="aircraft" />
 
   <RelatedLinks items={[
     { href: '/getting-started', label: "Getting Started", desc: 'New to the series? Which aircraft category to start with, and what changed.' },

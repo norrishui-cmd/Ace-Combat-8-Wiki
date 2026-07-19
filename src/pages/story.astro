@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import TabNews from '../components/TabNews.astro';
+import RelatedFaqs from '../components/RelatedFaqs.astro';
 ---
 <BaseLayout
   title="Story & Setting Explained"
@@ -68,6 +69,7 @@ import TabNews from '../components/TabNews.astro';
     </p>
   </article>
   <TabNews category="story" />
+  <RelatedFaqs category="story" />
 
   <RelatedLinks items={[
     { href: '/characters', label: 'Joker Flight — Characters', desc: 'Meet your squadron: Baxter, Tasha, and Coster.' },

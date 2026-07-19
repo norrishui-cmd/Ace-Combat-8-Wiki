@@ -63,6 +63,10 @@ for (const [route, html] of pages) {
     if (!html.includes('direct-answer')) errors.push(`${route}: news page missing direct answer`);
     if (!html.includes('"@type":"NewsArticle"')) errors.push(`${route}: missing NewsArticle schema`);
   }
+  if (/^\/faq\//.test(route)) {
+    if (!html.includes('direct-answer')) errors.push(`${route}: FAQ detail missing direct answer`);
+    if (!html.includes('"@type":"FAQPage"')) errors.push(`${route}: missing FAQPage schema`);
+  }
 
   if (title) {
     if (seenTitles.has(title)) errors.push(`${route}: duplicate title with ${seenTitles.get(title)}`);

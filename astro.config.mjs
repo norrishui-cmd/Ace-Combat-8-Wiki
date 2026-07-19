@@ -71,7 +71,7 @@ export default defineConfig({
 
         if (lastmodMap[pathname]) {
           item.lastmod = lastmodMap[pathname];
-        } else if (pathname.startsWith('/news/')) {
+        } else if (pathname.startsWith('/news/') || pathname.startsWith('/faq/')) {
           item.lastmod = '2026-07-19';
         }
 

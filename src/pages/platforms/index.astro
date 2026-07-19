@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import TabNews from '../../components/TabNews.astro';
+import RelatedFaqs from '../../components/RelatedFaqs.astro';
 import { confirmedPlatforms, unannouncedPlatforms } from '../../data/platformGuides';
 
 const itemListJsonLd = {
@@ -69,6 +70,7 @@ const itemListJsonLd = {
     </p>
   </article>
   <TabNews category="platforms" />
+  <RelatedFaqs category="platforms" />
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
   <RelatedLinks items={[
     { href: '/release-date', label: 'Release Date & Unlock Times', desc: 'Launch and Deluxe early-access timing by region.' },

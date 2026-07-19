@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import TabNews from '../../components/TabNews.astro';
+import RelatedFaqs from '../../components/RelatedFaqs.astro';
 import { gameplayGuides } from '../../data/gameplayGuides';
 
 const itemListJsonLd = {
@@ -48,6 +49,7 @@ const itemListJsonLd = {
     </p>
   </article>
   <TabNews category="gameplay" />
+  <RelatedFaqs category="gameplay" />
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
   <RelatedLinks items={[
     { href: '/aircraft', label: 'Aircraft Database', desc: 'Browse every evidence-checked aircraft profile.' },
