@@ -2,7 +2,7 @@
 const year = new Date().getFullYear();
 const { lang = 'en' } = Astro.props;
 
-const siteMap = [
+const englishSiteMap = [
   {
     heading: 'Core info',
     links: [
@@ -54,6 +54,53 @@ const siteMap = [
     ],
   },
 ];
+const localizedSiteMaps = {
+  de: [
+    { heading: 'Grundlagen', links: [
+      {href:'/de/erscheinungsdatum',label:'Erscheinungsdatum'}, {href:'/de/plattformen',label:'Plattformen'},
+      {href:'/de/sprachen',label:'Sprachen'}, {href:'/de/pc',label:'PC-Anforderungen'}, {href:'/de/faq',label:'FAQ'},
+    ]},
+    { heading: 'Welt & Figuren', links: [
+      {href:'/de/charaktere',label:'Charaktere'}, {href:'/de/staffeln',label:'Staffeln'},
+      {href:'/de/staffeln/joker-flight',label:'Joker Flight'}, {href:'/de/staffeln/queen-flight',label:'Queen Flight'},
+      {href:'/de/welt',label:'Welt & Fraktionen'}, {href:'/de/welt/endurance',label:'Endurance'},
+    ]},
+    { heading: 'Gameplay', links: [
+      {href:'/de/spielsysteme',label:'Gameplay-Systeme'}, {href:'/de/einsteiger-guide',label:'Einsteiger-Guide'},
+      {href:'/de/gameplay/staffelzusammenstellung',label:'Staffelzusammenstellung'},
+      {href:'/de/gameplay/wrack-kettenreaktionen',label:'Wrack-Kettenreaktionen'},
+      {href:'/de/gameplay/superwaffen-schadenszonen',label:'Superwaffen-Schadenszonen'},
+      {href:'/de/gameplay/ego-szenen',label:'Ego-Szenen'}, {href:'/de/mehrspieler',label:'Mehrspieler'},
+    ]},
+    { heading: 'Inhalte', links: [
+      {href:'/de/gegenstaende',label:'Gegenstände & Kosmetik'}, {href:'/de/sammlerstuecke',label:'Sammlerstücke'},
+      {href:'/de/vorbestellerbonus',label:'Vorbestellerbonus'}, {href:'/de/demo',label:'Demo-Status'},
+    ]},
+  ],
+  ja: [
+    { heading: '基本情報', links: [
+      {href:'/ja/release-date',label:'発売日'}, {href:'/ja/platforms',label:'対応機種'},
+      {href:'/ja/languages',label:'対応言語'}, {href:'/ja/pc',label:'PC版スペック'}, {href:'/ja/faq',label:'FAQ'},
+    ]},
+    { heading: '世界・人物', links: [
+      {href:'/ja/characters',label:'登場人物'}, {href:'/ja/squadrons',label:'飛行隊'},
+      {href:'/ja/squadrons/joker-flight',label:'Joker Flight'}, {href:'/ja/squadrons/queen-flight',label:'Queen Flight'},
+      {href:'/ja/world',label:'世界・勢力'}, {href:'/ja/world/endurance',label:'空母Endurance'},
+    ]},
+    { heading: 'ゲームプレイ', links: [
+      {href:'/ja/gameplay',label:'ゲームシステム'}, {href:'/ja/beginner-guide',label:'初心者ガイド'},
+      {href:'/ja/gameplay/squadron-composition',label:'飛行隊編成'},
+      {href:'/ja/gameplay/wreckage-chain-reactions',label:'残骸連鎖ダメージ'},
+      {href:'/ja/gameplay/superweapon-damage-zones',label:'巨大兵器の攻撃範囲'},
+      {href:'/ja/gameplay/first-person-scenes',label:'一人称ストーリー'}, {href:'/ja/multiplayer',label:'オンライン'},
+    ]},
+    { heading: 'コンテンツ', links: [
+      {href:'/ja/items',label:'アイテム・コスメ'}, {href:'/ja/collectibles',label:'コレクターズアイテム'},
+      {href:'/ja/preorder-bonus',label:'予約特典'}, {href:'/ja/demo',label:'体験版・ベータ情報'},
+    ]},
+  ],
+};
+const siteMap = lang === 'de' ? localizedSiteMaps.de : lang === 'ja' ? localizedSiteMaps.ja : englishSiteMap;
 ---
 <footer class="site-footer">
   <div class="container">

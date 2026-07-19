@@ -16,7 +16,7 @@ const related = localizedPeers.slice(0, 3).map((g) => ({
   href: `/${g.locale}${g.slug ? `/${g.slug}` : ''}`, label: g.h1, desc: g.answer,
 }));
 const faqJsonLd = {'@context':'https://schema.org','@type':'FAQPage',mainEntity:guide.faqs.map((faq) => ({'@type':'Question',name:faq.q,acceptedAnswer:{'@type':'Answer',text:faq.a}}))};
-const articleJsonLd = {'@context':'https://schema.org','@type':'Article',headline:guide.h1,inLanguage:guide.locale,mainEntityOfPage:new URL(Astro.url.pathname,Astro.site).href,dateModified:'2026-07-18',about:{'@type':'VideoGame',name:'ACE COMBAT 8: WINGS OF THEVE'}};
+const articleJsonLd = {'@context':'https://schema.org','@type':'Article',headline:guide.h1,inLanguage:guide.locale,mainEntityOfPage:new URL(Astro.url.pathname,Astro.site).href,dateModified:'2026-07-19',about:{'@type':'VideoGame',name:'ACE COMBAT 8: WINGS OF THEVE'}};
 ---
 <BaseLayout title={guide.title} description={guide.description} lang={guide.locale}>
   <Breadcrumbs items={guide.slug ? [{ label: langName, href: `/${guide.locale}` }, { label: guide.h1 }] : [{ label: langName }]} />
@@ -28,7 +28,7 @@ const articleJsonLd = {'@context':'https://schema.org','@type':'Article',headlin
     <h2>{guide.locale === 'de' ? 'Häufige Fragen' : 'よくある質問'}</h2>
     <div class="faq-list">{guide.faqs.map((faq) => <section class="card"><h3>{faq.q}</h3><p>{faq.a}</p></section>)}</div>
     <aside class="source-note">
-      <p class="mono">{guide.locale === 'de' ? 'Quellen geprüft: 18. Juli 2026' : '情報確認日：2026年7月18日'}</p>
+      <p class="mono">{guide.locale === 'de' ? 'Quellen geprüft: 19. Juli 2026' : '情報確認日：2026年7月19日'}</p>
       <ul><li><a href="https://www.bandainamcoent.com/games/ace-combat-8" rel="nofollow">Bandai Namco – ACE COMBAT 8</a></li><li><a href="https://store.steampowered.com/app/2288340/ACE_COMBAT_8_WINGS_OF_THEVE/" rel="nofollow">Steam – offizielle Produktseite</a></li></ul>
     </aside>
   </article>

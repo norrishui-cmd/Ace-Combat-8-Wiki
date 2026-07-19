@@ -1,4 +1,5 @@
 ---
+import { localizedGuides } from '../data/localizedGuides';
 const { lang = 'en' } = Astro.props;
 const navSets = { en: [
   { href: '/aircraft', label: 'Aircraft' },
@@ -13,14 +14,29 @@ const navSets = { en: [
 ], de: [
   { href: '/de/plattformen', label: 'Plattformen' }, { href: '/de/spielsysteme', label: 'Gameplay' },
   { href: '/de/charaktere', label: 'Charaktere' }, { href: '/de/mehrspieler', label: 'Mehrspieler' },
+  { href: '/de/gegenstaende', label: 'Gegenstände' }, { href: '/de/welt', label: 'Welt' },
   { href: '/de/faq', label: 'FAQ' },
 ], ja: [
   { href: '/ja/platforms', label: '対応機種' }, { href: '/ja/gameplay', label: 'ゲームプレイ' },
   { href: '/ja/characters', label: '登場人物' }, { href: '/ja/multiplayer', label: 'オンライン' },
+  { href: '/ja/items', label: 'アイテム' }, { href: '/ja/world', label: '世界' },
   { href: '/ja/faq', label: 'FAQ' },
 ]};
 const navItems = navSets[lang] || navSets.en;
 const home = lang === 'de' ? '/de' : lang === 'ja' ? '/ja' : '/';
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const currentLocalized = localizedGuides.find((g) => `/${g.locale}${g.slug ? `/${g.slug}` : ''}` === currentPath);
+const englishPath = lang === 'en' ? currentPath : currentLocalized?.englishPath || '/';
+const translatedPath = (locale: 'de' | 'ja') => {
+  const match = localizedGuides.find((g) => g.locale === locale && g.englishPath === englishPath);
+  return match ? `/${locale}${match.slug ? `/${match.slug}` : ''}` : `/${locale}`;
+};
+const languageOptions = [
+  { code: 'en', label: 'English', short: 'EN', href: englishPath },
+  { code: 'de', label: 'Deutsch', short: 'DE', href: translatedPath('de') },
+  { code: 'ja', label: '日本語', short: '日本語', href: translatedPath('ja') },
+];
+const activeLanguage = languageOptions.find((option) => option.code === lang) || languageOptions[0];
 ---
 <header class="site-header">
   <div class="container site-header__inner">
@@ -33,7 +49,16 @@ const home = lang === 'de' ? '/de' : lang === 'ja' ? '/ja' : '/';
         <a href={item.href}>{item.label}</a>
       ))}
     </nav>
-    <nav class="language-nav" aria-label="Language"><a href="/">EN</a><a href="/de">DE</a><a href="/ja">日本語</a></nav>
+    <details class="language-menu">
+      <summary aria-label="Choose language"><span aria-hidden="true">◎</span> {activeLanguage.short}<span class="chevron" aria-hidden="true">▾</span></summary>
+      <nav class="language-menu__list" aria-label="Language">
+        {languageOptions.map((option) => (
+          <a href={option.href} lang={option.code} hreflang={option.code} aria-current={option.code === lang ? 'page' : undefined}>
+            <span>{option.label}</span><span class="mono">{option.code === lang ? '●' : option.short}</span>
+          </a>
+        ))}
+      </nav>
+    </details>
   </div>
 </header>
 
@@ -92,6 +117,17 @@ const home = lang === 'de' ? '/de' : lang === 'ja' ? '/ja' : '/';
     color: var(--hud-amber);
     text-decoration: none;
   }
-  .language-nav { display:flex; gap:8px; margin-left:auto; }
-  .language-nav a { font: .68rem var(--font-mono); color:var(--text-secondary); border:var(--border-thin); padding:3px 6px; }
+  .language-menu { position:relative; margin-left:auto; }
+  .language-menu summary { list-style:none; cursor:pointer; min-width:80px; border:var(--border-thin); padding:7px 10px; color:var(--text-secondary); font:.7rem var(--font-mono); letter-spacing:.06em; display:flex; align-items:center; justify-content:space-between; gap:7px; }
+  .language-menu summary::-webkit-details-marker { display:none; }
+  .language-menu summary:hover, .language-menu[open] summary { color:var(--hud-amber); border-color:var(--hud-amber-dim); }
+  .chevron { transition:transform .15s ease; }
+  .language-menu[open] .chevron { transform:rotate(180deg); }
+  .language-menu__list { position:absolute; right:0; top:calc(100% + 8px); min-width:180px; padding:6px; display:grid; gap:2px; background:rgba(11,18,32,.98); border:var(--border-thin); box-shadow:0 16px 32px rgba(0,0,0,.32); z-index:80; }
+  .language-menu__list a { display:flex; justify-content:space-between; gap:24px; padding:9px 10px; color:var(--text-secondary); font-size:.78rem; text-decoration:none; }
+  .language-menu__list a:hover { color:var(--hud-amber); background:rgba(255,255,255,.04); }
+  .language-menu__list a[aria-current="page"] { color:var(--text-primary); }
+  .language-menu__list .mono { font-size:.65rem; color:var(--radar-green); }
+  @media(max-width:760px){
+    .site-nav{order:3;width:100%;gap:14px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}.site-nav a{white-space:nowrap}.language-menu{margin-left:0}.brand__text{font-size:.84rem}.language-menu__list{position:fixed;right:16px;top:68px}}
 </style>

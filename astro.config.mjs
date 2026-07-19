@@ -71,7 +71,7 @@ export default defineConfig({
 
         if (lastmodMap[pathname]) {
           item.lastmod = lastmodMap[pathname];
-        } else if (pathname.startsWith('/news/') || pathname.startsWith('/faq/') || pathname.startsWith('/items') || pathname.startsWith('/collectibles') || pathname.startsWith('/squadrons') || pathname.startsWith('/world') || pathname.startsWith('/gameplay/') || pathname === '/demo') {
+        } else if (pathname.startsWith('/news/') || pathname.startsWith('/faq/') || pathname.startsWith('/items') || pathname.startsWith('/collectibles') || pathname.startsWith('/squadrons') || pathname.startsWith('/world') || pathname.startsWith('/gameplay/') || pathname.startsWith('/de') || pathname.startsWith('/ja') || pathname === '/demo') {
           item.lastmod = '2026-07-19';
         }
 
